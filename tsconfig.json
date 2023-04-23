@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "declaration": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "jsx": "react",
+    "baseUrl": "./",
+    "paths": {
+      "@@/*": [
+        ".dumi/tmp/*"
+      ],
+      "json-schemaeditor-antd": [
+        "src"
+      ],
+      "json-schemaeditor-antd/*": [
+        "src/*",
+        "*"
+      ]
+    }
+  },
+  "include": [
+    ".dumi/**/*",
+    ".dumirc.ts",
+    // 仅包括 typescript 文件
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.d.ts"
+  ]
+}

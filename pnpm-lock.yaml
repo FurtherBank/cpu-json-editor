@@ -6,6 +6,7 @@ importers:
     specifiers:
       '@commitlint/cli': ^17.1.2
       '@commitlint/config-conventional': ^17.1.0
+      '@cpu-json-editor/core': workspace:^0.1.0
       '@testing-library/jest-dom': ^5
       '@testing-library/react': ^13
       '@testing-library/user-event': ^14.4.3
@@ -39,6 +40,7 @@ importers:
     devDependencies:
       '@commitlint/cli': 17.6.1
       '@commitlint/config-conventional': 17.6.1
+      '@cpu-json-editor/core': link:packages/core
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
       '@testing-library/user-event': 14.4.3
@@ -72,7 +74,7 @@ importers:
 
   packages/antd-components:
     specifiers:
-      father: ^4.1.9
+      father: ^4.1.8
     devDependencies:
       father: 4.1.9
 
@@ -109,30 +111,15 @@ importers:
       '@types/uuid': 9.0.1
       father: 4.1.9
 
-  packages/json-editor:
+  packages/test-examples:
     specifiers:
-      ajv: ^8.12.0
-      ajv-formats: ^2.1.1
-      ajv-i18n: ^4.2.0
       father: ^4.1.9
-      immer: ^10.0.1
-      lodash: ^4.17.21
-      react-redux: ^8.0.5
-      react-selectable-fast: ^3.4.0
-      redux: ^4.2.1
-      redux-undo: ^1.0.1
-      uuid: ^9.0.0
-    dependencies:
-      ajv: 8.12.0
-      ajv-formats: 2.1.1_ajv@8.12.0
-      ajv-i18n: 4.2.0_ajv@8.12.0
-      immer: 10.0.1
-      lodash: 4.17.21
-      react-redux: 8.0.5_redux@4.2.1
-      react-selectable-fast: 3.4.0
-      redux: 4.2.1
-      redux-undo: 1.0.1
-      uuid: 9.0.0
+    devDependencies:
+      father: 4.1.9
+
+  packages/test-utils:
+    specifiers:
+      father: ^4.1.9
     devDependencies:
       father: 4.1.9
 

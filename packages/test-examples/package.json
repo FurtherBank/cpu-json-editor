@@ -1,0 +1,28 @@
+{
+  "name": "@cpu-json-editor/test-examples",
+  "version": "0.0.1",
+  "description": "test examples of cpu json editor",
+  "keywords": [],
+  "license": "MIT",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "files": [
+    "dist",
+    "compiled"
+  ],
+  "scripts": {
+    "build": "father build",
+    "build:deps": "father prebundle",
+    "dev": "father dev",
+    "prepublishOnly": "father doctor && npm run build"
+  },
+  "devDependencies": {
+    "father": "^4.1.9"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "authors": [
+    "1293874885@qq.com"
+  ]
+}

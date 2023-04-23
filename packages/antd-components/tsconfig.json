@@ -1,8 +1,17 @@
 {
   "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "jsx": "react",
+    "esModuleInterop": true,
+    "types": ["jest"],
     "strict": true,
-    "declaration": true,
     "skipLibCheck": true,
-    "baseUrl": "./"
-  }
+    "resolveJsonModule": true,
+    "declaration": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["demos/**", "jest.config.ts", "__test__/**"]
+  // "references": [{ "path": "../cpu-json-editor/tsconfig.json" }]
 }

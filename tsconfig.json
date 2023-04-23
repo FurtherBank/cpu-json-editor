@@ -1,22 +1,20 @@
 {
   "compilerOptions": {
-    "strict": true,
-    "declaration": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
     "jsx": "react",
+    "esModuleInterop": true,
+    "types": ["jest", "node"],
+    "strict": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "declaration": true,
     "baseUrl": "./",
     "paths": {
-      "@@/*": [
-        ".dumi/tmp/*"
-      ],
-      "json-schemaeditor-antd": [
-        "src"
-      ],
-      "json-schemaeditor-antd/*": [
-        "src/*",
-        "*"
-      ]
+      "@@/*": [".dumi/tmp/*"],
+      "json-schemaeditor-antd": ["src"],
+      "json-schemaeditor-antd/*": ["src/*", "*"]
     }
   },
   "include": [

@@ -1,7 +1,7 @@
-# @cpu-editor/antd-components
+# @cpu-json-editor/antd-components
 
-[![NPM version](https://img.shields.io/npm/v/@cpu-editor/antd-components.svg?style=flat)](https://npmjs.org/package/@cpu-editor/antd-components)
-[![NPM downloads](http://img.shields.io/npm/dm/@cpu-editor/antd-components.svg?style=flat)](https://npmjs.org/package/@cpu-editor/antd-components)
+[![NPM version](https://img.shields.io/npm/v/@cpu-json-editor/antd-components.svg?style=flat)](https://npmjs.org/package/@cpu-json-editor/antd-components)
+[![NPM downloads](http://img.shields.io/npm/dm/@cpu-json-editor/antd-components.svg?style=flat)](https://npmjs.org/package/@cpu-json-editor/antd-components)
 
 ## Install
 

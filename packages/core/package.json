@@ -29,6 +29,9 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@types/json-pointer": "^1.0.31",
+    "@types/lodash": "^4.14.194",
+    "@types/uuid": "^9.0.1",
     "father": "^4.1.9"
   },
   "publishConfig": {

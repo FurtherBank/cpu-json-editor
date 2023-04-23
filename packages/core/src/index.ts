@@ -1,1 +1,5 @@
-export default 'Hello father 4!';
+import $meta from './$meta.json';
+import JsonSchemaEditor from './JsonSchemaEditor';
+
+export default JsonSchemaEditor;
+export const metaSchema = $meta;

@@ -1,7 +1,7 @@
-# @cpu-studio/json-editor
+# @cpu-json-editor/core
 
-[![NPM version](https://img.shields.io/npm/v/@cpu-studio/json-editor.svg?style=flat)](https://npmjs.org/package/@cpu-studio/json-editor)
-[![NPM downloads](http://img.shields.io/npm/dm/@cpu-studio/json-editor.svg?style=flat)](https://npmjs.org/package/@cpu-studio/json-editor)
+[![NPM version](https://img.shields.io/npm/v/@cpu-json-editor/core.svg?style=flat)](https://npmjs.org/package/@cpu-json-editor/core)
+[![NPM downloads](http://img.shields.io/npm/dm/@cpu-json-editor/core.svg?style=flat)](https://npmjs.org/package/@cpu-json-editor/core)
 
 ## Install
 

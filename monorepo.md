@@ -20,6 +20,20 @@ pnpm dlx create-father ./
 # √ Input NPM package author (Name <email@example.com>) ...
 ```
 
+## 添加子包依赖
+
+在同一仓库内引用，比如`docs`项目引用`liba`。只需要在`docs`项目中执行添加包命令，并加上`-w`参数，表面是引用 workspace 中的包。
+
+```
+# 项目根目录操作需要带过滤条件
+pnpm add liba -w --filter docs
+
+# 进入包的目录可以直接添加
+cd .\packages\docs
+pnpm add liba -w
+
+```
+
 ## ts 引用
 
 ## 参考文献

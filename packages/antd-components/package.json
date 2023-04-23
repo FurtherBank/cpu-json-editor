@@ -1,7 +1,7 @@
 {
-  "name": "@cpu-editor/antd-components",
-  "version": "0.0.1",
-  "description": "",
+  "name": "@cpu-json-editor/antd-components",
+  "version": "0.1.0",
+  "description": "antd components of cpu json editor",
   "keywords": [],
   "license": "MIT",
   "module": "dist/esm/index.js",
@@ -17,7 +17,10 @@
     "prepublishOnly": "father doctor && npm run build"
   },
   "devDependencies": {
-    "father": "^4.1.9"
+    "father": "^4.1.8"
+  },
+  "peerDependencies": {
+    "@cpu-json-editor/core": "^0.1.0"
   },
   "publishConfig": {
     "access": "public"

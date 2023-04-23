@@ -1,7 +1,7 @@
 import { Config, configUmiAlias, createConfig } from 'umi/test';
 
 export default async () => {
-  try{
+  try {
     return (await configUmiAlias({
       ...createConfig({
         target: 'browser',
@@ -15,7 +15,9 @@ export default async () => {
         'src/**/*.{ts,js,tsx,jsx}',
         '!src/.umi/**',
         '!src/.umi-test/**',
-        '!src/.umi-production/**'
+        '!src/.umi-production/**',
+        // .dumi 下被 ignore 的文件
+        '!.dumi/**',
       ],
       // if you require some es-module npm package, please uncomment below line and insert your package name
       // transformIgnorePatterns: ['node_modules/(?!.*(lodash-es|your-es-pkg-name)/)']

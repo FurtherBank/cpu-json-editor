@@ -1,9 +1,9 @@
 import { getExample } from '@cpu-json-editor/common-test-utils/src';
 import { MockRender } from '@cpu-json-editor/common-test-utils/src/MockComponent';
-import JsonSchemaEditor from '@cpu-json-editor/core/dist/esm';
-import CpuEditorContext from '@cpu-json-editor/core/dist/esm/context';
-import { EditorProps } from '@cpu-json-editor/core/dist/esm/JsonSchemaEditor';
-import { JSONSchema } from '@cpu-json-editor/core/dist/esm/type/Schema';
+import JsonSchemaEditor from '@cpu-json-editor/core/src';
+import CpuEditorContext from '@cpu-json-editor/core/src/context';
+import { EditorProps } from '@cpu-json-editor/core/src/JsonSchemaEditor';
+import { JSONSchema } from '@cpu-json-editor/core/src/type/Schema';
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
 import React from 'react';

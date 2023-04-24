@@ -78,13 +78,18 @@ importers:
       '@cpu-json-editor/common-test-utils': workspace:^0.0.1
       '@cpu-json-editor/core': workspace:^0.1.0
       '@cpu-json-editor/test-examples': workspace:^0.0.1
+      '@types/lodash': ^4.14.194
       antd: '4'
       father: ^4.1.8
+      lodash: ^4.17.21
+    dependencies:
+      lodash: 4.17.21
     devDependencies:
       '@ant-design/icons': 4.8.0
       '@cpu-json-editor/common-test-utils': link:../common-test-utils
       '@cpu-json-editor/core': link:../core
       '@cpu-json-editor/test-examples': link:../test-examples
+      '@types/lodash': 4.14.194
       antd: 4.24.9
       father: 4.1.9
 
@@ -135,18 +140,33 @@ importers:
       '@types/uuid': 9.0.1
       father: 4.1.9
 
+  packages/docs:
+    specifiers:
+      '@cpu-json-editor/antd-components': workspace:^0.1.0
+      '@cpu-json-editor/common-test-utils': workspace:^0.0.1
+      '@cpu-json-editor/core': workspace:^0.1.0
+      '@cpu-json-editor/test-examples': workspace:^0.0.1
+      '@types/lodash': ^4.14.194
+      antd: '4'
+      father: ^4.1.9
+      lodash: ^4.17.21
+    dependencies:
+      '@cpu-json-editor/antd-components': link:../antd-components
+      '@cpu-json-editor/common-test-utils': link:../common-test-utils
+      '@cpu-json-editor/core': link:../core
+      '@cpu-json-editor/test-examples': link:../test-examples
+      antd: 4.24.9
+      lodash: 4.17.21
+    devDependencies:
+      '@types/lodash': 4.14.194
+      father: 4.1.9
+
   packages/test-examples:
     specifiers:
       antd: '4'
       father: ^4.1.9
     dependencies:
       antd: 4.24.9
-    devDependencies:
-      father: 4.1.9
-
-  packages/test-utils:
-    specifiers:
-      father: ^4.1.9
     devDependencies:
       father: 4.1.9
 

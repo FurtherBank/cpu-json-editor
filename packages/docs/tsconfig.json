@@ -1,4 +1,4 @@
-// @cpu-json-editor/antd-components
+// @cpu-json-editor/docs
 {
   "compilerOptions": {
     "target": "esnext",
@@ -20,9 +20,19 @@
       "@cpu-json-editor/core/dist/esm/*": [
         "./node_modules/@cpu-json-editor/core/src/*",
         "*"
+      ],
+      "@cpu-json-editor/antd-components": [
+        "./node_modules/@cpu-json-editor/antd-components/src"
+      ],
+      "@cpu-json-editor/antd-components/dist/esm": [
+        "./node_modules/@cpu-json-editor/antd-components/src"
+      ],
+      "@cpu-json-editor/antd-components/dist/esm/*": [
+        "./node_modules/@cpu-json-editor/antd-components/src/*",
+        "*"
       ]
     }
   },
-  "include": ["src/**/*", "../docs/src/App.tsx"],
+  "include": ["src/**/*"],
   "exclude": ["src/demos/**", "jest.config.ts", "__test__/**"]
 }

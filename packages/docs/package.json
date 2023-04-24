@@ -1,7 +1,7 @@
 {
-  "name": "@cpu-json-editor/antd-components",
-  "version": "0.1.0",
-  "description": "antd components of cpu json editor",
+  "name": "@cpu-json-editor/docs",
+  "version": "0.0.1",
+  "description": "",
   "keywords": [],
   "license": "MIT",
   "module": "dist/esm/index.js",
@@ -17,22 +17,19 @@
     "prepublishOnly": "father doctor && npm run build"
   },
   "dependencies": {
-    "lodash": "^4.17.21"
-  },
-  "devDependencies": {
-    "@ant-design/icons": "4",
+    "@cpu-json-editor/antd-components": "workspace:^0.1.0",
     "@cpu-json-editor/common-test-utils": "workspace:^0.0.1",
     "@cpu-json-editor/core": "workspace:^0.1.0",
     "@cpu-json-editor/test-examples": "workspace:^0.0.1",
-    "@types/lodash": "^4.14.194",
     "antd": "4",
-    "father": "^4.1.8"
+    "lodash": "^4.17.21"
   },
-  "peerDependencies": {
-    "@cpu-json-editor/core": "^0.1.0"
+  "devDependencies": {
+    "@types/lodash": "^4.14.194",
+    "father": "^4.1.9"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "restricted"
   },
   "authors": [
     "1293874885@qq.com"

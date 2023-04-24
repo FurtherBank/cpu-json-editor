@@ -20,8 +20,8 @@ import {
   antdViewsMap,
 } from '@cpu-json-editor/antd-components';
 import JsonSchemaEditor from '@cpu-json-editor/core';
+import CpuEditorContext from '@cpu-json-editor/core/dist/esm/context';
 import examples from '@cpu-json-editor/test-examples/src';
-import CpuEditorContext from '../context';
 import { useCooldown } from './hooks';
 import ModalSelect from './ModalSelect';
 

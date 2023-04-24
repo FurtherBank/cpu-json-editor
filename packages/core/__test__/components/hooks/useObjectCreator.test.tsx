@@ -1,5 +1,5 @@
 import { getExample } from '@cpu-json-editor/common-test-utils/src';
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 import { useObjectCreator } from '../../../src/components/hooks/useObjectCreator';
 import { CpuEditorAction } from '../../../src/definition/reducer';
 import { mockCtx } from '../../test-utils';

@@ -1,9 +1,4 @@
----
-nav:
-  title: 预览
----
-
-## JSON Schema Editor
+# JSON Schema Editor
 
 <code src="./App.tsx"></code>
 

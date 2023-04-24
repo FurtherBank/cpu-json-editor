@@ -1,16 +1,12 @@
-import { Modal, TreeSelect } from 'antd';
-import { cloneDeep } from 'lodash';
-import React, { useState } from 'react';
-import examples from './examples';
+import examples from '@cpu-json-editor/test-examples/src'
+import { Modal, TreeSelect } from 'antd'
+import { cloneDeep } from 'lodash'
+import React, { useState } from 'react'
 
 // 接下来是示例选择功能的定义
-const ModalSelect = (props: {
-  cb: (data: any, schema: any) => void;
-  cancelCb: () => void;
-  visible: boolean;
-}) => {
-  const { cb, cancelCb, visible } = props;
-  const [item, setItem] = useState('string');
+const ModalSelect = (props: { cb: (data: any, schema: any) => void; cancelCb: () => void; visible: boolean }) => {
+  const { cb, cancelCb, visible } = props
+  const [item, setItem] = useState('string')
 
   return (
     <Modal
@@ -19,11 +15,11 @@ const ModalSelect = (props: {
       cancelText="取消"
       onOk={() => {
         const data = cloneDeep(examples.plainData[item][0]),
-          schema = cloneDeep(examples.plainData[item][1]);
-        cb(data, schema);
+          schema = cloneDeep(examples.plainData[item][1])
+        cb(data, schema)
       }}
       onCancel={() => {
-        cancelCb();
+        cancelCb()
       }}
       open={visible}
     >
@@ -31,7 +27,7 @@ const ModalSelect = (props: {
         showSearch
         placeholder="选择示例"
         onChange={(value) => {
-          setItem(value);
+          setItem(value)
         }}
         dropdownStyle={{ maxHeight: 600, overflow: 'auto' }}
         treeDefaultExpandAll
@@ -40,7 +36,7 @@ const ModalSelect = (props: {
         style={{ width: '100%' }}
       />
     </Modal>
-  );
-};
+  )
+}
 
-export default ModalSelect;
+export default ModalSelect

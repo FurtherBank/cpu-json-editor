@@ -1,24 +1,24 @@
-import Ajv from 'ajv';
-import { IComponentMap, IViewsMap } from '../../src/components/ComponentMap';
-import CpuEditorContext from '../../src/context';
-import { CpuInteraction } from '../../src/context/interaction';
-import defaultAjvInstance from '../../src/definition/ajvInstance';
-import { MockComponentMap } from './componentMap';
+import Ajv from 'ajv'
+import { IComponentMap, IViewsMap } from '../../src/components/ComponentMap'
+import CpuEditorContext from '../../src/context'
+import { CpuInteraction } from '../../src/context/interaction'
+import defaultAjvInstance from '../../src/definition/ajvInstance'
+import { MockComponentMap } from './componentMap'
 
-export const getAllObjectRefs = (data: any, ref = ''): string[] => {
-  const result = [];
+export const getAllObjectRefs = (data: any, ref = '') => {
+  const result: string[] = []
   if (data && typeof data === 'object') {
     for (const key in data) {
       if (Object.prototype.hasOwnProperty.call(data, key)) {
-        const value = data[key];
-        const currentRef = ref ? ref + '.' + key.toString() : key.toString();
-        result.push(currentRef);
-        result.push(...getAllObjectRefs(value, currentRef));
+        const value = data[key]
+        const currentRef = ref ? ref + '.' + key.toString() : key.toString()
+        result.push(currentRef)
+        result.push(...getAllObjectRefs(value, currentRef))
       }
     }
   }
-  return result;
-};
+  return result
+}
 
 /**
  * 得到 data 所有的 keyref，并根据 keyref 获得所有同名 id 的元素
@@ -26,13 +26,13 @@ export const getAllObjectRefs = (data: any, ref = ''): string[] => {
  * @returns
  */
 export const getKeysAndIds = (data: any) => {
-  const allRefs = getAllObjectRefs(data);
-  const allElements: (Element | null)[] = [];
+  const allRefs = getAllObjectRefs(data)
+  const allElements: (Element | null)[] = []
   allRefs.forEach((ref) => {
-    allElements.push(document.getElementById(ref));
-  });
-  return [allRefs, allElements] as [string[], (Element | null)[]];
-};
+    allElements.push(document.getElementById(ref))
+  })
+  return [allRefs, allElements] as [string[], (Element | null)[]]
+}
 
 /**
  * 通过 data 所有的 keyref 数量和 id 数量比较，得出几个 key 被隐藏了。
@@ -40,9 +40,9 @@ export const getKeysAndIds = (data: any) => {
  * @returns
  */
 export const countNullId = (data: any) => {
-  const [, allElements] = getKeysAndIds(data);
-  return allElements.filter((element) => !element).length;
-};
+  const [, allElements] = getKeysAndIds(data)
+  return allElements.filter((element) => !element).length
+}
 
 /**
  * 不需要组件的情况下构造 ctx，便于测试
@@ -62,9 +62,9 @@ export const mockCtx = (
   ajvInstance?: Ajv,
   id?: string,
   componentMap?: IComponentMap,
-  viewsMap?: Record<string, IViewsMap>,
+  viewsMap?: Record<string, IViewsMap>
 ) => {
-  const interaction = new CpuInteraction(() => {});
+  const interaction = new CpuInteraction(() => {})
   return new CpuEditorContext(
     data,
     schema,
@@ -72,6 +72,6 @@ export const mockCtx = (
     id,
     interaction,
     componentMap ?? MockComponentMap,
-    viewsMap ?? {},
-  );
-};
+    viewsMap ?? {}
+  )
+}

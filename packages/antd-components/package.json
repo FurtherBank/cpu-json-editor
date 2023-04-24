@@ -17,7 +17,8 @@
     "prepublishOnly": "father doctor && npm run build"
   },
   "dependencies": {
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "react-selectable-fast": "^3.4.0"
   },
   "devDependencies": {
     "@ant-design/icons": "4",
@@ -26,7 +27,8 @@
     "@cpu-json-editor/test-examples": "workspace:^0.0.1",
     "@types/lodash": "^4.14.194",
     "antd": "4",
-    "father": "^4.1.8"
+    "father": "^4.1.8",
+    "moment": "^2.29.4"
   },
   "peerDependencies": {
     "@cpu-json-editor/core": "^0.1.0"

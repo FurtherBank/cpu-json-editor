@@ -17,6 +17,11 @@
     "prepublishOnly": "father doctor && npm run build"
   },
   "devDependencies": {
+    "@ant-design/icons": "4",
+    "@cpu-json-editor/common-test-utils": "workspace:^0.0.1",
+    "@cpu-json-editor/core": "workspace:^0.1.0",
+    "@cpu-json-editor/test-examples": "workspace:^0.0.1",
+    "antd": "4",
     "father": "^4.1.8"
   },
   "peerDependencies": {

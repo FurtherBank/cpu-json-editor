@@ -16,11 +16,14 @@
     "dev": "father dev",
     "prepublishOnly": "father doctor && npm run build"
   },
+  "dependencies": {
+    "antd": "4"
+  },
   "devDependencies": {
     "father": "^4.1.9"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "restricted"
   },
   "authors": [
     "1293874885@qq.com"

@@ -1,5 +1,6 @@
+import { getExample } from '@cpu-json-editor/common-test-utils/src';
 import '@testing-library/jest-dom';
-import { getExample, mockCtx } from '../test-utils';
+import { mockCtx } from '../test-utils';
 
 it('partial validate errors ok', () => {
   const [data, schema] = getExample('一系列测试');

@@ -1,9 +1,9 @@
+import { getExample } from '@cpu-json-editor/common-test-utils/src';
+import { MockRender } from '@cpu-json-editor/common-test-utils/src/MockComponent';
 import CpuEditorContext from '@cpu-json-editor/core/dist/esm/context';
 import JsonSchemaEditor, {
   EditorProps,
 } from '@cpu-json-editor/core/dist/esm/JsonSchemaEditor';
-import { getExample } from '@cpu-json-editor/core/dist/esm/__test__/test-utils';
-import { MockRender } from '@cpu-json-editor/core/dist/esm/__test__/test-utils/MockComponent';
 import { act, fireEvent } from '@testing-library/react';
 import { antdComponentMap, antdViewsMap } from '../src';
 

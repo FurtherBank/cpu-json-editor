@@ -1,7 +1,7 @@
+import { getExample } from '@cpu-json-editor/common-test-utils/src';
+import { MockRender } from '@cpu-json-editor/common-test-utils/src/MockComponent';
 import JsonSchemaEditor from '@cpu-json-editor/core/dist/esm';
 import CpuEditorContext from '@cpu-json-editor/core/dist/esm/context';
-import { getExample } from '@cpu-json-editor/core/dist/esm/__test__/test-utils';
-import { MockRender } from '@cpu-json-editor/core/dist/esm/__test__/test-utils/MockComponent';
 import { act, fireEvent, screen } from '@testing-library/react';
 import React, {
   forwardRef,

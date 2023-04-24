@@ -15,10 +15,13 @@ import React, {
 import { Button, Card, message, PageHeader } from 'antd'; // 用 antd 封装demo
 import MonacoEditor from 'react-monaco-editor/lib/editor';
 
-import { antdComponentMap, antdViewsMap } from '@cpu-studio/antd-components';
-import JsonSchemaEditor from '@cpu-studio/json-editor';
+import {
+  antdComponentMap,
+  antdViewsMap,
+} from '@cpu-json-editor/antd-components';
+import JsonSchemaEditor from '@cpu-json-editor/core';
+import examples from '@cpu-json-editor/test-examples/src';
 import CpuEditorContext from '../context';
-import examples from './examples';
 import { useCooldown } from './hooks';
 import ModalSelect from './ModalSelect';
 

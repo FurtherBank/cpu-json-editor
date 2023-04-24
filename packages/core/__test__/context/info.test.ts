@@ -1,6 +1,7 @@
+import { getExample } from '@cpu-json-editor/common-test-utils/src';
 import _ from 'lodash';
 import { isShort } from '../../src/context/virtual';
-import { getExample, mockCtx } from '../test-utils';
+import { mockCtx } from '../test-utils';
 
 test('parse ok', () => {
   const [data, schema] = getExample('简单示例');

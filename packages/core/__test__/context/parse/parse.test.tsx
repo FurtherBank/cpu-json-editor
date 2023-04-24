@@ -1,10 +1,11 @@
+import { getExample } from '@cpu-json-editor/common-test-utils/src';
+import { MockRender } from '@cpu-json-editor/common-test-utils/src/MockComponent';
 import '@testing-library/jest-dom';
 import CpuEditorContext from '../../../src/context';
 import { MergedSchema } from '../../../src/context/mergeSchema';
 import JsonSchemaEditor, { EditorProps } from '../../../src/JsonSchemaEditor';
-import { getExample, mockCtx } from '../../test-utils';
+import { mockCtx } from '../../test-utils';
 import { MockComponentMap } from '../../test-utils/componentMap';
-import { MockRender } from '../../test-utils/MockComponent';
 
 it('use alternative rules correctly', () => {
   const [data, schema] = getExample('替代法则测试');

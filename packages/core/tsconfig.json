@@ -1,3 +1,4 @@
+// @cpu-json-editor/core
 {
   "compilerOptions": {
     "target": "esnext",

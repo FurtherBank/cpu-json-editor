@@ -1,5 +1,5 @@
+import { getExample } from '@cpu-json-editor/common-test-utils/src';
 import ajvInstance from '../../src/definition/ajvInstance';
-import { getExample } from '../test-utils';
 
 test('draft4 support', () => {
   expect(true).toBeTruthy();

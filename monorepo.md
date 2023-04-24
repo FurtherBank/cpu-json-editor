@@ -36,6 +36,25 @@ pnpm add liba -w
 
 ## ts 引用
 
+开发组件库的情况下，用户一般会从你的打包产物`dist/esm`目录中引用，但是在开发过程中，它不会打包，而是要引用源代码`src`。
+
+以`docs`引用`liba`为例，所以应该在`docs/tsconfig.json`加入以下配置：
+
+```json
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "liba/dist/esm": ["./node_modules/liba/src"],
+      "liba/dist/esm/*": ["./node_modules/liba/src/*", "*"],
+    },
+  },
+
+```
+
+注意事项：
+
+1. 先把包安装好。不然没有。
+
 ## 参考文献
 
 讲 changeset 发布 npm 包：[https://github.com/DavidWells/pnpm-workspaces-example](https://github.com/DavidWells/pnpm-workspaces-example)

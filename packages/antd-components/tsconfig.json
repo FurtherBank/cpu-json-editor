@@ -1,3 +1,4 @@
+// @cpu-json-editor/antd-components
 {
   "compilerOptions": {
     "target": "esnext",
@@ -9,7 +10,17 @@
     "strict": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "declaration": true
+    "declaration": true,
+    "baseUrl": ".",
+    "paths": {
+      "@cpu-json-editor/core/dist/esm": [
+        "./node_modules/@cpu-json-editor/core/src"
+      ],
+      "@cpu-json-editor/core/dist/esm/*": [
+        "./node_modules/@cpu-json-editor/core/src/*",
+        "*"
+      ]
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["demos/**", "jest.config.ts", "__test__/**"]

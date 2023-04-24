@@ -1,7 +1,8 @@
+import { getExample } from '@cpu-json-editor/common-test-utils/src';
 import { renderHook } from '@testing-library/react-hooks';
 import { useObjectCreator } from '../../../src/components/hooks/useObjectCreator';
 import { CpuEditorAction } from '../../../src/definition/reducer';
-import { getExample, mockCtx } from '../../test-utils';
+import { mockCtx } from '../../test-utils';
 
 describe('useObjectCreator: get correct return value', () => {
   const [data, schema] = getExample('一系列测试');

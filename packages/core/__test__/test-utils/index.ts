@@ -3,7 +3,6 @@ import { IComponentMap, IViewsMap } from '../../src/components/ComponentMap';
 import CpuEditorContext from '../../src/context';
 import { CpuInteraction } from '../../src/context/interaction';
 import defaultAjvInstance from '../../src/definition/ajvInstance';
-import examples from '../../src/demos/examples';
 import { MockComponentMap } from './componentMap';
 
 export const getAllObjectRefs = (data: any, ref = ''): string[] => {
@@ -43,10 +42,6 @@ export const getKeysAndIds = (data: any) => {
 export const countNullId = (data: any) => {
   const [, allElements] = getKeysAndIds(data);
   return allElements.filter((element) => !element).length;
-};
-
-export const getExample = (name: string) => {
-  return examples.plainData[name] || [0, {}];
 };
 
 /**

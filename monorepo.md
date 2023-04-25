@@ -38,6 +38,12 @@ pnpm add liba -w
 
 开发组件库的情况下，用户一般会从你的打包产物`dist/esm`目录中引用，但是在开发过程中，它不会打包，而是要引用源代码`src`。
 
+这一点在本项目中要做三处配置：
+
+- `tsconfig.json`：ts 导入
+- `.dumirc.ts`：dumi 导入
+- `jest.config.ts`：jest 测试导入
+
 以`docs`引用`liba`为例，所以应该在`docs/tsconfig.json`加入以下配置：
 
 ```json
@@ -55,6 +61,7 @@ pnpm add liba -w
 
 1. 先把包安装好。不然没有。
 2. 必须是`include`范围内的文件才能应用`paths`的路径映射，不在其中的文件，如`__test__`等，必须导入开发时原本`src`的文件名。但也因为这部分代码进不了生产，所以也行。但总是感觉不太对劲。
+3. 需要
 
 ## 参考文献
 

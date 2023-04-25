@@ -14,15 +14,10 @@
     "baseUrl": ".",
     "paths": {
       "@cpu-json-editor/core": ["./node_modules/@cpu-json-editor/core/src"],
-      "@cpu-json-editor/core/dist/esm": [
-        "./node_modules/@cpu-json-editor/core/src"
-      ],
-      "@cpu-json-editor/core/dist/esm/*": [
-        "./node_modules/@cpu-json-editor/core/src/*",
-        "*"
-      ]
+      "@cpu-json-editor/core/dist/esm": ["./node_modules/@cpu-json-editor/core/src"],
+      "@cpu-json-editor/core/dist/esm/*": ["./node_modules/@cpu-json-editor/core/src/*", "*"]
     }
   },
-  "include": ["src/**/*", "../docs/src/App.tsx"],
-  "exclude": ["src/demos/**", "jest.config.ts", "__test__/**"]
+  "include": ["src/**/*"],
+  "exclude": ["jest.config.ts", "__test__/**/*"]
 }

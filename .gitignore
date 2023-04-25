@@ -3,7 +3,18 @@ node_modules
 .dumi/tmp
 .dumi/tmp-test
 .dumi/tmp-production
+
 .DS_Store
+
+# umi & test
 /src/.umi
 /src/.umi-production
 /src/.umi-test
+.umi-test
+/coverage
+
+# playwright
+/test-results
+/playwright-report
+/playwright/.cache
+

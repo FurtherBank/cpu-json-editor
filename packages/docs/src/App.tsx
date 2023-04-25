@@ -49,6 +49,20 @@ export default () => {
     setIsModalVisible(false)
   }
 
+  const handleDataTextChange = useCallback(
+    (text: string) => {
+      setDataText(text)
+    },
+    [setDataText]
+  )
+
+  const handleSchemaTextChange = useCallback(
+    (text: string) => {
+      setSchemaText(text)
+    },
+    [setSchemaText]
+  )
+
   // 自动保存
   // 注：开发模式会渲染两次，这里就会保存两遍。生产模式没事
   const save = useCooldown(
@@ -173,6 +187,7 @@ export default () => {
               language="json"
               theme="vs"
               value={dataText}
+              onChange={handleDataTextChange}
               options={{
                 automaticLayout: true,
                 formatOnPaste: true,
@@ -194,6 +209,7 @@ export default () => {
               language="json"
               theme="vs"
               value={schemaText}
+              onChange={handleSchemaTextChange}
               options={{
                 automaticLayout: true,
                 formatOnPaste: true,

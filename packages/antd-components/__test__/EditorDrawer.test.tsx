@@ -3,11 +3,12 @@ import { MockRender } from '@cpu-json-editor/common-test-utils/src/MockComponent
 import CpuEditorContext from '@cpu-json-editor/core/src/context'
 import JsonSchemaEditor, { EditorProps } from '@cpu-json-editor/core/src/JsonSchemaEditor'
 import { act, fireEvent } from '@testing-library/react'
+import { ConfigProviderProps } from 'antd/lib/config-provider'
 import { antdComponentMap, antdViewsMap } from '../src'
 
 it('not render field while not visible', async () => {
   const [data, schema] = getExample('一系列测试')
-  const editorProps: EditorProps = {
+  const editorProps: EditorProps<ConfigProviderProps> = {
     data,
     schema,
     componentMap: antdComponentMap,

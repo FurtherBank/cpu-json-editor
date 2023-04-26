@@ -1,41 +1,34 @@
-import merge from 'lodash/merge';
-import { ComponentType } from 'react';
-import { JSONSchema } from '../type/Schema';
-import { ContainerProps, EditionProps, MenuActionProps } from './type/props';
+import merge from 'lodash/merge'
+import { ComponentType } from 'react'
+import { JSONSchema } from '../type/Schema'
+import { ContainerProps, EditionProps, MenuActionProps } from './type/props'
 
-export type CpuEditionType =
-  | 'object'
-  | 'array'
-  | 'string'
-  | 'number'
-  | 'boolean'
-  | 'null'
-  | 'enum'
-  | 'const';
+export type CpuEditionType = 'object' | 'array' | 'string' | 'number' | 'boolean' | 'null' | 'enum' | 'const'
 /**
  * 编辑器使用的所有组件的 map。
  *
  * 根据对应的组件角色索引到对应使用的组件。
  */
-export interface IComponentMap {
-  containerNormal: ComponentType<ContainerProps>;
-  containerShort: ComponentType<ContainerProps>;
-  title: ComponentType<EditionProps>;
-  menuAction: ComponentType<MenuActionProps>;
-  operation: Record<string, ComponentType<any>>;
-  format: Record<string, ComponentType<any>>;
-  edition: Record<CpuEditionType, ComponentType<EditionProps>>;
-  drawer: ComponentType<any>;
-  schemaErrorLogger: ComponentType<any>;
+export interface IComponentMap<T = Record<string, never>> {
+  containerNormal: ComponentType<ContainerProps>
+  containerShort: ComponentType<ContainerProps>
+  title: ComponentType<EditionProps>
+  menuAction: ComponentType<MenuActionProps>
+  operation: Record<string, ComponentType<any>>
+  format: Record<string, ComponentType<any>>
+  edition: Record<CpuEditionType, ComponentType<EditionProps>>
+  drawer: ComponentType<any>
+  schemaErrorLogger: ComponentType<any>
+  globalProvider: ComponentType<T>
 }
 
 type PartialIComponentMap = Partial<
   {
-    operation: Partial<Record<string, ComponentType<any>>>;
-    format: Partial<Record<string, ComponentType<any>>>;
-    edition: Partial<Record<CpuEditionType, ComponentType<EditionProps>>>;
-  } & Omit<IComponentMap, 'operation' | 'format' | 'edition'>
->;
+    operation: Partial<Record<string, ComponentType<any>>>
+    format: Partial<Record<string, ComponentType<any>>>
+    edition: Partial<Record<CpuEditionType, ComponentType<EditionProps>>>
+  } & Omit<IComponentMap, 'operation' | 'format' | 'edition' | 'globalProvider'>
+>
 
 export interface IViewsMap extends PartialIComponentMap {
   /**
@@ -45,7 +38,7 @@ export interface IViewsMap extends PartialIComponentMap {
    *
    * 如果您需要对不同的组件设置不同的`shortable`值，可以使用不同的`viewType`
    */
-  shortable: boolean;
+  shortable: boolean
   /**
    * 使用该自定义 view 的字段参数的 schema。
    *
@@ -53,7 +46,7 @@ export interface IViewsMap extends PartialIComponentMap {
    *
    * 注：该字段仅供对外声明使用，为提高性能，并不对传入的参数进行校验。
    */
-  paramSchema?: JSONSchema;
+  paramSchema?: JSONSchema
 }
 
 /**
@@ -67,7 +60,7 @@ export class ComponentMap {
    */
   static merge<T extends IComponentMap | IViewsMap>(...maps: T[]) {
     return maps.reduce((resultMap, newMap) => {
-      return merge(resultMap, newMap);
-    });
+      return merge(resultMap, newMap)
+    })
   }
 }

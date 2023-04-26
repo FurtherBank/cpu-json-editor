@@ -21,7 +21,7 @@ it('do not parse when components not used', () => {
   const [data, schema] = getExample('view: list')
   // const { asFragment } =
 
-  const editorProps: EditorProps = {
+  const editorProps: EditorProps<any> = {
     data,
     schema,
     componentMap: MockComponentMap

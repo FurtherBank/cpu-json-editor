@@ -6,6 +6,7 @@ import { EditorProps } from '@cpu-json-editor/core/src/JsonSchemaEditor'
 import { JSONSchema } from '@cpu-json-editor/core/src/type/Schema'
 import '@testing-library/jest-dom'
 import { render } from '@testing-library/react'
+import { ConfigProviderProps } from 'antd/lib/config-provider'
 import React from 'react'
 import { antdComponentMap, antdViewsMap } from '../../src'
 
@@ -70,7 +71,7 @@ test('parse in need', () => {
   const [data, schema] = getExample('view: list')
   // const { asFragment } =
 
-  const editorProps: EditorProps = {
+  const editorProps: EditorProps<ConfigProviderProps> = {
     data,
     schema,
     componentMap: antdComponentMap,

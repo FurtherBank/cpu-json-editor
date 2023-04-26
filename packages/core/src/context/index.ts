@@ -1,27 +1,27 @@
-import Ajv from 'ajv/dist/core';
-import { ComponentType } from 'react';
-import { AnyAction, createStore, Dispatch, Store } from 'redux';
-import { StateWithHistory } from 'redux-undo';
-import { v4 as uuidv4 } from 'uuid';
-import { IComponentMap, IViewsMap } from '../components/ComponentMap';
+import Ajv from 'ajv/dist/core'
+import { ComponentType } from 'react'
+import { AnyAction, createStore, Dispatch, Store } from 'redux'
+import { StateWithHistory } from 'redux-undo'
+import { v4 as uuidv4 } from 'uuid'
+import { IComponentMap, IViewsMap } from '../components/ComponentMap'
 import {
   CpuEditorActionDispatcher,
   CpuEditorActionOption,
   CpuEditorState,
   doAction,
-  getReducer,
-} from '../definition/reducer';
-import Field from '../Field';
-import { JSONSchema } from '../type/Schema';
-import { deepGet } from '../utils';
-import { getRefSchemaMap } from '../utils/schemaWithRef';
-import { CpuInteraction } from './interaction';
-import { MergedSchema, mergeSchemaMap } from './mergeSchema';
-import { ofSchemaCache, setOfInfo } from './ofInfo';
+  getReducer
+} from '../definition/reducer'
+import Field from '../Field'
+import { JSONSchema } from '../type/Schema'
+import { deepGet } from '../utils'
+import { getRefSchemaMap } from '../utils/schemaWithRef'
+import { CpuInteraction } from './interaction'
+import { MergedSchema, mergeSchemaMap } from './mergeSchema'
+import { ofSchemaCache, setOfInfo } from './ofInfo'
 
 export interface SchemaArrayRefInfo {
-  ref: string;
-  length: number;
+  ref: string
+  length: number
 }
 
 /**
@@ -31,32 +31,32 @@ export interface SchemaArrayRefInfo {
  * 在编辑器`schema`变更时重新初始化
  */
 export default class CpuEditorContext {
-  Field = Field;
+  Field = Field
   /**
    * 获取 store 中目前的 data
    * @returns
    */
   getNowData = () => {
-    return this.store.getState().present.data;
-  };
-  rootSchema: JSONSchema | false;
-  schemaId: string;
-  schemaError: any;
-  store: Store<StateWithHistory<CpuEditorState>, AnyAction>;
-  basicModelMap: Map<string, any> | any;
-  mergedSchemaMap: Map<string, MergedSchema | false>;
+    return this.store.getState().present.data
+  }
+  rootSchema: JSONSchema | false
+  schemaId: string
+  schemaError: any
+  store: Store<StateWithHistory<CpuEditorState>, AnyAction>
+  basicModelMap: Map<string, any> | any
+  mergedSchemaMap: Map<string, MergedSchema | false>
   /**
    * schemaInfo 是 schema 信息的需要对子层进行归纳的部分。
    * 将 schemaInfo 和 mergedSchema 分开，是为了编辑器可以按需创建这些信息。
    */
-  ofInfoMap: Map<string, ofSchemaCache | null>;
+  ofInfoMap: Map<string, ofSchemaCache | null>
   /**
    * 已加载资源的缓存列表，通过`url`为键索引。
    */
-  resourceMap: Map<string, any>;
+  resourceMap: Map<string, any>
 
-  dispatch: Dispatch<AnyAction>;
-  private createAction: CpuEditorActionDispatcher;
+  dispatch: Dispatch<AnyAction>
+  private createAction: CpuEditorActionDispatcher
 
   constructor(
     data: any,
@@ -64,7 +64,7 @@ export default class CpuEditorContext {
     public ajvInstance: Ajv,
     public domId: string | undefined,
     public interaction: CpuInteraction,
-    public readonly componentMap: IComponentMap,
+    public readonly componentMap: IComponentMap<any>,
     /**
      * 自定义 view 的组件列表，通过`view.type`索引到 componentMap；
      *
@@ -72,44 +72,41 @@ export default class CpuEditorContext {
      *
      * 如果在 schema 中限定了`view.type`，但没有在对应的 componentMap 找到组件，将使用对应的默认组件代替。
      */
-    public readonly viewsMap: Record<string, IViewsMap>,
+    public readonly viewsMap: Record<string, IViewsMap>
   ) {
     // 1. 注册 schema，并设立 id
     try {
-      const realSchema =
-        schema === true ? {} : schema ? schema : schema === false ? false : {};
-      const idInSchema = realSchema
-        ? realSchema.$id || realSchema.id
-        : undefined;
-      this.schemaId = idInSchema || uuidv4();
-      ajvInstance.addSchema(realSchema, this.schemaId);
-      this.rootSchema = realSchema;
+      const realSchema = schema === true ? {} : schema ? schema : schema === false ? false : {}
+      const idInSchema = realSchema ? realSchema.$id || realSchema.id : undefined
+      this.schemaId = idInSchema || uuidv4()
+      ajvInstance.addSchema(realSchema, this.schemaId)
+      this.rootSchema = realSchema
     } catch (error) {
-      this.schemaError = error;
+      this.schemaError = error
       // 出错了，注册一个空 schema
-      this.schemaId = uuidv4();
-      this.rootSchema = {};
-      ajvInstance.addSchema(this.rootSchema, this.schemaId);
+      this.schemaId = uuidv4()
+      this.rootSchema = {}
+      ajvInstance.addSchema(this.rootSchema, this.schemaId)
     }
 
     // 2. 初始化 store，拿到 dispatch
     const initialState: CpuEditorState = {
       data: data,
-      dataErrors: {},
-    };
+      dataErrors: {}
+    }
 
     this.store = createStore(getReducer(this), {
       past: [],
       present: initialState,
-      future: [],
-    });
+      future: []
+    })
 
-    this.dispatch = this.store.dispatch;
-    this.createAction = doAction;
+    this.dispatch = this.store.dispatch
+    this.createAction = doAction
     // 3. 初始化各种 map
-    this.mergedSchemaMap = new Map();
-    this.ofInfoMap = new Map();
-    this.resourceMap = new Map();
+    this.mergedSchemaMap = new Map()
+    this.ofInfoMap = new Map()
+    this.resourceMap = new Map()
   }
 
   /**
@@ -119,9 +116,9 @@ export default class CpuEditorContext {
    * @returns
    */
   executeAction(type: string, options: CpuEditorActionOption = {}) {
-    const action = this.createAction(type, options);
-    this.dispatch(action);
-    return action;
+    const action = this.createAction(type, options)
+    this.dispatch(action)
+    return action
   }
 
   /**
@@ -131,10 +128,8 @@ export default class CpuEditorContext {
    * @returns
    */
   getMergedSchema(ref: string | undefined) {
-    if (this.rootSchema === false || !ref) return false;
-    return this.mergedSchemaMap.has(ref)
-      ? this.mergedSchemaMap.get(ref)!
-      : this.makeMergedSchema(ref);
+    if (this.rootSchema === false || !ref) return false
+    return this.mergedSchemaMap.has(ref) ? this.mergedSchemaMap.get(ref)! : this.makeMergedSchema(ref)
   }
 
   /**
@@ -144,10 +139,8 @@ export default class CpuEditorContext {
    * @returns
    */
   getOfInfo(ref: string | undefined) {
-    if (this.rootSchema === false || !ref) return null;
-    return this.ofInfoMap.has(ref)
-      ? this.ofInfoMap.get(ref)!
-      : setOfInfo(this, ref, this.rootSchema);
+    if (this.rootSchema === false || !ref) return null
+    return this.ofInfoMap.has(ref) ? this.ofInfoMap.get(ref)! : setOfInfo(this, ref, this.rootSchema)
   }
 
   /**
@@ -158,23 +151,18 @@ export default class CpuEditorContext {
    * @param rolePath 组件角色路径
    * @returns
    */
-  getComponent(
-    view: string | null = null,
-    rolePath: string | string[],
-  ): ComponentType<any> {
-    const componentPath = typeof rolePath === 'string' ? [rolePath] : rolePath;
+  getComponent(view: string | null = null, rolePath: string | string[]): ComponentType<any> {
+    const componentPath = typeof rolePath === 'string' ? [rolePath] : rolePath
     if (view) {
-      const result = deepGet(this.viewsMap[view] || {}, componentPath);
+      const result = deepGet(this.viewsMap[view] || {}, componentPath)
 
-      if (result) return result;
+      if (result) return result
     }
-    const result = deepGet(this.componentMap, componentPath);
+    const result = deepGet(this.componentMap, componentPath)
     if (result) {
-      return result;
+      return result
     } else {
-      throw new Error(
-        `The component of ${componentPath} not exist in component map`,
-      );
+      throw new Error(`The component of ${componentPath} not exist in component map`)
     }
   }
 
@@ -186,28 +174,25 @@ export default class CpuEditorContext {
    * @param format
    * @returns
    */
-  getFormatComponent(
-    view: string | null = null,
-    format: string,
-  ): ComponentType<any> {
-    const componentPath = ['format', format];
+  getFormatComponent(view: string | null = null, format: string): ComponentType<any> {
+    const componentPath = ['format', format]
     if (view) {
-      const result = deepGet(this.viewsMap, componentPath);
-      if (result) return result;
+      const result = deepGet(this.viewsMap, componentPath)
+      if (result) return result
     }
-    const result = deepGet(this.componentMap, componentPath);
+    const result = deepGet(this.componentMap, componentPath)
     if (result) {
-      return result;
+      return result
     } else {
-      return this.getComponent(view, ['edition', 'string']);
+      return this.getComponent(view, ['edition', 'string'])
     }
   }
 
   private makeMergedSchema(ref: string) {
-    if (typeof this.rootSchema === 'boolean') return false;
-    const map = getRefSchemaMap(ref, this.rootSchema);
-    const mergedSchema = mergeSchemaMap(this, map);
-    this.mergedSchemaMap.set(ref, mergedSchema);
-    return mergedSchema;
+    if (typeof this.rootSchema === 'boolean') return false
+    const map = getRefSchemaMap(ref, this.rootSchema)
+    const mergedSchema = mergeSchemaMap(this, map)
+    this.mergedSchemaMap.set(ref, mergedSchema)
+    return mergedSchema
   }
 }

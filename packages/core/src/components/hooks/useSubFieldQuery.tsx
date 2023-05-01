@@ -1,11 +1,13 @@
-import React, { useCallback } from 'react';
-import { ShortLevel } from '../../definition';
-import { IField } from '../../Field';
-import { getFieldSchema } from '../../utils/schemaWithRef';
-import { FatherInfo } from '../type/list';
+import React, { useCallback } from 'react'
+import CpuEditorContext from '../../context'
+import { ShortLevel } from '../../definition'
+import { IField } from '../../Field'
+import { getFieldSchema } from '../../utils/schemaWithRef'
+import { FatherInfo } from '../type/list'
 
 /**
  * [业务]返回一个函数，传入 key 和 shortLevel 可以取得 subField 的 Field 组件
+ * @param ctx
  * @param data
  * @param access
  * @param fieldInfo
@@ -14,18 +16,18 @@ import { FatherInfo } from '../type/list';
  * @returns
  */
 export const useSubFieldQuery = (
+  ctx: CpuEditorContext,
   data: Record<string, any> | any[],
   access: string[],
   fieldInfo: IField,
   fatherInfo: FatherInfo,
-  viewport: string,
+  viewport: string
 ) => {
-  const { ctx, mergedValueSchema, valueEntry } = fieldInfo;
+  const { mergedValueSchema, valueEntry } = fieldInfo
   return useCallback(
     (key: string, short: ShortLevel) => {
-      const subEntry =
-        getFieldSchema(data, valueEntry, mergedValueSchema, key) || undefined;
-      const Field = ctx.Field;
+      const subEntry = getFieldSchema(data, valueEntry, mergedValueSchema, key) || undefined
+      const Field = ctx.Field
       return (
         <Field
           viewport={viewport}
@@ -35,8 +37,8 @@ export const useSubFieldQuery = (
           schemaEntry={subEntry}
           short={short}
         />
-      );
+      )
     },
-    [data, access, valueEntry, fieldInfo, fatherInfo, ctx],
-  );
-};
+    [data, access, valueEntry, fieldInfo, fatherInfo, ctx]
+  )
+}

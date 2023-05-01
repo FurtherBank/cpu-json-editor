@@ -17,9 +17,11 @@
     "prepublishOnly": "father doctor && npm run build"
   },
   "dependencies": {
+    "@cpu-json-editor/antd-components": "workspace:^0.1.0",
     "ajv": "^8.12.0",
     "ajv-formats": "^2.1.1",
     "ajv-i18n": "^4.2.0",
+    "eventemitter3": "^5.0.1",
     "immer": "^10.0.1",
     "json-pointer": "^0.6.2",
     "lodash": "^4.17.21",

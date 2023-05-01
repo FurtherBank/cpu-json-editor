@@ -1,37 +1,23 @@
-import { useSubFieldQuery } from '@cpu-json-editor/core/dist/esm/components/hooks/useSubFieldQuery';
-import {
-  ChildData,
-  EmptyChildData,
-  ListDisplayPanelProps,
-} from '@cpu-json-editor/core/dist/esm/components/type/list';
-import { ShortLevel } from '@cpu-json-editor/core/dist/esm/definition';
-import { List } from 'antd';
-import React from 'react';
-import { gridOption } from '../config';
-import { CreateName } from './creator';
+import { useSubFieldQuery } from '@cpu-json-editor/core/dist/esm/components/hooks/useSubFieldQuery'
+import { ChildData, EmptyChildData, ListDisplayPanelProps } from '@cpu-json-editor/core/dist/esm/components/type/list'
+import { ShortLevel } from '@cpu-json-editor/core/dist/esm/definition'
+import { List } from 'antd'
+import React from 'react'
+import { gridOption } from '../config'
+import { CreateName } from './creator'
 
 export const ListDisplayPanel = (props: ListDisplayPanelProps) => {
-  const { viewport, data, access, fieldInfo, fatherInfo, lists } = props;
-  const { schemaEntry } = fatherInfo;
-  const { ctx, mergedValueSchema } = fieldInfo;
+  const { viewport, data, access, fieldInfo, fatherInfo, lists, ctx } = props
+  const { schemaEntry } = fatherInfo
+  const { mergedValueSchema } = fieldInfo
 
-  const getSubField = useSubFieldQuery(
-    data,
-    access,
-    fieldInfo,
-    fatherInfo,
-    viewport,
-  );
+  const getSubField = useSubFieldQuery(ctx, data, access, fieldInfo, fatherInfo, viewport)
 
   const renderItem = (shortLv: ShortLevel) => {
     return (item: ChildData | EmptyChildData) => {
       if (item.key !== '') {
-        const { key } = item;
-        return (
-          <List.Item key={'property-' + key}>
-            {getSubField(key, shortLv)}
-          </List.Item>
-        );
+        const { key } = item
+        return <List.Item key={'property-' + key}>{getSubField(key, shortLv)}</List.Item>
       } else {
         return (
           <List.Item key="end">
@@ -43,10 +29,10 @@ export const ListDisplayPanel = (props: ListDisplayPanelProps) => {
               schemaEntry={schemaEntry}
             />
           </List.Item>
-        );
+        )
       }
-    };
-  };
+    }
+  }
 
   // const keys = Object.keys(data)
   // // todo: 排查属性的 order 关键字并写入 cache，然后在这里排个序再 map
@@ -81,7 +67,7 @@ export const ListDisplayPanel = (props: ListDisplayPanelProps) => {
   return (
     <div>
       {lists.map((list, i) => {
-        const { items, short } = list;
+        const { items, short } = list
         return (
           <List
             key={i}
@@ -91,10 +77,10 @@ export const ListDisplayPanel = (props: ListDisplayPanelProps) => {
             grid={gridOption[short]}
             renderItem={renderItem(short)}
           />
-        );
+        )
       })}
     </div>
-  );
+  )
   // switch (1) {
   //   case 'list':
   //     return (
@@ -141,4 +127,4 @@ export const ListDisplayPanel = (props: ListDisplayPanelProps) => {
   //     )
   //   default:
   // }
-};
+}

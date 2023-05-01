@@ -1,34 +1,31 @@
-import { EditionProps } from '@cpu-json-editor/core/dist/esm/components/type/props';
-import React, { useCallback } from 'react';
-import { CInputNumber } from '../base/cacheInput';
+import { EditionProps } from '@cpu-json-editor/core/dist/esm/components/type/props'
+import React, { useCallback } from 'react'
+import { CInputNumber } from '../base/cacheInput'
 
 export const NumberEdition = (props: EditionProps) => {
   const {
-    route,
-    field,
-    schemaEntry,
-    fieldInfo: { ctx },
-  } = props;
-  const data = props.data as number;
+    fieldProps: { route, field, schemaEntry, data },
+    fieldInfo: { ctx }
+  } = props
 
   const handleValueChange = useCallback(
     (value: number) => {
-      ctx.executeAction('change', { schemaEntry, route, field, value });
+      ctx.executeAction('change', { schemaEntry, route, field, value })
     },
-    [ctx],
-  );
+    [ctx]
+  )
 
   return (
     <CInputNumber
       size="small"
       key="value"
-      value={data}
+      value={data as number}
       validate
       onValueChange={handleValueChange}
       onPressEnter={(e: any) => {
-        e.target.blur();
+        e.target.blur()
       }}
       style={{ flex: 1 }}
     />
-  );
-};
+  )
+}

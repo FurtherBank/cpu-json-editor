@@ -1,31 +1,27 @@
-import { EditionProps } from '@cpu-json-editor/core/dist/esm/components/type/props';
-import { toConstName } from '@cpu-json-editor/core/dist/esm/definition';
-import { Input, Select } from 'antd';
-import isEqual from 'lodash/isEqual';
-import React, { useCallback } from 'react';
+import { EditionProps } from '@cpu-json-editor/core/dist/esm/components/type/props'
+import { toConstName } from '@cpu-json-editor/core/dist/esm/definition'
+import { Input, Select } from 'antd'
+import isEqual from 'lodash/isEqual'
+import React, { useCallback } from 'react'
 
 export const EnumEdition = (props: EditionProps) => {
   const {
-    data,
-    route,
-    field,
-    fieldInfo: { ctx, mergedValueSchema },
-    schemaEntry,
-  } = props;
-  const { enum: enumValue = [] } = mergedValueSchema || {};
+    fieldProps: { data, route, schemaEntry, field },
+    fieldInfo: { ctx, mergedValueSchema }
+  } = props
+  const { enum: enumValue = [] } = mergedValueSchema || {}
 
   const handleValueChange = useCallback(
     (key: string) => {
-      const i = parseInt(key);
-      const value = enumValue[i];
+      const i = parseInt(key)
+      const value = enumValue[i]
 
-      if (value !== undefined)
-        ctx.executeAction('change', { schemaEntry, route, field, value });
+      if (value !== undefined) ctx.executeAction('change', { schemaEntry, route, field, value })
     },
-    [ctx],
-  );
+    [ctx]
+  )
 
-  const enumIndex = enumValue.findIndex((v) => isEqual(v, data));
+  const enumIndex = enumValue.findIndex((v) => isEqual(v, data))
 
   return (
     <Input.Group compact style={{ display: 'flex', flex: 1 }}>
@@ -35,8 +31,8 @@ export const EnumEdition = (props: EditionProps) => {
         options={enumValue.map((value: any, i: number) => {
           return {
             value: i,
-            label: toConstName(value),
-          };
+            label: toConstName(value)
+          }
         })}
         className="resolve-flex"
         style={{ flex: 1 }}
@@ -45,5 +41,5 @@ export const EnumEdition = (props: EditionProps) => {
         allowClear={false}
       />
     </Input.Group>
-  );
-};
+  )
+}

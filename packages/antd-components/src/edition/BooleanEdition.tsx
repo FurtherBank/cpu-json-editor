@@ -1,31 +1,21 @@
-import { EditionProps } from '@cpu-json-editor/core/dist/esm/components/type/props';
-import { Switch } from 'antd';
-import React, { useCallback } from 'react';
+import { EditionProps } from '@cpu-json-editor/core/dist/esm/components/type/props'
+import { Switch } from 'antd'
+import React, { useCallback } from 'react'
 
 export const BooleanEdition = (props: EditionProps) => {
   const {
-    route,
-    field,
-    data,
-    schemaEntry,
-    fieldInfo: { ctx },
-  } = props;
+    fieldProps: { route, field, data, schemaEntry },
+    fieldInfo: { ctx }
+  } = props
 
   const handleValueChange = useCallback(
     (value: any) => {
-      if (value !== undefined)
-        ctx.executeAction('change', { schemaEntry, route, field, value });
+      if (value !== undefined) ctx.executeAction('change', { schemaEntry, route, field, value })
     },
-    [ctx],
-  );
+    [ctx]
+  )
 
   return (
-    <Switch
-      checkedChildren="true"
-      unCheckedChildren="false"
-      checked={data}
-      onChange={handleValueChange}
-      size="small"
-    />
-  );
-};
+    <Switch checkedChildren="true" unCheckedChildren="false" checked={data} onChange={handleValueChange} size="small" />
+  )
+}

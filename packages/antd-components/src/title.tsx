@@ -1,48 +1,41 @@
-import { CloseCircleOutlined } from '@ant-design/icons';
-import { ShortLevel } from '@cpu-json-editor/core/dist/esm/definition';
-import {
-  canFieldRename,
-  isFieldRequired,
-} from '@cpu-json-editor/core/dist/esm/definition/schema';
-import { Tooltip } from 'antd';
-import React from 'react';
+import { CloseCircleOutlined } from '@ant-design/icons'
+import { ShortLevel } from '@cpu-json-editor/core/dist/esm/definition'
+import { canFieldRename, isFieldRequired } from '@cpu-json-editor/core/dist/esm/definition/schema'
+import { Tooltip } from 'antd'
+import React from 'react'
 
-import { CInput } from './base/cacheInput';
+import { CInput } from './base/cacheInput'
 
-import { EditionProps } from '@cpu-json-editor/core/dist/esm/components/type/props';
-import './css/title.less';
+import { EditionProps } from '@cpu-json-editor/core/dist/esm/components/type/props'
+import './css/title.less'
 
 const stopBubble = (e: React.SyntheticEvent) => {
-  e.stopPropagation();
-};
+  e.stopPropagation()
+}
 
 export const FieldTitle = (props: EditionProps) => {
-  const { route, field, short, canNotRename, fatherInfo, fieldInfo } = props;
-  const { errors, mergedEntrySchema, ctx } = fieldInfo;
-  const { schemaEntry: parentSchemaEntry } = fatherInfo ?? {};
-  const { description } = mergedEntrySchema || {};
+  const { fieldProps, ctx, fieldInfo } = props
+  const { route, field, short, canNotRename, fatherInfo } = fieldProps
+  const { errors, mergedEntrySchema } = fieldInfo
+  const { schemaEntry: parentSchemaEntry } = fatherInfo ?? {}
+  const { description } = mergedEntrySchema || {}
 
-  const fieldNameRange = canFieldRename(props, fieldInfo);
-  const titleName =
-    fieldNameRange === '' || fieldNameRange instanceof RegExp
-      ? field
-      : fieldNameRange;
+  const fieldNameRange = canFieldRename(fieldProps, fieldInfo)
+  const titleName = fieldNameRange === '' || fieldNameRange instanceof RegExp ? field : fieldNameRange
 
-  const isRequired = isFieldRequired(field, fatherInfo);
+  const isRequired = isFieldRequired(field, fatherInfo)
 
   const spaceStyle =
     short === ShortLevel.short
       ? {
-          width: '9.5em',
+          width: '9.5em'
         }
-      : {};
+      : {}
   return (
     <div onClick={stopBubble} style={spaceStyle} className="flex-center">
       {errors.length > 0 ? (
         <Tooltip
-          title={errors
-            .map((error: { message: string }) => error.message)
-            .join('\n')}
+          title={errors.map((error: { message: string }) => error.message).join('\n')}
           placement="topLeft"
           key="valid"
         >
@@ -50,7 +43,7 @@ export const FieldTitle = (props: EditionProps) => {
             style={{
               color: 'red',
               marginRight: '0.25em',
-              display: 'inline-block',
+              display: 'inline-block'
             }}
           />
         </Tooltip>
@@ -58,8 +51,7 @@ export const FieldTitle = (props: EditionProps) => {
 
       {short !== ShortLevel.extra ? (
         <Tooltip title={description} placement="topLeft" key="name">
-          {!canNotRename &&
-          (fieldNameRange === '' || fieldNameRange instanceof RegExp) ? (
+          {!canNotRename && (fieldNameRange === '' || fieldNameRange instanceof RegExp) ? (
             <CInput
               size="small"
               bordered={false}
@@ -67,20 +59,18 @@ export const FieldTitle = (props: EditionProps) => {
               title={field}
               value={field} // todo: validate the propertyName
               validate={(v) => {
-                return fieldNameRange instanceof RegExp
-                  ? fieldNameRange.test(v)
-                  : true;
+                return fieldNameRange instanceof RegExp ? fieldNameRange.test(v) : true
               }}
               onPressEnter={(e: any) => {
-                e.currentTarget.blur();
+                e.currentTarget.blur()
               }}
               onValueChange={(value) => {
                 ctx.executeAction('rename', {
                   route,
                   field,
                   value,
-                  schemaEntry: parentSchemaEntry,
-                });
+                  schemaEntry: parentSchemaEntry
+                })
               }}
             />
           ) : (
@@ -90,7 +80,7 @@ export const FieldTitle = (props: EditionProps) => {
                   style={{
                     color: 'orange',
                     width: '0.75em',
-                    display: 'inline-block',
+                    display: 'inline-block'
                   }}
                 >
                   *
@@ -102,5 +92,5 @@ export const FieldTitle = (props: EditionProps) => {
         </Tooltip>
       ) : null}
     </div>
-  );
-};
+  )
+}

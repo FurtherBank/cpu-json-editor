@@ -14,7 +14,7 @@ import { CpuEditorState } from './definition/reducer'
 import { canFieldDelete } from './definition/schema'
 import { InfoContext } from './JsonSchemaEditor'
 import { MenuActionType } from './menu/MenuActions'
-import { concatAccess, deepGet, jsonDataType } from './utils'
+import { concatAccess, deepGet, getFieldDomId, jsonDataType } from './utils'
 
 export interface FieldProps {
   viewport: string
@@ -36,6 +36,7 @@ export interface IField {
   mergedValueSchema: MergedSchema | false
   ofOption: string | false | null
   errors: any[]
+  id: string
 }
 
 /**
@@ -79,14 +80,14 @@ const menuActionSpace = (props: FieldProps, ctx: CpuEditorContext, fieldInfo: IF
 
   // 如果父亲是对象/数组，且属性可删除，加入删除功能
   if (fatherInfo && fatherInfo.type) {
-    if (canFieldDelete(props, fieldInfo)) result.push('delete')
+    if (canFieldDelete(ctx, props)) result.push('delete')
   }
 
   return result
 }
 
 const FieldBase = (props: FieldProps) => {
-  const { data, route, field, schemaEntry, short, fatherInfo } = props
+  const { data, route, field, schemaEntry, short, fatherInfo, viewport } = props
 
   const dataType = jsonDataType(data)
   const access = concatAccess(route, field)
@@ -122,7 +123,8 @@ const FieldBase = (props: FieldProps) => {
       valueEntry,
       mergedValueSchema,
       ofOption,
-      errors
+      errors,
+      id: getFieldDomId(viewport, access)
     }),
     [ofOption, errors, valueEntry, mergedValueSchema, mergedEntrySchema, ctx]
   )

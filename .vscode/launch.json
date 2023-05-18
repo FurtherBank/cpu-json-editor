@@ -5,10 +5,10 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "pwa-msedge",
+      "type": "msedge",
       "request": "launch",
       "name": "Launch Edge against localhost",
-      "url": "http://localhost:8000/#/~demos/jsonschemaeditor-app",
+      "url": "http://localhost:8000/#/~demos/packages-docs-src-json-schema-editor-demo-app",
       "webRoot": "${workspaceFolder}"
     },
     {

@@ -2,12 +2,18 @@ import { ReactNode } from 'react'
 import CpuEditorContext from '../../context'
 import { FieldProps, IField } from '../../Field'
 import { MenuActionType } from '../../menu/MenuActions'
+import { ComponentModel } from '../ComponentModel'
 
 export interface EditionProps {
   children?: ReactNode
   fieldInfo: IField
   fieldProps: FieldProps
   ctx: CpuEditorContext
+  model: ComponentModel
+}
+
+export interface TitleProps extends EditionProps {
+  fieldNameRange: string | RegExp
 }
 
 export interface FormatEditionProps extends EditionProps {
@@ -21,7 +27,7 @@ export type MenuActionHandlers = Record<MenuActionType, () => void>
  *
  * 相比普通容器组件，不会从属性中继承 菜单动作组件 和 选择操作组件。
  */
-export interface ContainerProps extends EditionProps {
+export interface ContainerProps extends Omit<EditionProps, 'model'> {
   availableMenuActions: MenuActionType[]
   menuActionHandlers: MenuActionHandlers
 }

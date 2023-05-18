@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import CpuEditorContext from '../../context'
+import { canFieldRename } from '../../definition/schema'
 import { FieldProps, IField } from '../../Field'
 import { concatAccess, getFieldDomId, jsonDataType } from '../../utils'
 import { ComponentModel } from '../ComponentModel'
@@ -22,9 +23,6 @@ export const useContainer = (ctx: CpuEditorContext, fieldProps: FieldProps, fiel
     view: { type: valueEntryViewType = undefined } = {}
   } = mergedValueSchema || {}
 
-  const titleRef = useRef()
-  const editionRef = useRef()
-
   const dataType = jsonDataType(data)
   const valueType = constValue !== undefined ? 'const' : enumValue !== undefined ? 'enum' : dataType
 
@@ -32,11 +30,12 @@ export const useContainer = (ctx: CpuEditorContext, fieldProps: FieldProps, fiel
   const { format } = mergedValueSchema || {}
 
   const { view: { type: schemaEntryViewType = null } = {} } = mergedEntrySchema || {}
+  const fieldNameRange = canFieldRename(ctx, fieldProps, fieldInfo)
 
   // 1. 设置标题组件
   const TitleComponent = ctx.getComponent(schemaEntryViewType, ['title'])
 
-  // 设置值组件
+  // 2. 设置值组件
   const EditionComponent =
     valueType === 'string' && format
       ? ctx.getFormatComponent(valueEntryViewType, format)
@@ -48,7 +47,7 @@ export const useContainer = (ctx: CpuEditorContext, fieldProps: FieldProps, fiel
     format
   } as const
 
-  const model = new ComponentModel(titleRef, editionRef)
+  const model = new ComponentModel()
 
   useEffect(() => {
     ctx.interaction.componentModelMap.set(id, model)
@@ -59,15 +58,21 @@ export const useContainer = (ctx: CpuEditorContext, fieldProps: FieldProps, fiel
 
   return {
     titleElement: (
-      <TitleComponent fieldProps={fieldProps} ctx={ctx} fieldInfo={fieldInfo} key={'title'} ref={titleRef} />
+      <TitleComponent
+        fieldNameRange={fieldNameRange}
+        fieldProps={fieldProps}
+        ctx={ctx}
+        fieldInfo={fieldInfo}
+        key={'title'}
+        model={model}
+      />
     ),
-    titleRef,
     editionElement: (
-      <EditionComponent fieldProps={fieldProps} ctx={ctx} fieldInfo={fieldInfo} key={'edition'} ref={editionRef} />
+      <EditionComponent fieldProps={fieldProps} ctx={ctx} fieldInfo={fieldInfo} key={'edition'} model={model} />
     ),
-    editionRef,
     editionInfo,
     model,
+    fieldNameRange,
     id
   }
 }

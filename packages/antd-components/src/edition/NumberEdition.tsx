@@ -1,11 +1,16 @@
 import { EditionProps } from '@cpu-json-editor/core/dist/esm/components/type/props'
-import React, { useCallback } from 'react'
+import { InputRef } from 'antd'
+import React, { useCallback, useMemo, useRef } from 'react'
 import { CInputNumber } from '../base/cacheInput'
+import { useDefaultInputKeyJump } from '../hooks/useDefaultInputKeyJump'
+import { useRoleModelAttach } from '../hooks/useRoleModelAttach'
 
 export const NumberEdition = (props: EditionProps) => {
   const {
-    fieldProps: { route, field, schemaEntry, data },
-    fieldInfo: { ctx }
+    ctx,
+    model,
+    fieldProps: { route, field, data, schemaEntry },
+    fieldInfo: { id }
   } = props
 
   const handleValueChange = useCallback(
@@ -15,17 +20,36 @@ export const NumberEdition = (props: EditionProps) => {
     [ctx]
   )
 
+  const handleKeyDown = useDefaultInputKeyJump(ctx, id, { supportedKeys: ['ArrowLeft', 'ArrowRight'] })
+
+  // 挂载 roleModel
+  const ref = useRef<InputRef>(null)
+  const content = useMemo(
+    () => ({
+      keyJumpFocus: () => {
+        if (ref.current) {
+          ref.current.select()
+        }
+      }
+    }),
+    []
+  )
+  useRoleModelAttach(model, content, 'edition')
+
   return (
     <CInputNumber
+      ref={ref}
       size="small"
       key="value"
       value={data as number}
       validate
       onValueChange={handleValueChange}
+      onKeyDown={handleKeyDown}
       onPressEnter={(e: any) => {
         e.target.blur()
       }}
       style={{ flex: 1 }}
+      data-cpu-editor-focusable-role="edition"
     />
   )
 }

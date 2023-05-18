@@ -1,6 +1,9 @@
 import { EditionProps } from '@cpu-json-editor/core/dist/esm/components/type/props'
-import React, { forwardRef, SyntheticEvent, useCallback } from 'react'
+import { InputRef } from 'antd'
+import React, { useCallback, useMemo, useRef } from 'react'
 import { CInput } from '../base/cacheInput'
+import { useDefaultInputKeyJump } from '../hooks/useDefaultInputKeyJump'
+import { useRoleModelAttach } from '../hooks/useRoleModelAttach'
 
 const allUsedProps = {
   size: 'small',
@@ -8,18 +11,36 @@ const allUsedProps = {
   validate: true
 }
 
-export const StringEdition = forwardRef((props: EditionProps, ref) => {
+export const StringEdition = (props: EditionProps) => {
   const {
     ctx,
-    fieldProps: { route, field, data, schemaEntry }
+    model,
+    fieldProps: { route, field, data, schemaEntry },
+    fieldInfo: { id }
   } = props
 
   const handleValueChange = useCallback(
     (value: string) => {
       if (value !== undefined) ctx.executeAction('change', { schemaEntry, route, field, value })
     },
-    [route, field, ctx]
+    [schemaEntry, route, field, ctx]
   )
+
+  const handleKeyDown = useDefaultInputKeyJump(ctx, id)
+
+  // 挂载 roleModel
+  const ref = useRef<InputRef>(null)
+  const content = useMemo(
+    () => ({
+      keyJumpFocus: () => {
+        if (ref.current) {
+          ref.current.select()
+        }
+      }
+    }),
+    []
+  )
+  useRoleModelAttach(model, content, 'edition')
 
   return (
     <CInput
@@ -31,21 +52,8 @@ export const StringEdition = forwardRef((props: EditionProps, ref) => {
         e.currentTarget.blur()
       }}
       ref={ref}
-      onKeyDown={(event: SyntheticEvent<HTMLInputElement, KeyboardEvent>) => {
-        const input = event.target as HTMLInputElement
-
-        if (input.selectionStart === 0 && input.selectionEnd === 0) {
-          // 左方向键，且光标在最左侧
-          if (event.nativeEvent.key === 'ArrowLeft') {
-            console.log('左侧')
-          }
-        } else if (input.selectionStart === input.value.length && input.selectionEnd === input.value.length) {
-          // 右方向键，且光标在最右侧
-          if (event.nativeEvent.key === 'ArrowRight') {
-            console.log('左侧')
-          }
-        }
-      }}
+      onKeyDown={handleKeyDown}
+      data-cpu-editor-focusable-role="edition"
     />
   )
-})
+}

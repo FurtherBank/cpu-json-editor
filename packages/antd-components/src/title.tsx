@@ -1,29 +1,32 @@
 import { CloseCircleOutlined } from '@ant-design/icons'
 import { ShortLevel } from '@cpu-json-editor/core/dist/esm/definition'
-import { canFieldRename, isFieldRequired } from '@cpu-json-editor/core/dist/esm/definition/schema'
-import { Tooltip } from 'antd'
-import React from 'react'
+import { isFieldRequired } from '@cpu-json-editor/core/dist/esm/definition/schema'
+import { InputRef, Tooltip } from 'antd'
+import React, { useMemo, useRef } from 'react'
 
 import { CInput } from './base/cacheInput'
 
-import { EditionProps } from '@cpu-json-editor/core/dist/esm/components/type/props'
+import { TitleProps } from '@cpu-json-editor/core/dist/esm/components/type/props'
 import './css/title.less'
+import { useDefaultInputKeyJump } from './hooks/useDefaultInputKeyJump'
+import { useRoleModelAttach } from './hooks/useRoleModelAttach'
 
 const stopBubble = (e: React.SyntheticEvent) => {
   e.stopPropagation()
 }
 
-export const FieldTitle = (props: EditionProps) => {
-  const { fieldProps, ctx, fieldInfo } = props
+export const FieldTitle = (props: TitleProps) => {
+  const { fieldProps, ctx, fieldInfo, fieldNameRange, model } = props
   const { route, field, short, canNotRename, fatherInfo } = fieldProps
-  const { errors, mergedEntrySchema } = fieldInfo
+  const { errors, mergedEntrySchema, id } = fieldInfo
   const { schemaEntry: parentSchemaEntry } = fatherInfo ?? {}
   const { description } = mergedEntrySchema || {}
 
-  const fieldNameRange = canFieldRename(fieldProps, fieldInfo)
   const titleName = fieldNameRange === '' || fieldNameRange instanceof RegExp ? field : fieldNameRange
 
   const isRequired = isFieldRequired(field, fatherInfo)
+
+  const editable = !canNotRename && (fieldNameRange === '' || fieldNameRange instanceof RegExp)
 
   const spaceStyle =
     short === ShortLevel.short
@@ -31,6 +34,26 @@ export const FieldTitle = (props: EditionProps) => {
           width: '9.5em'
         }
       : {}
+
+  const handleKeyDown = useDefaultInputKeyJump(ctx, id)
+
+  const ref = useRef<InputRef>(null)
+
+  const content = useMemo(
+    () => ({
+      keyJumpFocus: () => {
+        if (ref.current) {
+          ref.current.focus()
+          return true
+        }
+        return false
+      }
+    }),
+    []
+  )
+
+  useRoleModelAttach(model, content, 'title')
+
   return (
     <div onClick={stopBubble} style={spaceStyle} className="flex-center">
       {errors.length > 0 ? (
@@ -51,7 +74,7 @@ export const FieldTitle = (props: EditionProps) => {
 
       {short !== ShortLevel.extra ? (
         <Tooltip title={description} placement="topLeft" key="name">
-          {!canNotRename && (fieldNameRange === '' || fieldNameRange instanceof RegExp) ? (
+          {editable ? (
             <CInput
               size="small"
               bordered={false}
@@ -64,6 +87,7 @@ export const FieldTitle = (props: EditionProps) => {
               onPressEnter={(e: any) => {
                 e.currentTarget.blur()
               }}
+              ref={ref}
               onValueChange={(value) => {
                 ctx.executeAction('rename', {
                   route,
@@ -72,6 +96,8 @@ export const FieldTitle = (props: EditionProps) => {
                   schemaEntry: parentSchemaEntry
                 })
               }}
+              onKeyDown={handleKeyDown}
+              data-cpu-editor-focusable-role="title"
             />
           ) : (
             <span className="prop-name inline-text-block" title={titleName!}>

@@ -1,5 +1,5 @@
-import React from 'react';
+import React from 'react'
 
 export const NullEdition = () => {
-  return <span>null</span>;
-};
+  return <span>null</span>
+}

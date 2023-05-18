@@ -1,5 +1,5 @@
 import Ajv from 'ajv'
-import React, { CSSProperties, forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef } from 'react'
+import React, { CSSProperties, forwardRef, useCallback, useImperativeHandle, useMemo, useRef } from 'react'
 import { Provider } from 'react-redux'
 import EditorDrawer from './EditorDrawer'
 import Field from './Field'
@@ -60,17 +60,30 @@ const Editor = <T,>(props: EditorProps<T>, ref: React.ForwardedRef<CpuEditorCont
     return new CpuEditorContext(data, schema, ajvInstance, id, interaction, componentMap, viewsMap)
   }, [schema, interaction, componentMap, viewsMap])
 
-  // 给 store 订阅 change(做成 effect)
-  useEffect(() => {
+  // ctx 变化生命周期维护(用 useMemo 而不是 useEffect，是为了一定保证 ctx 和 subscribe 变化的同时性)
+  const unsubscribeChangeRef = useRef<() => void>()
+  useMemo(() => {
     const change = () => {
       const changedData = ctx.store.getState().present.data
       if (onChange && typeof onChange === 'function') {
         onChange(changedData)
       }
     }
+    // 订阅 store 的 change
+    if (unsubscribeChangeRef.current) unsubscribeChangeRef.current()
     const unsubscribe = ctx.store.subscribe(change)
-    return unsubscribe
+    unsubscribeChangeRef.current = unsubscribe
   }, [onChange, ctx])
+
+  // 如果 data 更新来自外部，通过 setData 与 store 同步
+  const presentData = ctx.store.getState().present.data
+  if (data !== presentData) {
+    console.log('检测到外部更新：', data, presentData, ctx.schemaId)
+    ctx.store.dispatch({
+      type: 'setData',
+      value: data
+    })
+  }
 
   // 暴露一下 api
   useImperativeHandle(
@@ -80,16 +93,6 @@ const Editor = <T,>(props: EditorProps<T>, ref: React.ForwardedRef<CpuEditorCont
     },
     [ctx]
   )
-
-  // 如果 data 更新来自外部，通过 setData 与 store 同步
-  const presentData = ctx.store.getState().present.data
-  if (data !== presentData) {
-    // console.log('检测到外部更新：', data, presentData);
-    ctx.store.dispatch({
-      type: 'setData',
-      value: data
-    })
-  }
 
   const SchemaErrorLogger = ctx.getComponent(null, ['schemaErrorLogger'])
   const GlobalProvider = ctx.getComponent(null, ['globalProvider'])

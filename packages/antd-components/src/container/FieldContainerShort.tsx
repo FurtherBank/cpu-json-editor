@@ -3,6 +3,7 @@ import { useContainer } from '@cpu-json-editor/core/dist/esm/components/hooks/us
 import { ContainerProps } from '@cpu-json-editor/core/dist/esm/components/type/props'
 import { Button, Dropdown, Input } from 'antd'
 import React from 'react'
+import { useContainerKeyJump } from '../hooks/useContainerKeyJump'
 
 export const FieldContainerShort = (props: ContainerProps) => {
   const { fieldProps, availableMenuActions, menuActionHandlers, fieldInfo, ctx } = props
@@ -11,9 +12,11 @@ export const FieldContainerShort = (props: ContainerProps) => {
     titleElement,
     editionElement,
     editionInfo: { valueType },
-    // model,
+    model,
     id
   } = useContainer(ctx, fieldProps, fieldInfo)
+
+  useContainerKeyJump(ctx, model, id)
 
   const menuAction = (e: { key: string }) => {
     const key = e.key as keyof typeof menuActionHandlers
@@ -27,7 +30,7 @@ export const FieldContainerShort = (props: ContainerProps) => {
 
   const compact = valueType !== 'boolean'
   return (
-    <div className="cpu-field" style={{ display: 'flex' }} id={id}>
+    <div style={{ display: 'flex' }} id={id} data-cpu-editor-field-id={id}>
       {titleElement}
       <Input.Group
         compact={compact}

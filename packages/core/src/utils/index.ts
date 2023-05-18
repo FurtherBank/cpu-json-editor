@@ -1,32 +1,27 @@
 /* eslint-disable no-param-reassign */
-import pointer from 'json-pointer';
-import { uri2strArray } from './path/uri';
+import pointer from 'json-pointer'
+import { uri2strArray } from './path/uri'
 
 export const KeywordTypes = {
   intersection: ['type'],
-  merge: ['properties', 'patternProperties'],
-} as any;
+  merge: ['properties', 'patternProperties']
+} as any
 
 export const getKeywordType = (keyword: string) => {
   for (const type in KeywordTypes) {
-    if (KeywordTypes[type].includes(keyword)) return type;
+    if (KeywordTypes[type].includes(keyword)) return type
   }
-  return 'first';
-};
+  return 'first'
+}
 
-export const concatAccess = (
-  route: string[],
-  ...args: (string | null | undefined)[]
-) => {
-  const filtered = args.filter(
-    (value) => typeof value === 'string' && value,
-  ) as string[];
-  return route.concat(filtered);
-};
+export const concatAccess = (route: string[], ...args: (string | null | undefined)[]) => {
+  const filtered = args.filter((value) => typeof value === 'string' && value) as string[]
+  return route.concat(filtered)
+}
 
 export const jsonDataType = (data: any) => {
-  return data === null ? 'null' : data instanceof Array ? 'array' : typeof data;
-};
+  return data === null ? 'null' : data instanceof Array ? 'array' : typeof data
+}
 
 /**
  * 简单的迭代器转数组
@@ -34,12 +29,12 @@ export const jsonDataType = (data: any) => {
  * @returns
  */
 export const iterToArray = <T>(it: Iterable<T>): T[] => {
-  const r = [];
+  const r = []
   for (const ele of it) {
-    r.push(ele);
+    r.push(ele)
   }
-  return r;
-};
+  return r
+}
 
 /**
  * 给 uri 路径继续添加子路径。
@@ -49,14 +44,14 @@ export const iterToArray = <T>(it: Iterable<T>): T[] => {
  * @returns
  */
 export const addRef = (ref: string | undefined, ...path: string[]) => {
-  if (ref === undefined) return undefined;
-  if (ref[ref.length - 1] === '/') ref = ref.substring(0, ref.length - 1);
+  if (ref === undefined) return undefined
+  if (ref[ref.length - 1] === '/') ref = ref.substring(0, ref.length - 1)
 
   path.forEach((v) => {
-    if (v) ref = ref + '/' + v;
-  });
-  return ref;
-};
+    if (v) ref = ref + '/' + v
+  })
+  return ref
+}
 
 /**
  * 通过 data access 得到 data 的 ref 字符串，用作 id
@@ -65,8 +60,28 @@ export const addRef = (ref: string | undefined, ...path: string[]) => {
  * @returns
  */
 export const getFieldDomId = (viewport: string, access: string[]) => {
-  return viewport + ':' + pointer.compile(access);
-};
+  return viewport + ':' + pointer.compile(access)
+}
+
+/**
+ * 通过 field 组件 dom 的 id 得到其信息
+ * @param id
+ * @returns
+ */
+export const extractFieldDomId = (id: string) => {
+  const index = id.indexOf(':') // 查找分隔符的位置
+  if (index === -1) {
+    throw new Error(`传入字段 id 错误：${id}`)
+  }
+
+  const [viewport, path] = [id.substring(0, index), id.substring(index + 1)] // 分割字符串并将其存储在数组中
+
+  return {
+    viewport,
+    path,
+    pathArray: pointer.parse(path)
+  }
+}
 
 /**
  * 通过数组 path 得到对象树中对象的位置。
@@ -75,13 +90,13 @@ export const getFieldDomId = (viewport: string, access: string[]) => {
  * @returns
  */
 export const deepGet = (data: any, path: string[]) => {
-  let nowData = data;
+  let nowData = data
   for (const field of path) {
-    if (typeof nowData !== 'object') return undefined;
-    nowData = nowData[field];
+    if (typeof nowData !== 'object') return undefined
+    nowData = nowData[field]
   }
-  return nowData;
-};
+  return nowData
+}
 
 /**
  * 设置对象树某一位置的值。
@@ -92,23 +107,23 @@ export const deepGet = (data: any, path: string[]) => {
  * @returns
  */
 export const deepSet = (obj: any, ref: string, value: any) => {
-  const path = uri2strArray(ref);
-  const oriObj = obj;
+  const path = uri2strArray(ref)
+  const oriObj = obj
   path.every((v, i) => {
     if (i === path.length - 1) {
-      obj[v] = value;
+      obj[v] = value
     } else if (obj[v] === undefined || obj[v] === null) {
-      obj[v] = {};
-      obj = obj[v];
+      obj[v] = {}
+      obj = obj[v]
     } else if (typeof obj[v] === 'object' && !(obj[v] instanceof Array)) {
-      obj = obj[v];
+      obj = obj[v]
     } else {
-      return false;
+      return false
     }
-    return true;
-  });
-  return oriObj;
-};
+    return true
+  })
+  return oriObj
+}
 
 /**
  * 深度递归收集一个对象某个键的所有属性
@@ -117,19 +132,19 @@ export const deepSet = (obj: any, ref: string, value: any) => {
  * @returns
  */
 export const deepCollect = (obj: any, key: string): any[] => {
-  let collection: any[] = [];
+  let collection: any[] = []
   // js 原型链安全问题
   for (const k in obj) {
     if (k === key) {
-      collection.push(obj[k]);
+      collection.push(obj[k])
     } else {
       if (obj[k] && typeof obj[k] === 'object') {
-        collection = collection.concat(deepCollect(obj[k], key));
+        collection = collection.concat(deepCollect(obj[k], key))
       }
     }
   }
-  return collection;
-};
+  return collection
+}
 
 /**
  * 深度递归替换一个对象某个键的所有属性。
@@ -139,23 +154,18 @@ export const deepCollect = (obj: any, key: string): any[] => {
  * @param map 替换函数
  * @returns
  */
-export const deepReplace = (
-  obj: any,
-  key: string,
-  map: (value: any, key: any) => any,
-) => {
+export const deepReplace = (obj: any, key: string, map: (value: any, key: any) => any) => {
   // js 原型链安全问题
   for (const k in obj) {
     if (k === key) {
-      obj[k] = map(obj[k], k);
+      obj[k] = map(obj[k], k)
       // console.log('替换',obj[k]);
     } else {
-      if (obj[k] && typeof obj[k] === 'object')
-        obj[k] = deepReplace(obj[k], key, map);
+      if (obj[k] && typeof obj[k] === 'object') obj[k] = deepReplace(obj[k], key, map)
     }
   }
-  return obj;
-};
+  return obj
+}
 
 /**
  * 将对象或map的keys当作正则表达式来匹配 key，如果匹配到返回这个正则表达式
@@ -163,20 +173,17 @@ export const deepReplace = (
  * @param key
  * @returns
  */
-export const getKeyByPattern = (
-  map: Map<string | RegExp, any> | { [x: string]: any },
-  key: string,
-) => {
-  const keys = map instanceof Map ? map.keys() : Object.keys(map);
+export const getKeyByPattern = (map: Map<string | RegExp, any> | { [x: string]: any }, key: string) => {
+  const keys = map instanceof Map ? map.keys() : Object.keys(map)
 
   for (const k of keys) {
-    const pattern = typeof k === 'string' ? new RegExp(k) : k;
+    const pattern = typeof k === 'string' ? new RegExp(k) : k
     if (pattern.test(key)) {
-      return pattern;
+      return pattern
     }
   }
-  return undefined;
-};
+  return undefined
+}
 
 /**
  * 查找对象某键的值，但是正则匹配
@@ -184,15 +191,12 @@ export const getKeyByPattern = (
  * @param key 待匹配的字符串
  * @returns
  */
-export const getValueByPattern = <T>(
-  obj: { [k: string]: T },
-  key: string,
-): T | undefined => {
+export const getValueByPattern = <T>(obj: { [k: string]: T }, key: string): T | undefined => {
   for (const k of Object.keys(obj)) {
-    const pattern = new RegExp(k);
+    const pattern = new RegExp(k)
     if (pattern.test(key)) {
-      return obj[k];
+      return obj[k]
     }
   }
-  return undefined;
-};
+  return undefined
+}

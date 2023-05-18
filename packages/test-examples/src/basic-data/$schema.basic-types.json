@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$ref": "#/definitions/BasicTypesJSON",
+  "title": "基本类型编辑",
+  "definitions": {
+    "BasicTypesJSON": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "number": {
+          "type": "integer"
+        },
+        "string": {
+          "type": "string"
+        },
+        "boolean": {
+          "type": "boolean"
+        },
+        "null": {
+          "type": "null"
+        },
+        "enum": {
+          "enum": ["choice 1", "choice 2", "choice 3"]
+        },
+        "const": {
+          "const": 123
+        }
+      },
+      "required": ["boolean", "null", "number", "string"]
+    }
+  }
+}

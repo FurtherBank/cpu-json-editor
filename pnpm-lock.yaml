@@ -82,13 +82,16 @@ importers:
       '@cpu-json-editor/common-test-utils': workspace:^0.0.1
       '@cpu-json-editor/core': workspace:^0.1.0
       '@cpu-json-editor/test-examples': workspace:^0.0.1
+      '@types/json-pointer': ^1.0.31
       '@types/lodash': ^4.14.194
       antd: '4'
       father: ^4.1.8
+      json-pointer: ^0.6.2
       lodash: ^4.17.21
       moment: ^2.29.4
       react-selectable-fast: ^3.4.0
     dependencies:
+      json-pointer: 0.6.2
       lodash: 4.17.21
       react-selectable-fast: 3.4.0
     devDependencies:
@@ -96,6 +99,7 @@ importers:
       '@cpu-json-editor/common-test-utils': link:../common-test-utils
       '@cpu-json-editor/core': link:../core
       '@cpu-json-editor/test-examples': link:../test-examples
+      '@types/json-pointer': 1.0.31
       '@types/lodash': 4.14.194
       antd: 4.24.9
       father: 4.1.9

@@ -38,4 +38,10 @@ export interface ListDisplayPanelProps {
   fieldInfo: IField
   data: any
   access: string[]
+  domAttributes?: Record<string, string>
+  id: string
+}
+
+export const childDataNotEmpty = (data: ChildData | EmptyChildData): data is ChildData => {
+  return (data as any).value !== undefined
 }

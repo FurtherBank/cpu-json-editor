@@ -1,77 +1,80 @@
 // json 配置
-import $default from './integrate/$schema.default.json';
-import $general from './integrate/$schema.general.json';
-import Default from './integrate/default.json'; // 注意 小写 default 保留字
-import general from './integrate/general.json';
+import $default from './integrate/$schema.default.json'
+import $general from './integrate/$schema.general.json'
+import Default from './integrate/default.json' // 注意 小写 default 保留字
+import general from './integrate/general.json'
 
-import $dataFacility from './integrate/$schema.dataFacility.json';
-import dataFacility from './integrate/dataFacility.json';
+import $dataFacility from './integrate/$schema.dataFacility.json'
+import dataFacility from './integrate/dataFacility.json'
 
-import $dataTechTree from './integrate/$schema.dataTechTree.json';
-import dataTechTree from './integrate/dataTechTree.json';
+import $dataTechTree from './integrate/$schema.dataTechTree.json'
+import dataTechTree from './integrate/dataTechTree.json'
 
-import $items from './integrate/$schema.items.json';
-import items from './integrate/items.json';
+import $items from './integrate/$schema.items.json'
+import items from './integrate/items.json'
 
-import $stringData from './integrate/$schema.string.json';
-import stringData from './integrate/string.json';
+import $stringData from './integrate/$schema.string.json'
+import stringData from './integrate/string.json'
 
-import $simple from './integrate/$schema.simple.json';
-import simple from './integrate/simple.json';
+import $simple from './integrate/$schema.simple.json'
+import simple from './integrate/simple.json'
 
-import $reducerTest from './integrate/$schema.reducerTest.json';
-import reducerTest from './integrate/reducerTest.json';
+import $reducerTest from './integrate/$schema.reducerTest.json'
+import reducerTest from './integrate/reducerTest.json'
 
-import $eslint from './integrate/$schema.eslint.json';
-import eslint from './integrate/eslint.json';
+import $eslint from './integrate/$schema.eslint.json'
+import eslint from './integrate/eslint.json'
 
-import $list from './integrate/$schema.test-list.json';
-import list from './integrate/test-list.json';
+import $list from './integrate/$schema.test-list.json'
+import list from './integrate/test-list.json'
 
-import $alternative from './integrate/$schema.alternative.json';
-import alternative from './integrate/alternative.json';
+import $alternative from './integrate/$schema.alternative.json'
+import alternative from './integrate/alternative.json'
 
-import $stringArray from './basic-data/$schema.string-array.json';
-import stringArray from './basic-data/string-array.json';
+import $stringArray from './basic-data/$schema.string-array.json'
+import stringArray from './basic-data/string-array.json'
 
-import { DefaultOptionType } from 'antd/lib/select';
-import metaSchema from './$meta.json';
+import $basicTypes from './basic-data/$schema.basic-types.json'
+import basicTypes from './basic-data/basic-types.json'
 
-export type TestExample = [any, any] | [any, any, string];
+import $stringObject from './basic-data/$schema.string-object.json'
+import stringObject from './basic-data/string-object.json'
+
+import { DefaultOptionType } from 'antd/lib/select'
+import metaSchema from './$meta.json'
+
+export type TestExample = [any, any] | [any, any, string]
 export type TestExamples = {
-  [key: string]: TestExample;
-};
+  [key: string]: TestExample
+}
 
 class ExampleData {
   /**
    *
    */
-  constructor(
-    public data: DefaultOptionType[] = [],
-    public plainData: Record<string, TestExample> = {},
-  ) {}
+  constructor(public data: DefaultOptionType[] = [], public plainData: Record<string, TestExample> = {}) {}
   addExamples(categoryName: string, examples: TestExample[]) {
     let index = this.data.findIndex((node) => {
-      return node.value === categoryName;
-    });
+      return node.value === categoryName
+    })
     if (index === -1) {
-      index = this.data.length;
+      index = this.data.length
       this.data.push({
         value: categoryName,
         label: categoryName,
         children: [],
-        disabled: true,
-      });
+        disabled: true
+      })
     }
     // 在种类中 push 子节点
     this.data[index].children?.push(
       ...examples.map((example) => {
-        const title = example[2] ? example[2] : (example[1].title as string);
-        this.plainData[title] = example;
-        return { value: title, label: title };
-      }),
-    );
-    return this;
+        const title = example[2] ? example[2] : (example[1].title as string)
+        this.plainData[title] = example
+        return { value: title, label: title }
+      })
+    )
+    return this
   }
 }
 
@@ -79,6 +82,8 @@ export default new ExampleData()
   .addExamples('基础数据', [
     [stringData, $stringData],
     [stringArray, $stringArray],
+    [stringObject, $stringObject],
+    [basicTypes, $basicTypes]
   ])
   .addExamples('字符串格式', [])
   .addExamples('自定义视图', [[list, $list]])
@@ -95,5 +100,5 @@ export default new ExampleData()
     [$dataTechTree, metaSchema, '《星际探索者》科技树配置模式编辑'],
     [items, $items],
     [reducerTest, $reducerTest],
-    [eslint, $eslint],
-  ]);
+    [eslint, $eslint]
+  ])

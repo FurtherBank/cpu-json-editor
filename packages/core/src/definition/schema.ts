@@ -1,7 +1,8 @@
 /* eslint-disable no-case-declarations */
-import { FatherInfo } from '../components/type/list';
-import { FieldProps, IField } from '../Field';
-import { getKeyByPattern, jsonDataType } from '../utils';
+import { FatherInfo } from '../components/type/list'
+import CpuEditorContext from '../context'
+import { FieldProps, IField } from '../Field'
+import { getKeyByPattern, jsonDataType } from '../utils'
 
 /**
  * 通过 schema 判断当前 json 是否可以创建新的属性。
@@ -9,20 +10,13 @@ import { getKeyByPattern, jsonDataType } from '../utils';
  * @param fieldInfo
  */
 export const canFieldCreate = (data: any, fieldInfo: IField) => {
-  const dataType = jsonDataType(data);
-  const { mergedValueSchema } = fieldInfo;
+  const dataType = jsonDataType(data)
+  const { mergedValueSchema } = fieldInfo
 
-  if (!mergedValueSchema) return dataType === 'array' || dataType === 'object';
-  const {
-    maxProperties,
-    properties,
-    additionalProperties,
-    patternProperties,
-    maxItems,
-    items,
-    prefixItems,
-  } = mergedValueSchema;
-  let autoCompleteKeys: string[] = [];
+  if (!mergedValueSchema) return dataType === 'array' || dataType === 'object'
+  const { maxProperties, properties, additionalProperties, patternProperties, maxItems, items, prefixItems } =
+    mergedValueSchema
+  let autoCompleteKeys: string[] = []
   switch (dataType) {
     case 'object':
       /**
@@ -31,74 +25,63 @@ export const canFieldCreate = (data: any, fieldInfo: IField) => {
        * 2. additionalProperties 不为 false
        * 3. 不超过 maxLength
        */
-      const nowKeys = Object.keys(data);
+      const nowKeys = Object.keys(data)
       // 1. 长度验证
-      if (maxProperties !== undefined && nowKeys.length >= maxProperties)
-        return false;
+      if (maxProperties !== undefined && nowKeys.length >= maxProperties) return false
       // 收集 properties 中可以创建的+可自动补全的属性
-      const restKeys = properties
-        ? Object.keys(properties).filter((key) => !nowKeys.includes(key))
-        : [];
+      const restKeys = properties ? Object.keys(properties).filter((key) => !nowKeys.includes(key)) : []
       // todo: 依据 dependencies 筛选可创建属性
-      if (properties) autoCompleteKeys = autoCompleteKeys.concat(restKeys);
+      if (properties) autoCompleteKeys = autoCompleteKeys.concat(restKeys)
       // 2. additionalProperties 验证
-      if (additionalProperties !== false) return autoCompleteKeys;
+      if (additionalProperties !== false) return autoCompleteKeys
       // 3. patternProperties 有键
-      if (patternProperties && Object.keys(patternProperties).length > 0)
-        return autoCompleteKeys;
+      if (patternProperties && Object.keys(patternProperties).length > 0) return autoCompleteKeys
       // 4. 有无剩余键
-      return restKeys.length > 0 ? autoCompleteKeys : false;
+      return restKeys.length > 0 ? autoCompleteKeys : false
     case 'array':
-      const prefixLength =
-        prefixItems && items === false ? prefixItems.length : +Infinity;
-      const maxLength = maxItems === undefined ? +Infinity : maxItems;
-      return (
-        maxLength < prefixLength
-          ? data.length < maxLength
-          : data.length < prefixLength
-      )
-        ? []
-        : false;
+      const prefixLength = prefixItems && items === false ? prefixItems.length : +Infinity
+      const maxLength = maxItems === undefined ? +Infinity : maxItems
+      return (maxLength < prefixLength ? data.length < maxLength : data.length < prefixLength) ? [] : false
     default:
-      return false;
+      return false
   }
-};
+}
 
 /**
  * 通过 schema 判断该字段(来自一个对象)是否可以重新命名
+ * @param ctx
  * @param props
+ * @param fieldInfo
  * @returns 返回字符串为不可命名(同时其也是字段名称)，返回正则为命名范围，返回空串即可命名
  */
-export const canFieldRename = (props: FieldProps, fieldInfo: IField) => {
-  const { field, fatherInfo } = props;
-  const { ctx, mergedEntrySchema } = fieldInfo;
+export const canFieldRename = (ctx: CpuEditorContext, props: FieldProps, fieldInfo: IField) => {
+  const { field, fatherInfo } = props
+  const { mergedEntrySchema } = fieldInfo
   // 注意，一个模式的 title 看 entryMap，如果有of等不理他
-  const { title } = mergedEntrySchema || {};
+  const { title } = mergedEntrySchema || {}
 
   if (field === undefined) {
-    return title ? title : ' ';
+    return title ? title : ' '
   }
   // 不是根节点，不保证 FatherInfo 一定存在，因为可能有抽屉！
-  const { valueEntry: fatherValueEntry, type: fatherType } = fatherInfo ?? {};
-  const fatherMergedValueSchema = ctx.getMergedSchema(fatherValueEntry);
+  const { valueEntry: fatherValueEntry, type: fatherType } = fatherInfo ?? {}
+  const fatherMergedValueSchema = ctx.getMergedSchema(fatherValueEntry)
   if (fatherType === 'array') {
-    return title ? title + ' ' + field : field;
+    return title ? title + ' ' + field : field
   } else if (!fatherMergedValueSchema) {
-    return '';
+    return ''
   } else {
-    const { properties, patternProperties } = fatherMergedValueSchema;
+    const { properties, patternProperties } = fatherMergedValueSchema
 
-    if (properties && properties[field]) return title ? title : field;
+    if (properties && properties[field]) return title ? title : field
 
-    const pattern = patternProperties
-      ? getKeyByPattern(patternProperties, field)
-      : undefined;
+    const pattern = patternProperties ? getKeyByPattern(patternProperties, field) : undefined
 
-    if (pattern) return pattern;
+    if (pattern) return pattern
 
-    return '';
+    return ''
   }
-};
+}
 
 /**
  * 通过 schema 判断该字段是否可删除。可删除条件：
@@ -106,35 +89,34 @@ export const canFieldRename = (props: FieldProps, fieldInfo: IField) => {
  * 2. 如果父亲是数组，只要不在数组 prefixItems 里面即可删除
  * 3. 如果父亲是对象，只要不在 required 里面即可删除
  *
+ * @param ctx
  * @param props
- * @param fieldInfo
  */
-export const canFieldDelete = (props: FieldProps, fieldInfo: IField) => {
-  const { fatherInfo, field } = props;
-  const { ctx } = fieldInfo;
+export const canFieldDelete = (ctx: CpuEditorContext, props: FieldProps) => {
+  const { fatherInfo, field } = props
 
-  if (field === undefined) return false;
+  if (field === undefined) return false
   if (fatherInfo) {
-    const { valueEntry: fatherValueEntry } = fatherInfo;
+    const { valueEntry: fatherValueEntry } = fatherInfo
     switch (fatherInfo.type) {
       case 'array':
-        const { prefixItems } = ctx.getMergedSchema(fatherValueEntry) || {};
-        const index = parseInt(field);
-        return prefixItems ? index >= prefixItems.length : true;
+        const { prefixItems } = ctx.getMergedSchema(fatherValueEntry) || {}
+        const index = parseInt(field)
+        return prefixItems ? index >= prefixItems.length : true
       case 'object':
-        const fatherMergedValueSchema = ctx.getMergedSchema(fatherValueEntry);
+        const fatherMergedValueSchema = ctx.getMergedSchema(fatherValueEntry)
         if (fatherMergedValueSchema && fatherMergedValueSchema.required) {
-          return !fatherMergedValueSchema.required.includes(field);
+          return !fatherMergedValueSchema.required.includes(field)
         } else {
-          return true;
+          return true
         }
       default:
-        console.error('意外的判断情况');
-        return false;
+        console.error('意外的判断情况')
+        return false
     }
   }
-  return false;
-};
+  return false
+}
 
 /**
  * 字段是否为 required 字段
@@ -142,11 +124,8 @@ export const canFieldDelete = (props: FieldProps, fieldInfo: IField) => {
  * @param fatherInfo
  * @returns
  */
-export const isFieldRequired = (
-  field: string | undefined,
-  fatherInfo?: FatherInfo | undefined,
-) => {
-  if (!fatherInfo || !field) return false;
-  const { required } = fatherInfo;
-  return required instanceof Array && required.indexOf(field) > -1;
-};
+export const isFieldRequired = (field: string | undefined, fatherInfo?: FatherInfo | undefined) => {
+  if (!fatherInfo || !field) return false
+  const { required } = fatherInfo
+  return required instanceof Array && required.indexOf(field) > -1
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$ref": "#/definitions/StringObjectJSON",
+  "title": "string{}",
+  "definitions": {
+    "StringObjectJSON": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    }
+  }
+}

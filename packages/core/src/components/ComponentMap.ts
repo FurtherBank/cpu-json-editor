@@ -1,5 +1,7 @@
 import merge from 'lodash/merge'
-import { ComponentType } from 'react'
+import { ComponentType, ForwardRefExoticComponent, RefAttributes } from 'react'
+import { IFocusable } from '../helper/IFocusable'
+import { IKeyJumpable } from '../helper/IKeyJumpable'
 import { JSONSchema } from '../type/Schema'
 import { ContainerProps, EditionProps, MenuActionProps } from './type/props'
 
@@ -12,11 +14,17 @@ export type CpuEditionType = 'object' | 'array' | 'string' | 'number' | 'boolean
 export interface IComponentMap<T = Record<string, never>> {
   containerNormal: ComponentType<ContainerProps>
   containerShort: ComponentType<ContainerProps>
-  title: ComponentType<EditionProps>
+  title: ForwardRefExoticComponent<EditionProps & RefAttributes<any>>
   menuAction: ComponentType<MenuActionProps>
   operation: Record<string, ComponentType<any>>
   format: Record<string, ComponentType<any>>
-  edition: Record<CpuEditionType, ComponentType<EditionProps>>
+  edition: Record<
+    CpuEditionType,
+    // 这里写了三遍纯粹是感觉不爽……
+    | ForwardRefExoticComponent<EditionProps & RefAttributes<IFocusable | IKeyJumpable>>
+    | ForwardRefExoticComponent<EditionProps & RefAttributes<IFocusable>>
+    | ForwardRefExoticComponent<EditionProps & RefAttributes<IKeyJumpable>>
+  >
   drawer: ComponentType<any>
   schemaErrorLogger: ComponentType<any>
   globalProvider: ComponentType<T>

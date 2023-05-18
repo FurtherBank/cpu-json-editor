@@ -1,23 +1,40 @@
-import { FormatEditionProps } from '@cpu-json-editor/core/dist/esm/components/type/props';
-import React, { useCallback } from 'react';
-import { CTextArea } from '../base/cacheInput';
+import { FormatEditionProps } from '@cpu-json-editor/core/dist/esm/components/type/props'
+import { InputRef } from 'antd'
+import React, { useCallback, useMemo, useRef } from 'react'
+import { CTextArea } from '../base/cacheInput'
+import { useDefaultInputKeyJump } from '../hooks/useDefaultInputKeyJump'
+import { useRoleModelAttach } from '../hooks/useRoleModelAttach'
 
 export const MultilineEdition = (props: FormatEditionProps) => {
   const {
-    route,
-    field,
-    data,
-    schemaEntry,
-    fieldInfo: { ctx },
-  } = props;
+    ctx,
+    model,
+    fieldProps: { route, field, data, schemaEntry },
+    fieldInfo: { id }
+  } = props
 
   const handleValueChange = useCallback(
     (value: any) => {
-      if (value !== undefined)
-        ctx.executeAction('change', { schemaEntry, route, field, value });
+      if (value !== undefined) ctx.executeAction('change', { schemaEntry, route, field, value })
     },
-    [ctx],
-  );
+    [ctx]
+  )
+
+  const handleKeyDown = useDefaultInputKeyJump(ctx, id)
+
+  // 挂载 roleModel
+  const ref = useRef<InputRef>(null)
+  const content = useMemo(
+    () => ({
+      keyJumpFocus: () => {
+        if (ref.current) {
+          ref.current.select()
+        }
+      }
+    }),
+    []
+  )
+  useRoleModelAttach(model, content, 'edition')
 
   return (
     <CTextArea
@@ -25,10 +42,12 @@ export const MultilineEdition = (props: FormatEditionProps) => {
       key="value"
       value={data}
       onValueChange={handleValueChange}
+      onKeyDown={handleKeyDown}
       validate={true}
       style={{ flex: 1 }}
       autoSize={{ minRows: 3, maxRows: 5 }}
       onPressEnter={undefined}
+      data-cpu-editor-focusable-role="edition"
     />
-  );
-};
+  )
+}

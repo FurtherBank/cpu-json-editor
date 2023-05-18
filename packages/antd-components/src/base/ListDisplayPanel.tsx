@@ -2,12 +2,12 @@ import { useSubFieldQuery } from '@cpu-json-editor/core/dist/esm/components/hook
 import { ChildData, EmptyChildData, ListDisplayPanelProps } from '@cpu-json-editor/core/dist/esm/components/type/list'
 import { ShortLevel } from '@cpu-json-editor/core/dist/esm/definition'
 import { List } from 'antd'
-import React from 'react'
+import React, { ForwardedRef, forwardRef } from 'react'
 import { gridOption } from '../config'
 import { CreateName } from './creator'
 
-export const ListDisplayPanel = (props: ListDisplayPanelProps) => {
-  const { viewport, data, access, fieldInfo, fatherInfo, lists, ctx } = props
+export const ListDisplayPanel = forwardRef((props: ListDisplayPanelProps, ref: ForwardedRef<HTMLDivElement>) => {
+  const { viewport, data, access, fieldInfo, fatherInfo, lists, ctx, id, domAttributes = {} } = props
   const { schemaEntry } = fatherInfo
   const { mergedValueSchema } = fieldInfo
 
@@ -27,6 +27,7 @@ export const ListDisplayPanel = (props: ListDisplayPanelProps) => {
               mergedValueSchema={mergedValueSchema}
               ctx={ctx}
               schemaEntry={schemaEntry}
+              id={id}
             />
           </List.Item>
         )
@@ -65,12 +66,13 @@ export const ListDisplayPanel = (props: ListDisplayPanelProps) => {
   //   </div>
   // )
   return (
-    <div>
+    <div ref={ref} {...domAttributes}>
       {lists.map((list, i) => {
         const { items, short } = list
         return (
           <List
             key={i}
+            className="cpu-editor-list-panel"
             size="small"
             split={false}
             dataSource={items}
@@ -127,4 +129,4 @@ export const ListDisplayPanel = (props: ListDisplayPanelProps) => {
   //     )
   //   default:
   // }
-}
+})

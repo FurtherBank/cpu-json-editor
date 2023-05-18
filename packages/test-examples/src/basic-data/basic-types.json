@@ -1,0 +1,8 @@
+{
+  "number": 15,
+  "string": "hello world!",
+  "boolean": true,
+  "null": null,
+  "enum": "choice 1",
+  "const": 123
+}

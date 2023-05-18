@@ -83,7 +83,9 @@ export default () => {
   }, [data, schema])
 
   const changeData = (value: any) => {
-    setData(typeof value === 'object' ? value : value)
+    console.log('demo changeData', value)
+
+    setData(value)
   }
 
   const changeExample = (data: any, schema: any) => {

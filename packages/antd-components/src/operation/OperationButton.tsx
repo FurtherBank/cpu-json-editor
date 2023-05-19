@@ -4,11 +4,13 @@ import {
   DeleteOutlined,
   RedoOutlined,
   RetweetOutlined,
-  UndoOutlined,
-} from '@ant-design/icons';
-import { MenuActionProps } from '@cpu-json-editor/core/dist/esm/components/type/props';
-import { Button } from 'antd';
-import React from 'react';
+  UndoOutlined
+} from '@ant-design/icons'
+import { MenuActionProps } from '@cpu-json-editor/core/dist/esm/components/type/props'
+import { Button } from 'antd'
+import React, { useMemo, useRef } from 'react'
+import { useDefaultBtnKeyJump } from '../hooks/useDefaultBtnKeyJump'
+import { useRoleModelAttach } from '../hooks/useRoleModelAttach'
 
 const actionIcon = {
   reset: <RetweetOutlined />,
@@ -17,11 +19,28 @@ const actionIcon = {
   delete: <DeleteOutlined />,
   undo: <UndoOutlined />,
   redo: <RedoOutlined />,
-  detail: null,
-};
+  detail: null
+}
 
 export const OperationButton = (props: MenuActionProps) => {
-  const { opType, opHandler } = props;
+  const { opType, opHandler, ctx, id, model } = props
+
+  const handleKeyDown = useDefaultBtnKeyJump(ctx, id, { supportedKeys: ['ArrowLeft', 'ArrowRight'] })
+
+  // 挂载 roleModel
+  const ref = useRef<HTMLElement>(null)
+  const content = useMemo(
+    () => ({
+      keyJumpFocus: () => {
+        if (ref.current) {
+          ref.current.focus()
+        }
+      }
+    }),
+    []
+  )
+  useRoleModelAttach(model, content, opType)
+
   return (
     <Button
       key={opType}
@@ -30,6 +49,9 @@ export const OperationButton = (props: MenuActionProps) => {
       shape="circle"
       onClick={opHandler}
       title={opType}
+      ref={ref}
+      onKeyDown={handleKeyDown}
+      data-cpu-editor-focusable-role={opType}
     />
-  );
-};
+  )
+}

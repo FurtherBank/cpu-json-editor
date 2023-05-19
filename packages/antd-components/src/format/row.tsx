@@ -38,17 +38,14 @@ export const RowEdition = (props: EditionProps) => {
 
   return (
     <CInput
-      ref={ref}
       size="small"
       key="value"
       value={data}
       onValueChange={handleValueChange}
       validate={true}
-      onPressEnter={(e: any) => {
-        e.currentTarget.blur()
-      }}
-      onKeyDown={handleKeyDown}
       style={{ flex: 1, minWidth: '400px' }}
+      onKeyDown={handleKeyDown}
+      ref={ref}
       data-cpu-editor-focusable-role="edition"
     />
   )

@@ -35,6 +35,9 @@ export interface ContainerProps extends Omit<EditionProps, 'model'> {
 export interface MenuActionProps<T extends MenuActionType = MenuActionType> {
   opType: T
   opHandler: () => void
+  ctx: CpuEditorContext
+  id: string
+  model: ComponentModel
 }
 
 export interface EditorDrawerProps {

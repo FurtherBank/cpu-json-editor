@@ -17,6 +17,6 @@ export const useDefaultBtnKeyJump = (ctx: CpuEditorContext, id: string, options:
         if (preventDefault) event.preventDefault()
       }
     },
-    [options]
+    [options, ctx]
   )
 }

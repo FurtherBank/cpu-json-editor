@@ -30,7 +30,7 @@ const ArrayEditionPanel = (props: EditionProps) => {
   const panelRef = useRef<HTMLDivElement>(null)
 
   // 挂载 roleModel
-  const keyJumpFocus = useListKeyJump(ctx, panelRef, id)
+  const keyJumpFocus = useListKeyJump(ctx, panelRef, id, lists)
   const content = useMemo(
     () => ({
       keyJumpFocus

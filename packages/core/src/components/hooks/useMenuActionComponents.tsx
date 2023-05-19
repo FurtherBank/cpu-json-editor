@@ -3,13 +3,14 @@ import { getRefByOfChain } from '../../context/ofInfo'
 import { defaultTypeValue, getDefaultValue } from '../../definition/defaultValue'
 import { JsonTypes } from '../../definition/reducer'
 import { jsonDataType } from '../../utils'
+import { ComponentModel } from '../ComponentModel'
 import { ContainerProps } from '../type/props'
 
 /**
  * [业务]通过 Field 的属性得到使用的 菜单栏 和 操作栏 组件
  * @param props
  */
-export const useMenuActionComponents = (props: ContainerProps) => {
+export const useMenuActionComponents = (props: ContainerProps, model: ComponentModel) => {
   const {
     fieldProps: { data, route, field, schemaEntry },
     fieldInfo,
@@ -17,7 +18,7 @@ export const useMenuActionComponents = (props: ContainerProps) => {
     menuActionHandlers,
     ctx
   } = props
-  const { mergedValueSchema, ofOption } = fieldInfo
+  const { mergedValueSchema, ofOption, id } = fieldInfo
 
   const dataType = jsonDataType(data)
   const { const: constValue, enum: enumValue, type: allowedTypes } = mergedValueSchema || {}
@@ -42,6 +43,9 @@ export const useMenuActionComponents = (props: ContainerProps) => {
           })
         }}
         key={'oneOf'}
+        ctx={ctx}
+        id={id}
+        model={model}
       />
     )
   }
@@ -67,13 +71,25 @@ export const useMenuActionComponents = (props: ContainerProps) => {
           })
         }}
         key={'type'}
+        ctx={ctx}
+        id={id}
+        model={model}
       />
     )
   }
   // 4. 设置菜单动作栏组件
   const menuActionComs = availableMenuActions.map((actType) => {
     const MenuActionComponent = ctx.getComponent(null, ['menuAction'])
-    return <MenuActionComponent key={actType} opType={actType} opHandler={menuActionHandlers[actType]} />
+    return (
+      <MenuActionComponent
+        key={actType}
+        opType={actType}
+        opHandler={menuActionHandlers[actType]}
+        ctx={ctx}
+        id={id}
+        model={model}
+      />
+    )
   })
 
   return [directActionComs, menuActionComs] as const

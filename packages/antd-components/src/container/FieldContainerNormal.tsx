@@ -20,10 +20,6 @@ export const FieldContainerNormal = (props: ContainerProps) => {
 
   const access = concatAccess(route, field)
 
-  const [operationComponents, menuActionComponents] = useMenuActionComponents(props)
-
-  const extraComponents = operationComponents.concat(rootMenuItems).concat(menuActionComponents)
-
   const {
     titleElement,
     editionElement,
@@ -31,6 +27,10 @@ export const FieldContainerNormal = (props: ContainerProps) => {
     model,
     id
   } = useContainer(ctx, fieldProps, fieldInfo)
+
+  const [operationComponents, menuActionComponents] = useMenuActionComponents(props, model)
+
+  const extraComponents = operationComponents.concat(rootMenuItems).concat(menuActionComponents)
 
   const dataIsObject = valueType === 'object' || valueType === 'array'
   const formatType = getFormatType(format)

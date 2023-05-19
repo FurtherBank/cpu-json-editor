@@ -28,7 +28,7 @@ export const MultilineEdition = (props: FormatEditionProps) => {
     () => ({
       keyJumpFocus: () => {
         if (ref.current) {
-          ref.current.select()
+          ref.current.focus()
         }
       }
     }),
@@ -42,11 +42,12 @@ export const MultilineEdition = (props: FormatEditionProps) => {
       key="value"
       value={data}
       onValueChange={handleValueChange}
-      onKeyDown={handleKeyDown}
       validate={true}
       style={{ flex: 1 }}
       autoSize={{ minRows: 3, maxRows: 5 }}
       onPressEnter={undefined}
+      onKeyDown={handleKeyDown}
+      ref={ref}
       data-cpu-editor-focusable-role="edition"
     />
   )

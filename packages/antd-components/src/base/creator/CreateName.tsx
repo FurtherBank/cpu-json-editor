@@ -6,9 +6,7 @@ import { MergedSchema } from '@cpu-json-editor/core/dist/esm/context/mergeSchema
 import { isFocusable } from '@cpu-json-editor/core/dist/esm/helper/IFocusable'
 import { extractFieldDomId, getFieldDomId } from '@cpu-json-editor/core/dist/esm/utils'
 import { AutoComplete, Button, Input, InputRef, message } from 'antd'
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { useDefaultBtnKeyJump } from '../../hooks/useDefaultBtnKeyJump'
-import { useDefaultInputKeyJump } from '../../hooks/useDefaultInputKeyJump'
+import React, { SyntheticEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 export interface CreateNameProps {
   ctx: CpuEditorContext
@@ -27,11 +25,6 @@ export const ObjectPropCreator = (props: CreateNameProps) => {
   const [name, setName] = useState('')
 
   const { properties } = mergedValueSchema || {}
-
-  const createId = useMemo(() => {
-    const { viewport, pathArray } = extractFieldDomId(id)
-    return getFieldDomId(viewport, pathArray.concat(['']))
-  }, [])
 
   // todo: 考察 notInAutoFill 以及 create 是否允许
   const optionStrings = properties
@@ -62,9 +55,9 @@ export const ObjectPropCreator = (props: CreateNameProps) => {
       if (inputRef.current && isFocusable(inputRef.current)) {
         inputRef.current.focus()
       }
-      if (buttonRef.current && isFocusable(buttonRef.current)) {
-        buttonRef.current.focus()
-      }
+      // if (buttonRef.current && isFocusable(buttonRef.current)) {
+      //   buttonRef.current.focus()
+      // }
     }
   }, [editing])
 
@@ -80,8 +73,38 @@ export const ObjectPropCreator = (props: CreateNameProps) => {
     }
   }, [name, createObjectProp, setEditing])
 
-  const handleButtonKeyDown = useDefaultBtnKeyJump(ctx, createId)
-  const handleInputKeyDown = useDefaultInputKeyJump(ctx, createId)
+  // 键盘跳转处理
+  const createId = useMemo(() => {
+    const { viewport, pathArray } = extractFieldDomId(id)
+    return getFieldDomId(viewport, pathArray.concat(['']))
+  }, [])
+  const handleInputKeyDown = useCallback(
+    (event: SyntheticEvent<HTMLInputElement, KeyboardEvent>) => {
+      const supportedKeys = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown']
+      const model = ctx.interaction.componentModelMap.get(id)
+      if (!model) return
+      const input = event.currentTarget
+      const key = event.nativeEvent.key
+
+      if (supportedKeys.includes(key) && model.roles['edition']) {
+        if (input.selectionStart === 0 && input.selectionEnd === 0) {
+          // 左方向键，且光标在最左侧
+          if (['ArrowLeft', 'ArrowUp'].indexOf(key) >= 0) {
+            model.roles['edition'].keyJumpFocus(key, createId, [input, input])
+            event.preventDefault()
+          }
+        }
+        if (input.selectionStart === input.value.length && input.selectionEnd === input.value.length) {
+          // 右方向键，且光标在最右侧
+          if (['ArrowRight', 'ArrowDown'].indexOf(key) >= 0) {
+            model.roles['edition'].keyJumpFocus(key, createId, [input, input])
+            event.preventDefault()
+          }
+        }
+      }
+    },
+    [ctx]
+  )
   return editing ? (
     <div style={{ display: 'flex' }} data-creator={'object'} onBlur={handleClick}>
       <AutoComplete
@@ -96,21 +119,16 @@ export const ObjectPropCreator = (props: CreateNameProps) => {
           addonBefore={'新属性名称'}
           onPressEnter={handleObjectCreate}
           onKeyDown={handleInputKeyDown}
+          data-creator-id={id}
+          data-creator={'object'}
           ref={inputRef}
         />
       </AutoComplete>
 
-      <Button
-        size="small"
-        shape="circle"
-        onClick={handleObjectCreate}
-        onKeyDown={handleButtonKeyDown}
-        style={{ margin: '0 6px' }}
-        data-creator={'object'}
-      >
+      <Button size="small" shape="circle" onClick={handleObjectCreate} style={{ margin: '0 6px' }}>
         <CheckOutlined />
       </Button>
-      <Button size="small" shape="circle" onClick={handleClick} onKeyDown={handleButtonKeyDown} data-creator={'object'}>
+      <Button size="small" shape="circle" onClick={handleClick} data-creator={'object'}>
         <CloseOutlined />
       </Button>
     </div>
@@ -121,13 +139,13 @@ export const ObjectPropCreator = (props: CreateNameProps) => {
       size="small"
       block
       onClick={handleClick}
-      onKeyDown={handleButtonKeyDown}
       style={style}
       onFocus={(e) => {
         console.log(e)
       }}
       ref={buttonRef}
       data-creator={'object'}
+      data-creator-id={id}
     >
       Property
     </Button>
@@ -137,13 +155,28 @@ export const ObjectPropCreator = (props: CreateNameProps) => {
 export const ArrayItemCreator = (props: CreateNameProps) => {
   const { data, access, style, mergedValueSchema, ctx, schemaEntry, id } = props
 
+  const createArrayItem = useArrayCreator(ctx, data, access, mergedValueSchema, schemaEntry)
+
+  // 键盘跳转处理
   const createId = useMemo(() => {
     const { viewport, pathArray } = extractFieldDomId(id)
     return getFieldDomId(viewport, pathArray.concat(['']))
   }, [])
+  const handleButtonKeyDown = useCallback(
+    (event: SyntheticEvent<HTMLElement, KeyboardEvent>) => {
+      const supportedKeys = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown']
+      const model = ctx.interaction.componentModelMap.get(id)
+      if (!model) return
+      const btn = event.currentTarget
+      const key = event.nativeEvent.key
 
-  const createArrayItem = useArrayCreator(ctx, data, access, mergedValueSchema, schemaEntry)
-  const handleButtonKeyDown = useDefaultBtnKeyJump(ctx, createId)
+      if (supportedKeys.includes(key) && model.roles['edition']) {
+        model.roles['edition'].keyJumpFocus(key, createId, [btn, btn])
+        event.preventDefault()
+      }
+    },
+    [ctx]
+  )
 
   return (
     <Button
@@ -155,6 +188,7 @@ export const ArrayItemCreator = (props: CreateNameProps) => {
       onKeyDown={handleButtonKeyDown}
       style={style}
       data-creator={'array'}
+      data-creator-id={id}
     >
       Item
     </Button>

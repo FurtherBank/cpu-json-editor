@@ -1,25 +1,43 @@
+import { FieldDisplayList } from '@cpu-json-editor/core/dist/esm/components/type/list'
 import CpuEditorContext from '@cpu-json-editor/core/dist/esm/context'
+import { extractFieldDomId, getFieldDomId } from '@cpu-json-editor/core/dist/esm/utils'
 import { RefObject, useCallback } from 'react'
 import { findNextElement } from '../helper/ElementKbdMovement'
 
-export const useListKeyJump = (ctx: CpuEditorContext, panelRef: RefObject<HTMLDivElement>, id: string) => {
+export const useListKeyJump = (
+  ctx: CpuEditorContext,
+  panelRef: RefObject<HTMLDivElement>,
+  id: string,
+  lists: FieldDisplayList[]
+) => {
   return useCallback(
     (key: string, fromId: string, fromElements: HTMLElement[]) => {
       const div = panelRef.current
-      const elements = Array.from(
-        panelRef.current?.querySelectorAll<HTMLElement>('[data-cpu-editor-field-id]') || []
-      ).filter((e) => {
-        const focusableRoleElement = e.querySelector('[data-cpu-editor-focusable-role]')
-        return focusableRoleElement
-      })
-      const createElement = panelRef.current?.querySelector<HTMLElement>('[data-creator]')
+
+      // 求得可聚焦元素
+      const elements = lists
+        .reduce((acc, cur) => acc.concat(cur.items), [] as FieldDisplayList['items'])
+        .map((item) => {
+          const { viewport, pathArray } = extractFieldDomId(id)
+          const childId = getFieldDomId(viewport, pathArray.concat(item.key))
+          return panelRef.current?.querySelector<HTMLElement>(`[data-cpu-editor-field-id="${childId}"]`)
+        })
+        .filter((e) => {
+          // 必须有 focusable-role 的元素才可以作为候选(不需要考虑子孙有自己没有的问题)
+          const focusableRoleElement = e?.querySelector('[data-cpu-editor-focusable-role]')
+          return focusableRoleElement
+        }) as HTMLElement[]
+      const createElement = panelRef.current?.querySelector<HTMLElement>(`[data-creator][data-creator-id="${id}"]`)
       if (createElement) elements.push(createElement)
+
       const toElement = findNextElement(elements, fromElements[fromElements.length - 1], key)
       if (toElement) {
         console.log(`📇列表${id}转：`, fromId, fromElements[fromElements.length - 1], '->', toElement)
         if (toElement.dataset['creator']) {
           // 创建交互
-          const creatorInput = div?.querySelector('[data-creator]') as HTMLInputElement | undefined
+          const creatorInput = div?.querySelector(`[data-creator][data-creator-id="${id}"]`) as
+            | HTMLInputElement
+            | undefined
           if (creatorInput) {
             if (creatorInput.dataset['creator'] === 'object') {
               creatorInput.click()

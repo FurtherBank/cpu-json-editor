@@ -4,6 +4,7 @@ import { ContainerProps } from '@cpu-json-editor/core/dist/esm/components/type/p
 import { Button, Dropdown, Input } from 'antd'
 import React from 'react'
 import { useContainerKeyJump } from '../hooks/useContainerKeyJump'
+import { useDefaultBtnKeyJump } from '../hooks/useDefaultBtnKeyJump'
 
 export const FieldContainerShort = (props: ContainerProps) => {
   const { fieldProps, availableMenuActions, menuActionHandlers, fieldInfo, ctx } = props
@@ -29,6 +30,12 @@ export const FieldContainerShort = (props: ContainerProps) => {
   }))
 
   const compact = valueType !== 'boolean'
+
+  // const onTabMenuFocus = useCallback((e: SyntheticEvent<HTMLElement, FocusEvent>) => {
+  //   e.currentTarget.click()
+  // }, [])
+  const handleKeyDown = useDefaultBtnKeyJump(ctx, id, { supportedKeys: ['ArrowLeft', 'ArrowRight'] })
+
   return (
     <div style={{ display: 'flex' }} id={id} data-cpu-editor-field-id={id}>
       {titleElement}
@@ -44,8 +51,14 @@ export const FieldContainerShort = (props: ContainerProps) => {
       >
         {editionElement}
         {items.length !== 0 ? (
-          <Dropdown menu={{ items, onClick: menuAction }} placement="bottomRight" key="actions">
-            <Button icon={<EllipsisOutlined />} size="small" shape="circle" />
+          <Dropdown menu={{ items, onClick: menuAction }} placement="bottomRight" key="actions" trigger={['click']}>
+            <Button
+              icon={<EllipsisOutlined />}
+              size="small"
+              shape="circle"
+              // onFocus={onTabMenuFocus}
+              onKeyDown={handleKeyDown}
+            />
           </Dropdown>
         ) : null}
       </Input.Group>

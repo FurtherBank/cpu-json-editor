@@ -92,8 +92,6 @@ const cacheInput = (InputComponent: React.ComponentType<InputComProps>): React.F
       // 组件卸载时，保存
       useEffect(() => {
         return () => {
-          console.log('cacheInput 卸载保存', value)
-          // return
           debounceOnChange.cancel()
           onValueChange && onValueChange(value)
         }

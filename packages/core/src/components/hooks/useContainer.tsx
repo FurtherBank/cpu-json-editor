@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import CpuEditorContext from '../../context'
 import { canFieldRename } from '../../definition/schema'
 import { FieldProps, IField } from '../../Field'
@@ -47,14 +47,14 @@ export const useContainer = (ctx: CpuEditorContext, fieldProps: FieldProps, fiel
     format
   } as const
 
-  const model = new ComponentModel()
+  const model = useMemo(() => new ComponentModel(), [])
 
   useEffect(() => {
     ctx.interaction.componentModelMap.set(id, model)
     return () => {
       ctx.interaction.componentModelMap.delete(id)
     }
-  }, [model, field, route, ctx, viewport])
+  }, [ctx])
 
   return {
     titleElement: (

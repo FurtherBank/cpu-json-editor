@@ -43,10 +43,8 @@ export const FieldTitle = (props: TitleProps) => {
     () => ({
       keyJumpFocus: () => {
         if (ref.current) {
-          ref.current.focus()
-          return true
+          ref.current.select()
         }
-        return false
       }
     }),
     []
@@ -83,9 +81,6 @@ export const FieldTitle = (props: TitleProps) => {
               value={field} // todo: validate the propertyName
               validate={(v) => {
                 return fieldNameRange instanceof RegExp ? fieldNameRange.test(v) : true
-              }}
-              onPressEnter={(e: any) => {
-                e.currentTarget.blur()
               }}
               ref={ref}
               onValueChange={(value) => {

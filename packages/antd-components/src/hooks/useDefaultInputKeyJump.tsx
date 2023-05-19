@@ -23,7 +23,8 @@ export const useDefaultInputKeyJump = (ctx: CpuEditorContext, id: string, option
             model.emit('keyJump', key, id, [input])
             if (preventDefault) event.preventDefault()
           }
-        } else if (input.selectionStart === input.value.length && input.selectionEnd === input.value.length) {
+        }
+        if (input.selectionStart === input.value.length && input.selectionEnd === input.value.length) {
           // 右方向键，且光标在最右侧
           if (['ArrowRight', 'ArrowDown'].indexOf(key) >= 0) {
             model.emit('keyJump', key, id, [input])
@@ -32,6 +33,6 @@ export const useDefaultInputKeyJump = (ctx: CpuEditorContext, id: string, option
         }
       }
     },
-    [options]
+    [options, ctx]
   )
 }

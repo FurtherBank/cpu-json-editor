@@ -45,9 +45,6 @@ export const NumberEdition = (props: EditionProps) => {
       validate
       onValueChange={handleValueChange}
       onKeyDown={handleKeyDown}
-      onPressEnter={(e: any) => {
-        e.target.blur()
-      }}
       style={{ flex: 1 }}
       data-cpu-editor-focusable-role="edition"
     />

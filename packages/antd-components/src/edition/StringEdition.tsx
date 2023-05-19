@@ -48,9 +48,6 @@ export const StringEdition = (props: EditionProps) => {
       style={{ flex: 1 }}
       value={data}
       onValueChange={handleValueChange}
-      onPressEnter={(e: any) => {
-        e.currentTarget.blur()
-      }}
       ref={ref}
       onKeyDown={handleKeyDown}
       data-cpu-editor-focusable-role="edition"

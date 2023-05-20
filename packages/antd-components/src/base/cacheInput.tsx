@@ -1,7 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { AutoComplete, AutoCompleteProps, Input, InputNumber } from 'antd'
 import { debounce } from 'lodash'
-import React, { ChangeEvent, ForwardedRef, forwardRef, SyntheticEvent, useCallback, useEffect, useState } from 'react'
+import React, {
+  ChangeEvent,
+  ForwardedRef,
+  forwardRef,
+  SyntheticEvent,
+  useCallback,
+  useLayoutEffect,
+  useState
+} from 'react'
 const { TextArea } = Input
 
 interface InputComProps {
@@ -34,6 +42,7 @@ const cacheInput = (InputComponent: React.ComponentType<InputComProps>): React.F
         onValueChange,
         validate,
         onBlur,
+        onFocus,
         // autoComplete props
         backfill,
         defaultActiveFirstOption,
@@ -46,6 +55,7 @@ const cacheInput = (InputComponent: React.ComponentType<InputComProps>): React.F
     ) => {
       const [nowInputValue, setNowInputValue] = useState(value) // cache总是input的属性
       const [prev, setPrev] = useState(value)
+      const [focused, setFocused] = useState(false)
 
       // 如果之前的 value 不同于现在的 value，就是外部属性引起的value更新，此时同步更改 nowInputValue
       if (prev !== value) {
@@ -85,15 +95,27 @@ const cacheInput = (InputComponent: React.ComponentType<InputComProps>): React.F
       const newOnBlur = (e: SyntheticEvent<HTMLInputElement, FocusEvent>) => {
         debounceOnChange.cancel()
         syncPropValue(value, nowInputValue)
+        setFocused(false)
         // 如果有 onBlur 一并执行
         if (onBlur && typeof onBlur === 'function') onBlur(e)
       }
 
-      // 组件卸载时，保存
-      useEffect(() => {
+      const newOnFocus = useCallback(
+        (e: SyntheticEvent<HTMLInputElement, FocusEvent>) => {
+          setFocused(true)
+          // 如果有 onFocus 一并执行
+          if (onFocus && typeof onFocus === 'function') onFocus(e)
+        },
+        [onFocus]
+      )
+
+      // 组件卸载时，如果 input 在聚焦状态时保存(不在聚焦状态下的卸载是动作导致，此时如果保存会发送错误动作)
+      useLayoutEffect(() => {
         return () => {
-          debounceOnChange.cancel()
-          onValueChange && onValueChange(value)
+          if (focused) {
+            debounceOnChange.cancel()
+            onValueChange && onValueChange(value)
+          }
         }
       }, [])
 
@@ -107,10 +129,17 @@ const cacheInput = (InputComponent: React.ComponentType<InputComProps>): React.F
 
       return options ? (
         <AutoComplete {...autoCompleteFields} onChange={onChange} value={nowInputValue}>
-          <InputComponent onBlur={newOnBlur} ref={ref} {...props} />
+          <InputComponent onBlur={newOnBlur} onFocus={newOnFocus} ref={ref} {...props} />
         </AutoComplete>
       ) : (
-        <InputComponent onBlur={newOnBlur} {...props} onChange={onChange} value={nowInputValue} ref={ref} />
+        <InputComponent
+          onBlur={newOnBlur}
+          onFocus={newOnFocus}
+          {...props}
+          onChange={onChange}
+          value={nowInputValue}
+          ref={ref}
+        />
       )
     }
   )

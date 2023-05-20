@@ -25,7 +25,7 @@ const actionIcon = {
 export const OperationButton = (props: MenuActionProps) => {
   const { opType, opHandler, ctx, id, model } = props
 
-  const handleKeyDown = useDefaultBtnKeyJump(ctx, id, { supportedKeys: ['ArrowLeft', 'ArrowRight'] })
+  const handleKeyDown = useDefaultBtnKeyJump(ctx, id)
 
   // 挂载 roleModel
   const ref = useRef<HTMLElement>(null)

@@ -50,7 +50,12 @@ export const useListKeyJump = (
           const childId = toElement.dataset['cpuEditorFieldId']!
           const childModel = ctx.interaction.componentModelMap.get(childId)
           if (childModel) {
-            return childModel.emit('keyJump', key, fromId, fromElements.slice(0, -1))
+            return childModel.emit(
+              'keyJump',
+              key,
+              fromId,
+              fromElements.length === 1 ? fromElements : fromElements.slice(0, -1)
+            )
           }
         }
       } else {
@@ -62,7 +67,7 @@ export const useListKeyJump = (
         }
       }
     },
-    [ctx]
+    [lists, ctx]
   )
 }
 

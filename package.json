@@ -20,7 +20,7 @@
     "prepublishOnly": "father doctor && npm run build",
     "start": "npm run dev",
     "test": "cross-env TS_NODE_TRANSPILE_ONLY=yes jest --passWithNoTests",
-    "codegen": "pnpm exec playwright codegen http://localhost:8000/#/~demos/cpu-json-editor-app",
+    "codegen": "pnpm exec playwright codegen http://localhost:8000/#/~demos/packages-docs-src-json-schema-editor-demo-app",
     "playwright": "pnpm exec playwright test"
   },
   "commitlint": {

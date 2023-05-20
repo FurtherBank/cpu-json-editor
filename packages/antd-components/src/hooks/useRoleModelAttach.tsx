@@ -11,5 +11,5 @@ export const useRoleModelAttach = (model: ComponentModel, content: IRoleModel, r
 
       delete model.roles[role]
     }
-  }, [])
+  }, [content])
 }

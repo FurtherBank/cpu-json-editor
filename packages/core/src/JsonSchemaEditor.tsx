@@ -57,6 +57,8 @@ const Editor = <T,>(props: EditorProps<T>, ref: React.ForwardedRef<CpuEditorCont
 
   // 新建 ctx
   const ctx = useMemo(() => {
+    console.log('ℹ️ 新建 ctx')
+
     return new CpuEditorContext(data, schema, ajvInstance, id, interaction, componentMap, viewsMap)
   }, [schema, interaction, componentMap, viewsMap])
 

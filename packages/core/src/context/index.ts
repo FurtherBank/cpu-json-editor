@@ -18,6 +18,7 @@ import { getRefSchemaMap } from '../utils/schemaWithRef'
 import { CpuInteraction } from './interaction'
 import { MergedSchema, mergeSchemaMap } from './mergeSchema'
 import { ofSchemaCache, setOfInfo } from './ofInfo'
+import { CpuResources } from './resources'
 
 export interface SchemaArrayRefInfo {
   ref: string
@@ -64,6 +65,7 @@ export default class CpuEditorContext {
     public ajvInstance: Ajv,
     public domId: string | undefined,
     public interaction: CpuInteraction,
+    public resources: CpuResources,
     public readonly componentMap: IComponentMap<any>,
     /**
      * 自定义 view 的组件列表，通过`view.type`索引到 componentMap；

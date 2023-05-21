@@ -40,6 +40,9 @@ import basicTypes from './basic-data/basic-types.json'
 import $stringObject from './basic-data/$schema.string-object.json'
 import stringObject from './basic-data/string-object.json'
 
+import $imageFormat from './formats/$schema.image-format.json'
+import imageFormat from './formats/image-format.json'
+
 import { DefaultOptionType } from 'antd/lib/select'
 import metaSchema from './$meta.json'
 
@@ -85,7 +88,7 @@ export default new ExampleData()
     [stringObject, $stringObject],
     [basicTypes, $basicTypes]
   ])
-  .addExamples('字符串格式', [])
+  .addExamples('字符串格式', [[imageFormat, $imageFormat]])
   .addExamples('自定义视图', [[list, $list]])
   .addExamples('特性测试', [[alternative, $alternative]])
   .addExamples('集成测试', [

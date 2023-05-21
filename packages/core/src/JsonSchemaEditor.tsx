@@ -7,6 +7,7 @@ import Field from './Field'
 import { IComponentMap, IViewsMap } from './components/ComponentMap'
 import CpuEditorContext from './context'
 import { CpuInteraction } from './context/interaction'
+import { CpuResources, ResourceOptions } from './context/resources'
 import defaultAjvInstance from './definition/ajvInstance'
 import { JSONSchema } from './type/Schema'
 
@@ -21,24 +22,30 @@ export interface EditorProps<T = any> {
   rootMenuItems?: JSX.Element[]
   options?: {
     ajvInstance?: Ajv
+    resources?: ResourceOptions
   }
   providerProps?: T
 }
 
 export const InfoContext = React.createContext<CpuEditorContext>(null!)
 
-const emptyArray: never[] = []
+const immutableEmptyArray: never[] = []
+const immutableEmptyObject = {}
+
 const Editor = <T,>(props: EditorProps<T>, ref: React.ForwardedRef<CpuEditorContext>) => {
   const {
     schema,
     data,
     onChange,
     id,
-    viewsMap = {},
+    viewsMap = immutableEmptyObject as Record<string, IViewsMap>,
     componentMap,
     rootMenuItems,
-    providerProps = {},
-    options: { ajvInstance = defaultAjvInstance } = {}
+    providerProps = immutableEmptyObject as T,
+    options: {
+      ajvInstance = defaultAjvInstance,
+      resources: resourceOptions = immutableEmptyObject as ResourceOptions
+    } = {}
   } = props
 
   // 详细抽屉功能
@@ -55,12 +62,17 @@ const Editor = <T,>(props: EditorProps<T>, ref: React.ForwardedRef<CpuEditorCont
     return new CpuInteraction(setDrawer)
   }, [setDrawer])
 
+  const resources = useMemo(() => {
+    const { mapToSrc = (src) => src } = resourceOptions
+    return new CpuResources(mapToSrc)
+  }, [resourceOptions])
+
   // 新建 ctx
   const ctx = useMemo(() => {
     console.log('ℹ️ 新建 ctx')
 
-    return new CpuEditorContext(data, schema, ajvInstance, id, interaction, componentMap, viewsMap)
-  }, [schema, interaction, componentMap, viewsMap])
+    return new CpuEditorContext(data, schema, ajvInstance, id, interaction, resources, componentMap, viewsMap)
+  }, [schema, interaction, resources, componentMap, viewsMap])
 
   // ctx 变化生命周期维护(用 useMemo 而不是 useEffect，是为了一定保证 ctx 和 subscribe 变化的同时性)
   const unsubscribeChangeRef = useRef<() => void>()
@@ -103,7 +115,7 @@ const Editor = <T,>(props: EditorProps<T>, ref: React.ForwardedRef<CpuEditorCont
       {ctx.schemaError ? <SchemaErrorLogger error={ctx.schemaError.toString()} /> : null}
       <InfoContext.Provider value={ctx}>
         <GlobalProvider {...providerProps}>
-          <Field viewport="window" route={emptyArray} schemaEntry="#" rootMenuItems={rootMenuItems} />
+          <Field viewport="window" route={immutableEmptyArray} schemaEntry="#" rootMenuItems={rootMenuItems} />
           <EditorDrawer ref={drawerRef} />
         </GlobalProvider>
       </InfoContext.Provider>

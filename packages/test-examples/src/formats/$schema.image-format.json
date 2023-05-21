@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$ref": "#/definitions/ImageFormatJSON",
+  "definitions": {
+    "ImageFormatJSON": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "图标图片格式"
+    }
+  }
+}

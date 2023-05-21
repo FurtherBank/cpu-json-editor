@@ -1,10 +1,11 @@
+import { SelectOutlined } from '@ant-design/icons'
 import { EditionProps } from '@cpu-json-editor/core/dist/esm/components/type/props'
-import { InputRef } from 'antd'
-import React, { useCallback, useMemo, useRef } from 'react'
+import { InputRef, Tooltip } from 'antd'
+import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { CInput } from '../../base/cacheInput'
 import { useDefaultInputKeyJump } from '../../hooks/useDefaultInputKeyJump'
 import { useRoleModelAttach } from '../../hooks/useRoleModelAttach'
-import ImageComponent from './icon'
+import { useSafeCallback } from '../../hooks/useSafeCallback'
 
 export const IconImgEdition = (props: EditionProps) => {
   const {
@@ -20,6 +21,22 @@ export const IconImgEdition = (props: EditionProps) => {
     },
     [ctx]
   )
+
+  // 选择图片
+  const [isSelecting, setIsSelecting] = useState(ctx.resources.select === undefined)
+  const selectCb = useSafeCallback(
+    (value: any) => {
+      if (typeof value === 'string') {
+        handleValueChange(value)
+      }
+      setIsSelecting(false)
+    },
+    [handleValueChange]
+  )
+  const handleSelectBtnClick = useCallback(() => {
+    setIsSelecting(true)
+    ctx.resources.select?.(selectCb)
+  }, [ctx.resources.select, selectCb])
 
   const handleKeyDown = useDefaultInputKeyJump(ctx, id)
 
@@ -38,8 +55,11 @@ export const IconImgEdition = (props: EditionProps) => {
   useRoleModelAttach(model, content, 'edition')
 
   return (
-    <div>
-      <ImageComponent src={ctx.resources.mapToSrc(data)} alt={data} />
+    <div style={{ display: 'flex', flex: 1 }}>
+      <img
+        style={{ maxWidth: '80px', maxHeight: '32px', marginRight: '4px', display: 'inline-block' }}
+        src={ctx.resources.mapToSrc(data)}
+      />
       <CInput
         size="small"
         key="value"
@@ -47,6 +67,13 @@ export const IconImgEdition = (props: EditionProps) => {
         onValueChange={handleValueChange}
         validate={true}
         style={{ flex: 1, minWidth: '400px' }}
+        suffix={
+          !isSelecting ? (
+            <Tooltip title="选择图片文件">
+              <SelectOutlined onClick={handleSelectBtnClick} />
+            </Tooltip>
+          ) : null
+        }
         onKeyDown={handleKeyDown}
         ref={ref}
         data-cpu-editor-focusable-role="edition"

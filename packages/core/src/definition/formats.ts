@@ -1,5 +1,5 @@
-const longFormats = ['row', 'uri', 'uri-reference'];
-const extraLongFormats = ['multiline'];
+const longFormats = ['row', 'uri', 'uri-reference']
+const extraLongFormats = ['multiline', 'image']
 
 /**
  * 格式按照组件需要空间的情况分为三种类型：
@@ -10,7 +10,7 @@ const extraLongFormats = ['multiline'];
  * @returns
  */
 export const getFormatType = (format: string | undefined) => {
-  if (extraLongFormats.includes(format!)) return 2;
-  if (longFormats.includes(format!)) return 1;
-  return 0;
-};
+  if (extraLongFormats.includes(format!)) return 2
+  if (longFormats.includes(format!)) return 1
+  return 0
+}

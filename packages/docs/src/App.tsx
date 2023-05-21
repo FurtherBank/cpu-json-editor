@@ -27,6 +27,12 @@ const loadLocalJson = (key: string) => {
   }
 }
 
+const resourceOption = {
+  mapToSrc: (src: string) => {
+    return `https://github.com/FurtherBank/cpu-json-editor/blob/master/packages/docs/src/images/${src}?raw=true`
+  }
+}
+
 // app 最终定义
 export default () => {
   const [mode, setMode] = useState(0)
@@ -238,6 +244,7 @@ export default () => {
             rootMenuItems={rootMenuItems}
             componentMap={antdComponentMap}
             viewsMap={antdViewsMap}
+            options={{ resources: resourceOption }}
             ref={editorRef}
           />
         </div>

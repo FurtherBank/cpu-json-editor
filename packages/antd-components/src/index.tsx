@@ -25,6 +25,7 @@ import { ObjectEdition } from './edition/ObjectEdition'
 import { DateEdition } from './format/date'
 import { DateTimeEdition } from './format/date-time'
 import { IconImgEdition } from './format/icon-image/icon-img'
+import { ImageEdition } from './format/image'
 import { TimeEdition } from './format/time'
 
 export const antdComponentMap: IComponentMap<ConfigProviderProps> = {
@@ -44,7 +45,8 @@ export const antdComponentMap: IComponentMap<ConfigProviderProps> = {
     row: RowEdition,
     uri: RowEdition,
     'uri-reference': RowEdition,
-    image: IconImgEdition
+    image: ImageEdition,
+    icon: IconImgEdition
   },
   edition: {
     object: ObjectEdition,

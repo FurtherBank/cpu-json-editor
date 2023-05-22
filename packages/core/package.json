@@ -39,6 +39,9 @@
     "@types/uuid": "^9.0.1",
     "father": "^4.1.9"
   },
+  "peerDependencies": {
+    "react": "^16.8.0"
+  },
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"

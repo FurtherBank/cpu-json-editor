@@ -63,6 +63,12 @@ pnpm add liba -w
 2. 必须是`include`范围内的文件才能应用`paths`的路径映射，不在其中的文件，如`__test__`等，必须导入开发时原本`src`的文件名。但也因为这部分代码进不了生产，所以也行。但总是感觉不太对劲。
 3. 需要
 
+## 构建与发布
+
+该包的构建与发布有几个需要解决的地方：
+
+1. 构建需要
+
 ## 参考文献
 
 讲 changeset 发布 npm 包：[https://github.com/DavidWells/pnpm-workspaces-example](https://github.com/DavidWells/pnpm-workspaces-example)

@@ -36,7 +36,8 @@
     "@cpu-json-editor/core": "^0.1.0"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "authors": [
     "1293874885@qq.com"

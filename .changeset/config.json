@@ -5,7 +5,7 @@
   "fixed": [],
   "linked": [],
   "access": "restricted",
-  "baseBranch": "main",
+  "baseBranch": "master",
   "updateInternalDependencies": "patch",
-  "ignore": ["@cpu-json-editor/common-test-utils", "@cpu-json-editor/test-examples", "@cpu-json-editor/docs"]
+  "ignore": []
 }

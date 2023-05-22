@@ -1,9 +1,7 @@
 import merge from 'lodash/merge'
-import { ComponentType, ForwardRefExoticComponent, RefAttributes } from 'react'
-import { IFocusable } from '../helper/IFocusable'
-import { IKeyJumpable } from '../helper/IKeyJumpable'
+import { ComponentType } from 'react'
 import { JSONSchema } from '../type/Schema'
-import { ContainerProps, EditionProps, MenuActionProps } from './type/props'
+import { ContainerProps, EditionProps, FormatEditionProps, MenuActionProps, TitleProps } from './type/props'
 
 export type CpuEditionType = 'object' | 'array' | 'string' | 'number' | 'boolean' | 'null' | 'enum' | 'const'
 /**
@@ -14,17 +12,11 @@ export type CpuEditionType = 'object' | 'array' | 'string' | 'number' | 'boolean
 export interface IComponentMap<T = Record<string, never>> {
   containerNormal: ComponentType<ContainerProps>
   containerShort: ComponentType<ContainerProps>
-  title: ForwardRefExoticComponent<EditionProps & RefAttributes<any>>
+  title: ComponentType<TitleProps>
   menuAction: ComponentType<MenuActionProps>
   operation: Record<string, ComponentType<any>>
-  format: Record<string, ComponentType<any>>
-  edition: Record<
-    CpuEditionType,
-    // 这里写了三遍纯粹是感觉不爽……
-    | ForwardRefExoticComponent<EditionProps & RefAttributes<IFocusable | IKeyJumpable>>
-    | ForwardRefExoticComponent<EditionProps & RefAttributes<IFocusable>>
-    | ForwardRefExoticComponent<EditionProps & RefAttributes<IKeyJumpable>>
-  >
+  format: Record<string, ComponentType<FormatEditionProps>>
+  edition: Record<CpuEditionType, ComponentType<EditionProps>>
   drawer: ComponentType<any>
   schemaErrorLogger: ComponentType<any>
   globalProvider: ComponentType<T>
@@ -33,7 +25,7 @@ export interface IComponentMap<T = Record<string, never>> {
 type PartialIComponentMap = Partial<
   {
     operation: Partial<Record<string, ComponentType<any>>>
-    format: Partial<Record<string, ComponentType<any>>>
+    format: Partial<Record<string, ComponentType<FormatEditionProps>>>
     edition: Partial<Record<CpuEditionType, ComponentType<EditionProps>>>
   } & Omit<IComponentMap, 'operation' | 'format' | 'edition' | 'globalProvider'>
 >

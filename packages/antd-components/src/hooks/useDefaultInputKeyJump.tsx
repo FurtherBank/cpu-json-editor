@@ -16,7 +16,7 @@ export const useDefaultInputKeyJump = (ctx: CpuEditorContext, id: string, option
       const key = event.nativeEvent.key
 
       if (supportedKeys.includes(key)) {
-        console.log('👆触发：', event.currentTarget)
+        // console.log('👆触发：', event.currentTarget)
         if (input.selectionStart === 0 && input.selectionEnd === 0) {
           // 左方向键，且光标在最左侧
           if (['ArrowLeft', 'ArrowUp'].indexOf(key) >= 0) {

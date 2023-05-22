@@ -89,8 +89,6 @@ export default () => {
   }, [data, schema])
 
   const changeData = (value: any) => {
-    console.log('demo changeData', value)
-
     setData(value)
   }
 

@@ -1,5 +1,5 @@
 import { SelectOutlined } from '@ant-design/icons'
-import { EditionProps } from '@cpu-json-editor/core/dist/esm/components/type/props'
+import { FormatEditionProps } from '@cpu-json-editor/core/dist/esm/components/type/props'
 import { Image, InputRef, Tooltip } from 'antd'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { CInput } from '../base/cacheInput'
@@ -7,7 +7,7 @@ import { useDefaultInputKeyJump } from '../hooks/useDefaultInputKeyJump'
 import { useRoleModelAttach } from '../hooks/useRoleModelAttach'
 import { useSafeCallback } from '../hooks/useSafeCallback'
 
-export const ImageEdition = (props: EditionProps) => {
+export const ImageEdition = (props: FormatEditionProps) => {
   const {
     ctx,
     model,

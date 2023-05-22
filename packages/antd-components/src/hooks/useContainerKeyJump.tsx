@@ -7,7 +7,7 @@ import { findNextElement } from '../helper/ElementKbdMovement'
 export const useContainerKeyJump = (ctx: CpuEditorContext, model: ComponentModel, id: string) => {
   const keyJump = useCallback(
     (key: string, fromId: string, fromElements: HTMLElement[]) => {
-      console.log('✨容器接收', id, key, fromId, fromElements, model)
+      // console.log('✨容器接收', id, key, fromId, fromElements, model)
 
       const container = document.querySelector<HTMLElement>(`[data-cpu-editor-field-id="${id}"]`)
       const tryJumpParentModel = () => {
@@ -17,7 +17,7 @@ export const useContainerKeyJump = (ctx: CpuEditorContext, model: ComponentModel
         const parentModel = ctx.interaction.componentModelMap.get(getFieldDomId(viewport, pathArray))
         if (parentModel && parentModel.roles['edition'] && container) {
           const editionRoleModel = parentModel.roles['edition']
-          console.log('🎇上报edition：', getFieldDomId(viewport, pathArray))
+          // console.log('🎇上报edition：', getFieldDomId(viewport, pathArray))
           editionRoleModel.keyJumpFocus(key, id, fromElements.concat([container]))
         }
       }
@@ -34,13 +34,13 @@ export const useContainerKeyJump = (ctx: CpuEditorContext, model: ComponentModel
       // if (createElement) elements.push(createElement)
 
       const element = findNextElement(elements, fromElements[fromElements.length - 1], key)
-      console.log('🈲找到下个元素：' + id, element)
+      // console.log('🈲找到下个元素：' + id, element)
 
       if (element) {
         // 找到了可聚焦的下一个元素，直接聚焦
         const role = element.dataset['cpuEditorFocusableRole']!
         const roleModel = model.roles[role]
-        console.log('📎最终聚焦到:', id, role, roleModel)
+        // console.log('📎最终聚焦到:', id, role, roleModel)
         if (roleModel) {
           // 设计要求但凡带属性选择器 role 的 roleModel 必须 focusable，因此这里直接 focus
           roleModel.keyJumpFocus(key, id, fromElements)

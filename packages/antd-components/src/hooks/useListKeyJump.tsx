@@ -32,7 +32,7 @@ export const useListKeyJump = (
 
       const toElement = findNextElement(elements, fromElements[fromElements.length - 1], key)
       if (toElement) {
-        console.log(`📇列表${id}转：`, fromId, fromElements[fromElements.length - 1], '->', toElement)
+        // console.log(`📇列表${id}转：`, fromId, fromElements[fromElements.length - 1], '->', toElement)
         if (toElement.dataset['creator']) {
           // 创建交互
           const creatorInput = div?.querySelector(`[data-creator][data-creator-id="${id}"]`) as

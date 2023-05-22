@@ -32,7 +32,7 @@ export const InfoContext = React.createContext<CpuEditorContext>(null!)
 const immutableEmptyArray: never[] = []
 const immutableEmptyObject = {}
 
-const Editor = <T,>(props: EditorProps<T>, ref: React.ForwardedRef<CpuEditorContext>) => {
+const Editor = (props: EditorProps<any>, ref: React.ForwardedRef<CpuEditorContext>) => {
   const {
     schema,
     data,
@@ -41,7 +41,7 @@ const Editor = <T,>(props: EditorProps<T>, ref: React.ForwardedRef<CpuEditorCont
     viewsMap = immutableEmptyObject as Record<string, IViewsMap>,
     componentMap,
     rootMenuItems,
-    providerProps = immutableEmptyObject as T,
+    providerProps = immutableEmptyObject,
     options: {
       ajvInstance = defaultAjvInstance,
       resources: resourceOptions = immutableEmptyObject as ResourceOptions
@@ -69,8 +69,6 @@ const Editor = <T,>(props: EditorProps<T>, ref: React.ForwardedRef<CpuEditorCont
 
   // 新建 ctx
   const ctx = useMemo(() => {
-    console.log('ℹ️ 新建 ctx')
-
     return new CpuEditorContext(data, schema, ajvInstance, id, interaction, resources, componentMap, viewsMap)
   }, [schema, interaction, resources, componentMap, viewsMap])
 
@@ -92,7 +90,7 @@ const Editor = <T,>(props: EditorProps<T>, ref: React.ForwardedRef<CpuEditorCont
   // 如果 data 更新来自外部，通过 setData 与 store 同步
   const presentData = ctx.store.getState().present.data
   if (data !== presentData) {
-    console.log('检测到外部更新：', data, presentData, ctx.schemaId)
+    // console.log('检测到外部更新：', data, presentData, ctx.schemaId)
     ctx.store.dispatch({
       type: 'setData',
       value: data

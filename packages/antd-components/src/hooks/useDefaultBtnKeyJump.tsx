@@ -5,7 +5,7 @@ import { DefaultKeyJumpOption } from './useDefaultInputKeyJump'
 export const useDefaultBtnKeyJump = (ctx: CpuEditorContext, id: string, options: DefaultKeyJumpOption = {}) => {
   return useCallback(
     (event: SyntheticEvent<HTMLElement, KeyboardEvent>) => {
-      console.log('👆触发：', event.currentTarget)
+      // console.log('👆触发：', event.currentTarget)
       const { supportedKeys = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'], preventDefault = true } = options
       const model = ctx.interaction.componentModelMap.get(id)
       if (!model) return

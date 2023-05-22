@@ -1,11 +1,11 @@
-import { EditionProps } from '@cpu-json-editor/core/dist/esm/components/type/props'
+import { FormatEditionProps } from '@cpu-json-editor/core/dist/esm/components/type/props'
 import { InputRef } from 'antd'
 import React, { useCallback, useMemo, useRef } from 'react'
 import { CInput } from '../base/cacheInput'
 import { useDefaultInputKeyJump } from '../hooks/useDefaultInputKeyJump'
 import { useRoleModelAttach } from '../hooks/useRoleModelAttach'
 
-export const RowEdition = (props: EditionProps) => {
+export const RowEdition = (props: FormatEditionProps) => {
   const {
     ctx,
     model,

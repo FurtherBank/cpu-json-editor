@@ -24,7 +24,7 @@ export default async () => {
     })) as Config.InitialOptions
 
     // monorepo 开发模式下模块导入映射
-    result.moduleNameMapper!['^@cpu-json-editor/core/dist/esm/(.*)$'] = '@cpu-json-editor/core/src/$1'
+    // result.moduleNameMapper!['^@cpu-json-editor/core/dist/esm/(.*)$'] = '@cpu-json-editor/core/src/$1'
 
     return result
   } catch (e) {

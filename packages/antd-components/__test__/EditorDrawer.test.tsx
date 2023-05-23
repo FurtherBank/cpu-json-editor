@@ -1,6 +1,6 @@
 import { getExample } from '@cpu-json-editor/common-test-utils/src'
 import { MockRender } from '@cpu-json-editor/common-test-utils/src/MockComponent'
-import CpuEditorContext, { EditorProps, JsonSchemaEditor } from '@cpu-json-editor/core'
+import { CpuEditorContext, EditorProps, JsonSchemaEditor } from '@cpu-json-editor/core/src'
 import { act, fireEvent } from '@testing-library/react'
 import { ConfigProviderProps } from 'antd/lib/config-provider'
 import { antdComponentMap, antdViewsMap } from '../src'

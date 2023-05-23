@@ -5,7 +5,7 @@ import {
   default as JsonSchemaEditor,
   EditorProps,
   JSONSchema
-} from '@cpu-json-editor/core'
+} from '@cpu-json-editor/core/src'
 import '@testing-library/jest-dom'
 import { render } from '@testing-library/react'
 import { ConfigProviderProps } from 'antd/lib/config-provider'

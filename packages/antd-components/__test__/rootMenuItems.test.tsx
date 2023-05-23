@@ -1,6 +1,6 @@
 import { getExample } from '@cpu-json-editor/common-test-utils/src'
 import { MockRender } from '@cpu-json-editor/common-test-utils/src/MockComponent'
-import { default as CpuEditorContext, default as JsonSchemaEditor } from '@cpu-json-editor/core'
+import { CpuEditorContext, JsonSchemaEditor } from '@cpu-json-editor/core/src'
 import { act, fireEvent, screen } from '@testing-library/react'
 import React, { forwardRef, useCallback, useImperativeHandle, useRef } from 'react'
 import { antdComponentMap, antdViewsMap } from '../src'

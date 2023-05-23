@@ -1,4 +1,4 @@
-import CpuEditorContext from '@cpu-json-editor/core/dist/esm/context'
+import { CpuEditorContext } from '@cpu-json-editor/core'
 import { SyntheticEvent, useCallback } from 'react'
 import { DefaultKeyJumpOption } from './useDefaultInputKeyJump'
 

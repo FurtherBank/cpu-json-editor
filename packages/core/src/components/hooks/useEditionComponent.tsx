@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
-import CpuEditorContext from '../../context'
+import { CpuEditorContext } from '../../context/CpuEditorContext'
 import { FieldProps, IField } from '../../Field'
-import { jsonDataType } from '../../utils'
+import { jsonDataType } from '../../utils/utils'
 
 export const useEditionComponent = (ctx: CpuEditorContext, fieldProps: FieldProps, fieldInfo: IField) => {
   const { data } = fieldProps

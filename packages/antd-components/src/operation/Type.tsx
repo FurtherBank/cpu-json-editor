@@ -1,5 +1,4 @@
-import { ComponentModel } from '@cpu-json-editor/core/dist/esm/components/ComponentModel'
-import CpuEditorContext from '@cpu-json-editor/core/dist/esm/context'
+import { ComponentModel, CpuEditorContext } from '@cpu-json-editor/core'
 import { RefSelectProps, Select } from 'antd'
 import React, { useMemo, useRef } from 'react'
 import { useDefaultBtnKeyJump } from '../hooks/useDefaultBtnKeyJump'

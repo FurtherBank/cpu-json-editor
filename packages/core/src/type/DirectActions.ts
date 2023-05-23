@@ -1,7 +1,7 @@
-import { ofSchemaCache } from '../context/ofInfo';
+import { ofSchemaCache } from '../context/ofInfo'
 
 export interface DirectActionParams {
-  create: true | string[];
-  oneOf: ofSchemaCache;
-  type: string[];
+  create: true | string[]
+  oneOf: ofSchemaCache
+  type: string[]
 }

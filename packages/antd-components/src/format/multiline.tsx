@@ -1,4 +1,4 @@
-import { FormatEditionProps } from '@cpu-json-editor/core/dist/esm/components/type/props'
+import { FormatEditionProps } from '@cpu-json-editor/core'
 import { InputRef } from 'antd'
 import React, { useCallback, useMemo, useRef } from 'react'
 import { CTextArea } from '../base/cacheInput'

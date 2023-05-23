@@ -1,6 +1,4 @@
-import { ComponentModel } from '@cpu-json-editor/core/dist/esm/components/ComponentModel'
-import CpuEditorContext from '@cpu-json-editor/core/dist/esm/context'
-import { ofSchemaCache } from '@cpu-json-editor/core/dist/esm/context/ofInfo'
+import { ComponentModel, CpuEditorContext, ofSchemaCache } from '@cpu-json-editor/core'
 import { RefSelectProps, TreeSelect } from 'antd'
 import React, { useMemo, useRef } from 'react'
 import { useDefaultBtnKeyJump } from '../hooks/useDefaultBtnKeyJump'

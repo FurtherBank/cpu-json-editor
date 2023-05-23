@@ -1,10 +1,10 @@
 import range from 'lodash/range'
 import { useMemo } from 'react'
-import CpuEditorContext from '../../context'
+import { CpuEditorContext } from '../../context/CpuEditorContext'
 import { isShort } from '../../context/virtual'
 import { canFieldCreate } from '../../definition/schema'
 import { IField } from '../../Field'
-import { addRef } from '../../utils'
+import { addRef } from '../../utils/utils'
 import { ChildData, EmptyChildData, FieldDisplayList } from '../type/list'
 
 /**

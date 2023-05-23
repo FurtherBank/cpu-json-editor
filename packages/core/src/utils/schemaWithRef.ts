@@ -1,15 +1,9 @@
 /* eslint-disable no-case-declarations */
-import clone from 'lodash/clone';
-import {
-  addRef,
-  deepCollect,
-  deepGet,
-  getValueByPattern,
-  jsonDataType,
-} from '.';
-import { MergedSchema } from '../context/mergeSchema';
-import { JSONSchema } from '../type/Schema';
-import { uri2strArray } from './path/uri';
+import clone from 'lodash/clone'
+import { MergedSchema } from '../context/mergeSchema'
+import { JSONSchema } from '../type/Schema'
+import { uri2strArray } from './path/uri'
+import { addRef, deepCollect, deepGet, getValueByPattern, jsonDataType } from './utils'
 
 /**
  * 找到 $ref 引用的 schemaMap。如果找不到返回一个空 Map
@@ -21,35 +15,31 @@ import { uri2strArray } from './path/uri';
 export const getRefSchemaMap = (
   $ref: string | undefined | string[],
   rootSchema = {},
-  deepSearch = false,
+  deepSearch = false
 ): Map<string, JSONSchema | boolean> => {
-  const schemaMap = new Map();
-  const refQueue = $ref instanceof Array ? clone($ref) : $ref ? [$ref] : [];
+  const schemaMap = new Map()
+  const refQueue = $ref instanceof Array ? clone($ref) : $ref ? [$ref] : []
   while (refQueue.length > 0) {
-    const nowRef = addRef(refQueue.shift()!)!;
-    const current = deepGet(rootSchema, uri2strArray(nowRef));
+    const nowRef = addRef(refQueue.shift()!)!
+    const current = deepGet(rootSchema, uri2strArray(nowRef))
     if (current !== undefined) {
-      schemaMap.set(nowRef, current);
+      schemaMap.set(nowRef, current)
       if (deepSearch) {
-        const refs = deepCollect(current, '$ref');
+        const refs = deepCollect(current, '$ref')
         if (refs instanceof Array) {
           for (const ref of refs) {
-            if (typeof ref === 'string' && !schemaMap.has(addRef(ref)))
-              refQueue.push(ref);
+            if (typeof ref === 'string' && !schemaMap.has(addRef(ref))) refQueue.push(ref)
           }
         }
       } else {
-        if (
-          current.hasOwnProperty('$ref') &&
-          !schemaMap.has(addRef(current.$ref))
-        ) {
-          refQueue.push(current.$ref);
+        if (current.hasOwnProperty('$ref') && !schemaMap.has(addRef(current.$ref))) {
+          refQueue.push(current.$ref)
         }
       }
     }
   }
-  return schemaMap;
-};
+  return schemaMap
+}
 
 /**
  * 找到 schemaMap 中所有含有某键的 uri 引用
@@ -88,65 +78,59 @@ export const getFieldSchema = (
   data: any,
   valueEntry: string | undefined,
   mergedValueSchema: MergedSchema | false,
-  field: string,
+  field: string
 ): string | false | undefined => {
-  if (!mergedValueSchema) return undefined;
+  if (!mergedValueSchema) return undefined
 
-  const {
-    properties,
-    patternProperties,
-    additionalProperties,
-    items,
-    prefixItems,
-  } = mergedValueSchema;
-  const dataType = jsonDataType(data);
+  const { properties, patternProperties, additionalProperties, items, prefixItems } = mergedValueSchema
+  const dataType = jsonDataType(data)
   switch (dataType) {
     case 'object':
-      if (properties && properties[field]) return properties[field];
+      if (properties && properties[field]) return properties[field]
 
       if (patternProperties) {
-        const ref = getValueByPattern(patternProperties, field);
-        if (ref) return ref;
+        const ref = getValueByPattern(patternProperties, field)
+        if (ref) return ref
       }
 
-      if (additionalProperties !== undefined) return additionalProperties;
+      if (additionalProperties !== undefined) return additionalProperties
       // 如果上面这些属性都没有但是 type = object，会使得这里到了下面的 case 而出错
-      return undefined;
+      return undefined
     case 'array':
       /**
        * 注意：draft 2020-12 调整了items，删除了additionalItems属性。
        * 个人认为这么做是正确的，但是旧的没改，还需要兼容
        * 详情见：https://json-schema.org/draft/2020-12/release-notes.html
        */
-      const index = parseInt(field, 10);
+      const index = parseInt(field, 10)
       if (isNaN(index) || index < 0) {
         throw new Error(
           `获取字段模式错误：在数组中获取非法索引 ${field}\n辅助信息：${valueEntry} \n ${JSON.stringify(
             mergedValueSchema,
             null,
-            2,
-          )}`,
-        );
+            2
+          )}`
+        )
       }
       if (prefixItems) {
-        const { length, ref } = prefixItems;
+        const { length, ref } = prefixItems
         if (index < length) {
-          return addRef(ref, field);
+          return addRef(ref, field)
         } else {
-          return items;
+          return items
         }
       } else if (items) {
-        return items;
+        return items
       } else {
-        return undefined;
+        return undefined
       }
     default:
       throw new Error(
         `获取字段模式错误：在非对象中获取字段模式 ${field}\n辅助信息：${valueEntry} \n ${JSON.stringify(
           mergedValueSchema,
           null,
-          2,
-        )}`,
-      );
+          2
+        )}`
+      )
   }
-};
+}

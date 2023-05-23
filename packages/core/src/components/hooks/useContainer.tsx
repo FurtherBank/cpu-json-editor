@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo } from 'react'
-import CpuEditorContext from '../../context'
+import { CpuEditorContext } from '../../context/CpuEditorContext'
 import { canFieldRename } from '../../definition/schema'
 import { FieldProps, IField } from '../../Field'
-import { concatAccess, getFieldDomId, jsonDataType } from '../../utils'
+import { concatAccess, getFieldDomId, jsonDataType } from '../../utils/utils'
 import { ComponentModel } from '../ComponentModel'
 
 /**

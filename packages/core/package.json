@@ -14,6 +14,7 @@
     "build": "father build",
     "build:deps": "father prebundle",
     "dev": "father dev",
+    "generate-barrels": "barrelsby  -c ./barrel.json --delete",
     "prepublishOnly": "father doctor && npm run build"
   },
   "dependencies": {
@@ -37,7 +38,9 @@
     "@types/json-pointer": "^1.0.31",
     "@types/lodash": "^4.14.194",
     "@types/uuid": "^9.0.1",
-    "father": "^4.1.9"
+    "barrelsby": "^2.8.0",
+    "father": "^4.1.9",
+    "glob": "^10.2.6"
   },
   "peerDependencies": {
     "react": "^16.8.0"

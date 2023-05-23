@@ -13,11 +13,16 @@
     "declaration": true,
     "baseUrl": ".",
     "paths": {
-      "@cpu-json-editor/core": ["./node_modules/@cpu-json-editor/core/src"],
-      "@cpu-json-editor/core/dist/esm": ["./node_modules/@cpu-json-editor/core/src"],
-      "@cpu-json-editor/core/dist/esm/*": ["./node_modules/@cpu-json-editor/core/src/*", "*"]
+      "@cpu-json-editor/core": ["../core/src"],
+      "@cpu-json-editor/core/dist/esm": ["../core/src"],
+      "@cpu-json-editor/core/dist/esm/*": ["../core/src/*", "*"]
     }
   },
+  "references": [
+    {
+      "path": "../core"
+    }
+  ],
   "include": ["src/**/*"],
   "exclude": ["jest.config.ts", "__test__/**/*"]
 }

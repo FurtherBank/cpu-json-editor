@@ -1,5 +1,4 @@
-import { EditionProps } from '@cpu-json-editor/core/dist/esm/components/type/props'
-import { toConstName } from '@cpu-json-editor/core/dist/esm/definition'
+import { EditionProps, toConstName } from '@cpu-json-editor/core'
 import { Input, RefSelectProps, Select } from 'antd'
 import isEqual from 'lodash/isEqual'
 import React, { useCallback, useMemo, useRef } from 'react'

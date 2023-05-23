@@ -1,4 +1,4 @@
-import { ComponentModel, IRoleModel } from '@cpu-json-editor/core/dist/esm/components/ComponentModel'
+import { ComponentModel, IRoleModel } from '@cpu-json-editor/core'
 import { useEffect } from 'react'
 
 export const useRoleModelAttach = (model: ComponentModel, content: IRoleModel, role: string) => {

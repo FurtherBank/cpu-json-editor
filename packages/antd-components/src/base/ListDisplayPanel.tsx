@@ -1,6 +1,4 @@
-import { useSubFieldQuery } from '@cpu-json-editor/core/dist/esm/components/hooks/useSubFieldQuery'
-import { ChildData, EmptyChildData, ListDisplayPanelProps } from '@cpu-json-editor/core/dist/esm/components/type/list'
-import { ShortLevel } from '@cpu-json-editor/core/dist/esm/definition'
+import { ChildData, EmptyChildData, ListDisplayPanelProps, ShortLevel, useSubFieldQuery } from '@cpu-json-editor/core'
 import { List } from 'antd'
 import React, { ForwardedRef, forwardRef } from 'react'
 import { gridOption } from '../config'

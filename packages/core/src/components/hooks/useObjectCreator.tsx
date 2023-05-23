@@ -1,8 +1,8 @@
-import { useCallback } from 'react';
-import CpuEditorContext from '../../context';
-import { MergedSchema } from '../../context/mergeSchema';
-import { getDefaultValue } from '../../definition/defaultValue';
-import { getValueByPattern } from '../../utils';
+import { useCallback } from 'react'
+import { CpuEditorContext } from '../../context/CpuEditorContext'
+import { MergedSchema } from '../../context/mergeSchema'
+import { getDefaultValue } from '../../definition/defaultValue'
+import { getValueByPattern } from '../../utils/utils'
 
 /**
  * [业务]返回 object 创建新项的函数，传入新属性名称调用，会直接创建正确的新属性内容。
@@ -18,37 +18,35 @@ export const useObjectCreator = (
   data: Record<string, any>,
   access: string[],
   schemaEntry: string | undefined,
-  objectSchema: MergedSchema | false | undefined,
+  objectSchema: MergedSchema | false | undefined
 ) => {
   return useCallback(
     (newPropName: string) => {
-      const { properties, patternProperties, additionalProperties } =
-        objectSchema || {};
-      let newValueEntry = undefined;
+      const { properties, patternProperties, additionalProperties } = objectSchema || {}
+      let newValueEntry = undefined
       if (data[newPropName] !== undefined) {
-        return `字段 ${newPropName} 已经存在！`;
+        return `字段 ${newPropName} 已经存在！`
       } else {
         const newPropRef =
           (properties && properties[newPropName]) ??
-          (patternProperties &&
-            getValueByPattern(patternProperties, newPropName));
+          (patternProperties && getValueByPattern(patternProperties, newPropName))
         if (!newPropRef) {
           if (additionalProperties !== false) {
-            newValueEntry = additionalProperties;
+            newValueEntry = additionalProperties
           } else {
-            return `${newPropName} 不匹配 properties 中的名称或 patternProperties 中的正则式`;
+            return `${newPropName} 不匹配 properties 中的名称或 patternProperties 中的正则式`
           }
         } else {
-          newValueEntry = newPropRef;
+          newValueEntry = newPropRef
         }
       }
       return ctx.executeAction('create', {
         route: access,
         field: newPropName,
         value: getDefaultValue(ctx, newValueEntry),
-        schemaEntry,
-      });
+        schemaEntry
+      })
     },
-    [data, objectSchema, access, ctx],
-  );
-};
+    [data, objectSchema, access, ctx]
+  )
+}

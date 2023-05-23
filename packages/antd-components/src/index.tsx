@@ -1,4 +1,4 @@
-import { IComponentMap } from '@cpu-json-editor/core/dist/esm/components/ComponentMap'
+import { IComponentMap } from '@cpu-json-editor/core'
 import { FieldContainerNormal } from './container/FieldContainerNormal'
 import { FieldContainerShort } from './container/FieldContainerShort'
 import { FieldDrawer } from './drawer/FieldDrawer'

@@ -11,10 +11,10 @@ import {
   doAction,
   getReducer
 } from '../definition/reducer'
-import Field from '../Field'
+import { Field } from '../Field'
 import { JSONSchema } from '../type/Schema'
-import { deepGet } from '../utils'
 import { getRefSchemaMap } from '../utils/schemaWithRef'
+import { deepGet } from '../utils/utils'
 import { CpuInteraction } from './interaction'
 import { MergedSchema, mergeSchemaMap } from './mergeSchema'
 import { ofSchemaCache, setOfInfo } from './ofInfo'
@@ -31,7 +31,7 @@ export interface SchemaArrayRefInfo {
  * - `schema`的各个`ref`对应的模式性质信息
  * 在编辑器`schema`变更时重新初始化
  */
-export default class CpuEditorContext {
+export class CpuEditorContext {
   Field = Field
   /**
    * 获取 store 中目前的 data

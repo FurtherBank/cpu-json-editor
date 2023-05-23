@@ -1,7 +1,4 @@
-import { useFatherInfo } from '@cpu-json-editor/core/dist/esm/components/hooks/useFatherInfo'
-import { useObjectListContent } from '@cpu-json-editor/core/dist/esm/components/hooks/useObjectListContent'
-import { EditionProps } from '@cpu-json-editor/core/dist/esm/components/type/props'
-import { concatAccess } from '@cpu-json-editor/core/dist/esm/utils'
+import { concatAccess, EditionProps, useFatherInfo, useObjectListContent } from '@cpu-json-editor/core'
 import React, { useMemo, useRef } from 'react'
 import { ListDisplayPanel } from '../base/ListDisplayPanel'
 import { useListKeyJump } from '../hooks/useListKeyJump'

@@ -1,4 +1,4 @@
-import { EditionProps } from '@cpu-json-editor/core/dist/esm/components/type/props'
+import { EditionProps } from '@cpu-json-editor/core'
 import { Checkbox } from 'antd'
 import { CheckboxChangeEvent } from 'antd/lib/checkbox'
 import React, { SyntheticEvent, useCallback, useMemo, useRef } from 'react'

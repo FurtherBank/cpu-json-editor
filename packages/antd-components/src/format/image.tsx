@@ -1,5 +1,5 @@
 import { SelectOutlined } from '@ant-design/icons'
-import { FormatEditionProps } from '@cpu-json-editor/core/dist/esm/components/type/props'
+import { FormatEditionProps } from '@cpu-json-editor/core'
 import { Image, InputRef, Tooltip } from 'antd'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { CInput } from '../base/cacheInput'

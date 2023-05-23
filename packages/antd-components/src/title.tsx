@@ -1,12 +1,11 @@
 import { CloseCircleOutlined } from '@ant-design/icons'
-import { ShortLevel } from '@cpu-json-editor/core/dist/esm/definition'
-import { isFieldRequired } from '@cpu-json-editor/core/dist/esm/definition/schema'
+import { isFieldRequired, ShortLevel } from '@cpu-json-editor/core'
 import { InputRef, Tooltip } from 'antd'
 import React, { useMemo, useRef } from 'react'
 
 import { CInput } from './base/cacheInput'
 
-import { TitleProps } from '@cpu-json-editor/core/dist/esm/components/type/props'
+import { TitleProps } from '@cpu-json-editor/core'
 import './css/title.less'
 import { useDefaultInputKeyJump } from './hooks/useDefaultInputKeyJump'
 import { useRoleModelAttach } from './hooks/useRoleModelAttach'

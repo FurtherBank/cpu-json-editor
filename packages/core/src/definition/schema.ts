@@ -1,8 +1,8 @@
 /* eslint-disable no-case-declarations */
 import { FatherInfo } from '../components/type/list'
-import CpuEditorContext from '../context'
+import { CpuEditorContext } from '../context/CpuEditorContext'
 import { FieldProps, IField } from '../Field'
-import { getKeyByPattern, jsonDataType } from '../utils'
+import { getKeyByPattern, jsonDataType } from '../utils/utils'
 
 /**
  * 通过 schema 判断当前 json 是否可以创建新的属性。

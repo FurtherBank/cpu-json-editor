@@ -1,6 +1,4 @@
-import { ComponentModel } from '@cpu-json-editor/core/dist/esm/components/ComponentModel'
-import CpuEditorContext from '@cpu-json-editor/core/dist/esm/context'
-import { extractFieldDomId, getFieldDomId } from '@cpu-json-editor/core/dist/esm/utils'
+import { ComponentModel, CpuEditorContext, extractFieldDomId, getFieldDomId } from '@cpu-json-editor/core'
 import { useCallback, useEffect } from 'react'
 import { findNextElement } from '../helper/ElementKbdMovement'
 

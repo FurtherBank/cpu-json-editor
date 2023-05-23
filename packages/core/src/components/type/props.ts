@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import CpuEditorContext from '../../context'
+import { CpuEditorContext } from '../../context/CpuEditorContext'
 import { FieldProps, IField } from '../../Field'
 import { MenuActionType } from '../../menu/MenuActions'
 import { ComponentModel } from '../ComponentModel'

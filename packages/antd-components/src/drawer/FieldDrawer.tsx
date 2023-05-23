@@ -1,9 +1,9 @@
-import { EditorDrawerProps } from '@cpu-json-editor/core/dist/esm/components/type/props';
-import { Drawer } from 'antd';
-import React from 'react';
+import { EditorDrawerProps } from '@cpu-json-editor/core'
+import { Drawer } from 'antd'
+import React from 'react'
 
 export const FieldDrawer = (props: EditorDrawerProps) => {
-  const { onClose, open, children } = props;
+  const { onClose, open, children } = props
 
   return (
     <Drawer
@@ -16,5 +16,5 @@ export const FieldDrawer = (props: EditorDrawerProps) => {
     >
       {children}
     </Drawer>
-  );
-};
+  )
+}

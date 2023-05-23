@@ -1,5 +1,5 @@
-import CpuEditorContext from '../../context'
-import { ShortLevel } from '../../definition'
+import { CpuEditorContext } from '../../context/CpuEditorContext'
+import { ShortLevel } from '../../definition/definitions'
 import { IField } from '../../Field'
 
 /**

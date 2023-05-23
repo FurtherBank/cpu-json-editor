@@ -1,8 +1,10 @@
-import { useContainer } from '@cpu-json-editor/core/dist/esm/components/hooks/useContainer'
-import { useMenuActionComponents } from '@cpu-json-editor/core/dist/esm/components/hooks/useMenuActionComponents'
-import { ContainerProps } from '@cpu-json-editor/core/dist/esm/components/type/props'
-import { getFormatType } from '@cpu-json-editor/core/dist/esm/definition/formats'
-import { concatAccess } from '@cpu-json-editor/core/dist/esm/utils'
+import {
+  concatAccess,
+  ContainerProps,
+  getFormatType,
+  useContainer,
+  useMenuActionComponents
+} from '@cpu-json-editor/core'
 import { Card, Collapse, Space } from 'antd'
 import React from 'react'
 import { maxCollapseLayer } from '../config'

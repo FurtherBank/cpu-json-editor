@@ -1,6 +1,5 @@
 import { EllipsisOutlined } from '@ant-design/icons'
-import { useContainer } from '@cpu-json-editor/core/dist/esm/components/hooks/useContainer'
-import { ContainerProps } from '@cpu-json-editor/core/dist/esm/components/type/props'
+import { ContainerProps, useContainer } from '@cpu-json-editor/core'
 import { Button, Dropdown, Input } from 'antd'
 import React from 'react'
 import { useContainerKeyJump } from '../hooks/useContainerKeyJump'

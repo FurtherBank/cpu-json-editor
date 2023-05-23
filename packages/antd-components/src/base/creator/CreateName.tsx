@@ -1,10 +1,13 @@
 import { CheckOutlined, CloseOutlined, PlusOutlined } from '@ant-design/icons'
-import { useArrayCreator } from '@cpu-json-editor/core/dist/esm/components/hooks/useArrayCreator'
-import { useObjectCreator } from '@cpu-json-editor/core/dist/esm/components/hooks/useObjectCreator'
-import CpuEditorContext from '@cpu-json-editor/core/dist/esm/context'
-import { MergedSchema } from '@cpu-json-editor/core/dist/esm/context/mergeSchema'
-import { isFocusable } from '@cpu-json-editor/core/dist/esm/helper/IFocusable'
-import { extractFieldDomId, getFieldDomId } from '@cpu-json-editor/core/dist/esm/utils'
+import {
+  CpuEditorContext,
+  extractFieldDomId,
+  getFieldDomId,
+  isFocusable,
+  MergedSchema,
+  useArrayCreator,
+  useObjectCreator
+} from '@cpu-json-editor/core'
 import { AutoComplete, Button, Input, InputRef, message } from 'antd'
 import React, { SyntheticEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 

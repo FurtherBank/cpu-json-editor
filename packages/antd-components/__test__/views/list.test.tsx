@@ -1,9 +1,11 @@
 import { getExample } from '@cpu-json-editor/common-test-utils/src'
 import { MockRender } from '@cpu-json-editor/common-test-utils/src/MockComponent'
-import JsonSchemaEditor from '@cpu-json-editor/core/src'
-import CpuEditorContext from '@cpu-json-editor/core/src/context'
-import { EditorProps } from '@cpu-json-editor/core/src/JsonSchemaEditor'
-import { JSONSchema } from '@cpu-json-editor/core/src/type/Schema'
+import {
+  default as CpuEditorContext,
+  default as JsonSchemaEditor,
+  EditorProps,
+  JSONSchema
+} from '@cpu-json-editor/core'
 import '@testing-library/jest-dom'
 import { render } from '@testing-library/react'
 import { ConfigProviderProps } from 'antd/lib/config-provider'

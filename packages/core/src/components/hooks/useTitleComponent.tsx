@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import CpuEditorContext from '../../context'
+import { CpuEditorContext } from '../../context/CpuEditorContext'
 import { FieldProps, IField } from '../../Field'
 
 export const useTitleComponent = (ctx: CpuEditorContext, fieldProps: FieldProps, fieldInfo: IField) => {

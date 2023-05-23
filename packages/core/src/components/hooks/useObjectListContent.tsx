@@ -1,10 +1,10 @@
 import { useMemo } from 'react'
-import CpuEditorContext from '../../context'
+import { CpuEditorContext } from '../../context/CpuEditorContext'
 import { isShort } from '../../context/virtual'
-import { ShortLevel } from '../../definition'
+import { ShortLevel } from '../../definition/definitions'
 import { canFieldCreate } from '../../definition/schema'
 import { IField } from '../../Field'
-import { getValueByPattern } from '../../utils'
+import { getValueByPattern } from '../../utils/utils'
 import { ChildData, EmptyChildData, FieldDisplayList } from '../type/list'
 
 /**

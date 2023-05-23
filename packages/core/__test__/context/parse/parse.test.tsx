@@ -3,7 +3,7 @@ import { MockRender } from '@cpu-json-editor/common-test-utils/src/MockComponent
 import '@testing-library/jest-dom'
 import CpuEditorContext from '../../../src/context'
 import { MergedSchema } from '../../../src/context/mergeSchema'
-import JsonSchemaEditor, { EditorProps } from '../../../src/JsonSchemaEditor'
+import { EditorProps, JsonSchemaEditor } from '../../../src/JsonSchemaEditor'
 import { mockCtx } from '../../test-utils'
 import { MockComponentMap } from '../../test-utils/componentMap'
 

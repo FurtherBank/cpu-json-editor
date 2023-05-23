@@ -1,6 +1,4 @@
-import { FieldDisplayList } from '@cpu-json-editor/core/dist/esm/components/type/list'
-import CpuEditorContext from '@cpu-json-editor/core/dist/esm/context'
-import { extractFieldDomId, getFieldDomId } from '@cpu-json-editor/core/dist/esm/utils'
+import { CpuEditorContext, extractFieldDomId, FieldDisplayList, getFieldDomId } from '@cpu-json-editor/core'
 import { RefObject, useCallback } from 'react'
 import { findNextElement } from '../helper/ElementKbdMovement'
 

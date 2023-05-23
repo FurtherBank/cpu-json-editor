@@ -1,4 +1,4 @@
-import { EditionProps } from '@cpu-json-editor/core/dist/esm/components/type/props'
+import { EditionProps } from '@cpu-json-editor/core'
 import { InputRef } from 'antd'
 import React, { useCallback, useMemo, useRef } from 'react'
 import { CInput } from '../base/cacheInput'

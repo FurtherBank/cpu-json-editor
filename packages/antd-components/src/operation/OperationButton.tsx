@@ -6,7 +6,7 @@ import {
   RetweetOutlined,
   UndoOutlined
 } from '@ant-design/icons'
-import { MenuActionProps } from '@cpu-json-editor/core/dist/esm/components/type/props'
+import { MenuActionProps } from '@cpu-json-editor/core'
 import { Button } from 'antd'
 import React, { useMemo, useRef } from 'react'
 import { useDefaultBtnKeyJump } from '../hooks/useDefaultBtnKeyJump'

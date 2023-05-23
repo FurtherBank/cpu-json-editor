@@ -1,4 +1,4 @@
-import { FormatEditionProps } from '@cpu-json-editor/core/dist/esm/components/type/props'
+import { FormatEditionProps } from '@cpu-json-editor/core'
 import { TimePicker } from 'antd'
 import moment, { Moment } from 'moment'
 import React, { useCallback, useMemo, useRef } from 'react'

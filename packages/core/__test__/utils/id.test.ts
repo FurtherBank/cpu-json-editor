@@ -1,4 +1,4 @@
-import { extractFieldDomId, getFieldDomId } from '../../src/utils'
+import { extractFieldDomId, getFieldDomId } from '../../src/utils/utils'
 
 it('id', () => {
   const id = getFieldDomId('window', ['a', 'b', 'c'])

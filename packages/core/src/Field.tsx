@@ -7,14 +7,14 @@ import { StateWithHistory } from 'redux-undo'
 import { useMenuActionHandlers } from './components/hooks/useMenuActionHandlers'
 import { FatherInfo } from './components/type/list'
 import { ContainerProps } from './components/type/props'
-import CpuEditorContext from './context'
+import { CpuEditorContext } from './context/CpuEditorContext'
 import { MergedSchema } from './context/mergeSchema'
-import { getValueEntry, ShortLevel } from './definition'
+import { getValueEntry, ShortLevel } from './definition/definitions'
 import { CpuEditorState } from './definition/reducer'
 import { canFieldDelete } from './definition/schema'
 import { InfoContext } from './JsonSchemaEditor'
 import { MenuActionType } from './menu/MenuActions'
-import { concatAccess, deepGet, getFieldDomId, jsonDataType } from './utils'
+import { concatAccess, deepGet, getFieldDomId, jsonDataType } from './utils/utils'
 
 export interface FieldProps {
   viewport: string
@@ -174,7 +174,7 @@ const FieldBase = (props: FieldProps) => {
 //   return !changed;
 // };
 
-const Field = connect((state: StateWithHistory<CpuEditorState>, props: FieldProps) => {
+export const Field = connect((state: StateWithHistory<CpuEditorState>, props: FieldProps) => {
   const { route, field } = props
   const {
     present: { data }
@@ -187,5 +187,3 @@ const Field = connect((state: StateWithHistory<CpuEditorState>, props: FieldProp
     data: deepGet(data, path)
   }
 }, {})(React.memo(FieldBase))
-
-export default Field

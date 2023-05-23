@@ -1,6 +1,6 @@
 import Ajv from 'ajv'
 import { IComponentMap, IViewsMap } from '../../src/components/ComponentMap'
-import CpuEditorContext from '../../src/context'
+import { CpuEditorContext } from '../../src/context'
 import { CpuInteraction } from '../../src/context/interaction'
 import defaultAjvInstance from '../../src/definition/ajvInstance'
 import { MockComponentMap } from './componentMap'

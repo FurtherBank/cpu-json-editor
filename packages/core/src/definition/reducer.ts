@@ -7,7 +7,7 @@ import { produce } from 'immer'
 import cloneDeep from 'lodash/cloneDeep'
 import remove from 'lodash/remove'
 import undoable from 'redux-undo'
-import CpuEditorContext from '../context'
+import { CpuEditorContext } from '../context/CpuEditorContext'
 import { processValidateErrors } from '../helper/validate-errors/processValidateErrors'
 
 export interface CpuEditorActionOption {

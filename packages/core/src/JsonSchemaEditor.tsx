@@ -1,11 +1,11 @@
 import Ajv from 'ajv'
 import React, { CSSProperties, forwardRef, useCallback, useImperativeHandle, useMemo, useRef } from 'react'
 import { Provider } from 'react-redux'
-import EditorDrawer from './EditorDrawer'
-import Field from './Field'
+import { EditorDrawer } from './EditorDrawer'
+import { Field } from './Field'
 
 import { IComponentMap, IViewsMap } from './components/ComponentMap'
-import CpuEditorContext from './context'
+import { CpuEditorContext } from './context/CpuEditorContext'
 import { CpuInteraction } from './context/interaction'
 import { CpuResources, ResourceOptions } from './context/resources'
 import defaultAjvInstance from './definition/ajvInstance'
@@ -121,4 +121,4 @@ const Editor = (props: EditorProps<any>, ref: React.ForwardedRef<CpuEditorContex
   )
 }
 
-export default React.memo(forwardRef(Editor))
+export const JsonSchemaEditor = React.memo(forwardRef(Editor))

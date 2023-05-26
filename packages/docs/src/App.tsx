@@ -7,7 +7,7 @@ import _ from 'lodash'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { Button, Card, message, PageHeader } from 'antd' // 用 antd 封装demo
-import 'antd/dist/antd.compact.css'
+import 'antd/dist/antd.css'
 import MonacoEditor from 'react-monaco-editor/lib/editor'
 
 import { antdComponentMap, antdViewsMap } from '@cpu-json-editor/antd-components'

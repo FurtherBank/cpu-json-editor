@@ -30,6 +30,7 @@ export const useSubFieldQuery = (
       const Field = ctx.Field
       return (
         <Field
+          key={'property-' + key}
           viewport={viewport}
           route={access}
           field={key}

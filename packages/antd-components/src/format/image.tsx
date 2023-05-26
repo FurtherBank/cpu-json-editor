@@ -64,7 +64,7 @@ export const ImageEdition = (props: FormatEditionProps) => {
         value={data}
         onValueChange={handleValueChange}
         validate={true}
-        style={{ minWidth: '400px' }}
+        // style={{ minWidth: '400px' }}
         suffix={
           !isSelecting ? (
             <Tooltip title="选择图片文件">

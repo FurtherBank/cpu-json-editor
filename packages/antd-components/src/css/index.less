@@ -11,14 +11,19 @@
   width: 0;
 }
 
+// 减小容器组件 collapse 的内边距(这里要一个比较高的 specificity，因为 antd 的样式也有设置)
+.ant-collapse > [data-cpu-editor-field-id] > .ant-collapse-header {
+  padding: 0.5em;
+}
+
+.cpu-editor-list-panel > div,
+.cpu-editor-list-panel > button {
+  margin-bottom: 0.25em;
+}
+
 // utils css style
 
 .flex-center {
   display: flex;
   align-items: center;
-}
-
-[data-cpu-editor-field-id]:focus {
-  border: solid 1px #1890ff;
-  border-radius: 2px;
 }

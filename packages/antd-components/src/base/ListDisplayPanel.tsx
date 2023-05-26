@@ -1,8 +1,24 @@
 import { ChildData, EmptyChildData, ListDisplayPanelProps, ShortLevel, useSubFieldQuery } from '@cpu-json-editor/core'
-import { List } from 'antd'
-import React, { ForwardedRef, forwardRef } from 'react'
-import { gridOption } from '../config'
+import React, { CSSProperties, ForwardedRef, forwardRef } from 'react'
 import { CreateName } from './creator'
+
+const style: CSSProperties = {}
+
+const shortGridStyle: CSSProperties = {
+  ...style,
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(24.5em, 1fr))',
+  gridGap: '0 1em',
+  alignItems: 'center'
+}
+
+const extraShortGridStyle: CSSProperties = {
+  ...style,
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(15em, 1fr))',
+  gridGap: '0 1em',
+  alignItems: 'center'
+}
 
 export const ListDisplayPanel = forwardRef((props: ListDisplayPanelProps, ref: ForwardedRef<HTMLDivElement>) => {
   const { viewport, data, access, fieldInfo, fatherInfo, lists, ctx, id, domAttributes = {} } = props
@@ -15,19 +31,18 @@ export const ListDisplayPanel = forwardRef((props: ListDisplayPanelProps, ref: F
     return (item: ChildData | EmptyChildData) => {
       if (item.key !== '') {
         const { key } = item
-        return <List.Item key={'property-' + key}>{getSubField(key, shortLv)}</List.Item>
+        return getSubField(key, shortLv)
       } else {
         return (
-          <List.Item key="end">
-            <CreateName
-              data={data}
-              access={access}
-              mergedValueSchema={mergedValueSchema}
-              ctx={ctx}
-              schemaEntry={schemaEntry}
-              id={id}
-            />
-          </List.Item>
+          <CreateName
+            key="end"
+            data={data}
+            access={access}
+            mergedValueSchema={mergedValueSchema}
+            ctx={ctx}
+            schemaEntry={schemaEntry}
+            id={id}
+          />
         )
       }
     }
@@ -67,64 +82,18 @@ export const ListDisplayPanel = forwardRef((props: ListDisplayPanelProps, ref: F
     <div ref={ref} {...domAttributes}>
       {lists.map((list, i) => {
         const { items, short } = list
+        const render = renderItem(short)
+        const layoutStyle =
+          short === ShortLevel.extra ? extraShortGridStyle : short === ShortLevel.short ? shortGridStyle : {}
+        const panelStyle = i === 0 ? layoutStyle : { marginTop: '0.25em', ...layoutStyle }
         return (
-          <List
-            key={i}
-            className="cpu-editor-list-panel"
-            size="small"
-            split={false}
-            dataSource={items}
-            grid={gridOption[short]}
-            renderItem={renderItem(short)}
-          />
+          <div key={i} className="cpu-editor-list-panel" style={panelStyle}>
+            {items.map((item) => {
+              return render(item)
+            })}
+          </div>
         )
       })}
     </div>
   )
-  // switch (1) {
-  //   case 'list':
-  //     return (
-  //       <div style={{ height: '100%', flexDirection: 'row', alignItems: 'stretch', display: 'flex' }} id={id}>
-  //         <aside style={{ height: '100%', minWidth: '15em' }}>
-  //           <div
-  //             className="ant-card-bordered"
-  //             style={{
-  //               height: '100%',
-  //               display: 'flex',
-  //               flexDirection: 'column',
-  //               borderRadius: '2px'
-  //             }}
-  //           >
-  //             <SelectableGroup
-  //               clickClassName="tick"
-  //               enableDeselect={true}
-  //               tolerance={0}
-  //               deselectOnEsc={false}
-  //               allowClickWithoutSelected={true}
-  //               resetOnStart={true}
-  //               onSelectionFinish={handleSelectable}
-  //               ignoreList={['.not-selectable']}
-  //               style={{ flex: '1', overflow: 'auto', margin: '3px 0' }}
-  //               key={'select'}
-  //             >
-  //               <ItemList items={content} />
-  //             </SelectableGroup>
-  //             {canCreate ? (
-  //               <CreateName
-  //                 fatherInfo={fatherInfo}
-  //                 fieldProps={fieldProps}
-  //                 fieldInfo={fieldInfo}
-  //                 style={{ margin: '3px', width: 'auto' }}
-  //                 key={'create'}
-  //               />
-  //             ) : null}
-  //           </div>
-  //         </aside>
-  //         <main style={{ height: '100%', overflow: 'auto', flex: 'auto' }}>
-  //           {data.length > 0 ? getSubField(currentItem.toString(), short) : null}
-  //         </main>
-  //       </div>
-  //     )
-  //   default:
-  // }
 })

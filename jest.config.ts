@@ -23,8 +23,8 @@ export default async () => {
       // transformIgnorePatterns: ['node_modules/(?!.*(lodash-es|your-es-pkg-name)/)']
     })) as Config.InitialOptions
 
-    // monorepo 开发模式下模块导入映射
-    // result.moduleNameMapper!['^@cpu-json-editor/core/dist/esm/(.*)$'] = '@cpu-json-editor/core/src/$1'
+    // monorepo 开发模式下模块导入映射(不知道为啥一定要 core 映射到 src 才能正常运行，明明都一样的)
+    result.moduleNameMapper!['^@cpu-json-editor/core$'] = '@cpu-json-editor/core/src'
 
     return result
   } catch (e) {

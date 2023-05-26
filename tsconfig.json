@@ -14,8 +14,7 @@
     "baseUrl": "./",
     "paths": {
       "@@/*": [".dumi/tmp/*"],
-      "json-schemaeditor-antd": ["src"],
-      "json-schemaeditor-antd/*": ["src/*", "*"],
+      "@cpu-json-editor/core": ["@cpu-json-editor/core/src"],
       "@cpu-json-editor/core/dist/esm": ["@cpu-json-editor/core/src"],
       "@cpu-json-editor/core/dist/esm/*": ["@cpu-json-editor/core/src/*", "*"]
     }

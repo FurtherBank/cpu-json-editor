@@ -43,4 +43,10 @@ defaultAjvInstance.addKeyword({
   }
 })
 
+// 添加 resPrefix 关键字
+defaultAjvInstance.addKeyword({
+  keyword: 'resPrefix',
+  type: 'string'
+})
+
 export default defaultAjvInstance

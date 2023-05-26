@@ -1,4 +1,4 @@
-import { JSONSchema6 } from 'json-schema';
+import { JSONSchema6 } from 'json-schema'
 
 /**
  * 编辑器适用的 json-schema type definition
@@ -6,11 +6,12 @@ import { JSONSchema6 } from 'json-schema';
  * - 该定义不包括`boolean`，如果需要就`|`一下
  */
 export type JSONSchema = Omit<JSONSchema6, 'type'> & {
-  type?: string | string[] | undefined;
+  type?: string | string[] | undefined
   view?: {
-    param?: any;
-    type: string;
-  };
+    param?: any
+    type: string
+  }
+  resPrefix?: string
   // old schema props
-  id?: string;
-};
+  id?: string
+}

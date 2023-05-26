@@ -12,8 +12,10 @@ export const IconImgEdition = (props: FormatEditionProps) => {
     ctx,
     model,
     fieldProps: { route, field, data, schemaEntry },
-    fieldInfo: { id }
+    fieldInfo: { id, mergedValueSchema }
   } = props
+
+  const { resPrefix } = mergedValueSchema || {}
 
   const handleValueChange = useCallback(
     (value: any) => {
@@ -58,7 +60,7 @@ export const IconImgEdition = (props: FormatEditionProps) => {
     <div style={{ display: 'flex', flex: 1 }}>
       <img
         style={{ maxWidth: '80px', maxHeight: '32px', marginRight: '4px', display: 'inline-block' }}
-        src={ctx.resources.mapToSrc(data)}
+        src={ctx.resources.mapToSrc(resPrefix ? resPrefix + data : data)}
       />
       <CInput
         size="small"

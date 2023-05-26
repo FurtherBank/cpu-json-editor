@@ -6,7 +6,7 @@
       "type": "object",
       "additionalProperties": {
         "type": "string",
-        "format": "image"
+        "format": "icon"
       }
     }
   },

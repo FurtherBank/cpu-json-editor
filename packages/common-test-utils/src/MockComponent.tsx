@@ -1,15 +1,11 @@
-import { render } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import {
-  ForwardRefExoticComponent,
-  ForwardRefRenderFunction,
-  useRef,
-} from 'react';
+import { render } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import React, { ForwardRefExoticComponent, ForwardRefRenderFunction, useRef } from 'react'
 
 interface MockProps {
-  refHook: any;
-  component: ForwardRefExoticComponent<any>;
-  [k: string]: any;
+  refHook: any
+  component: ForwardRefExoticComponent<any>
+  [k: string]: any
 }
 
 export class RefMockerHook {
@@ -22,25 +18,20 @@ export class RefMockerHook {
  * @returns
  */
 export const RefMocker = (props: MockProps) => {
-  const { refHook, component: RenderComponent, ...restProps } = props;
-  const ref = useRef<any>(null);
+  const { refHook, component: RenderComponent, ...restProps } = props
+  const ref = useRef<any>(null)
 
-  refHook.current = ref;
+  refHook.current = ref
 
-  return <RenderComponent ref={ref} {...restProps} />;
-};
+  return <RenderComponent ref={ref} {...restProps} />
+}
 
-export const MockRender = <T extends any>(
-  component: ForwardRefRenderFunction<T, any>,
-  props: any = {},
-) => {
-  const user = userEvent.setup();
-  const refMockerHook = new RefMockerHook();
-  const renderResult = render(
-    <RefMocker {...props} component={component} refHook={refMockerHook} />,
-  );
+export const MockRender = <T extends any>(component: ForwardRefRenderFunction<T, any>, props: any = {}) => {
+  const user = userEvent.setup()
+  const refMockerHook = new RefMockerHook()
+  const renderResult = render(<RefMocker {...props} component={component} refHook={refMockerHook} />)
 
-  const current = refMockerHook.current.current as T;
+  const current = refMockerHook.current.current as T
 
-  return { current, refMockerHook, renderResult, user };
-};
+  return { current, refMockerHook, renderResult, user }
+}
